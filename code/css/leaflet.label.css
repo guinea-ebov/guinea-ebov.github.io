@@ -1,0 +1,48 @@
+
+
+.leaflet-label {
+	
+	text-align : center;
+	border : none;
+	display: block;
+	position: absolute;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+	pointer-events: none;
+	white-space: nowrap;
+	z-index: 2;
+}
+
+.leaflet-label.leaflet-clickable {
+	cursor: pointer;
+}
+
+.leaflet-label:before,
+.leaflet-label:after {
+	border-top: none;
+	border-bottom: none;
+	content: none;
+	position: absolute;
+	top: 5px;
+}
+
+.leaflet-label:before {
+	border-right: none;
+	border-right-color: inherit;
+	left: -10px;
+}
+
+.leaflet-label:after {
+	border-left: none;
+	border-left-color: inherit;
+	right: -10px;
+}
+
+.leaflet-label-right:before,
+.leaflet-label-left:after {
+	content: "";
+}
+
+

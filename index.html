@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Guinea - EBOV</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="code/src/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="code/src/html5slider.js"></script>
+    <script src="code/src/jquery-2.1.1.min.js"></script>
+    <script src="code/src/leaflet/leaflet.js"></script>
+    <script src="code/src/leaflet/leaflet.label.js"></script>
+    <script src='code/src/leaflet-omnivore.min.js'></script>
+    <script src='code/data/layers/sous_pref.geojson'></script>
+    <script src='code/data/layers/countries.geojson'></script>
+    <script src='code/data/layers/prefectures.geojson'></script>
+    <script src="code/data/data_per_day.geojson" type="text/javascript"></script>
+    <script src="code/data/data_per_week.geojson" type="text/javascript"></script>
+    <script src="code/data/cumulative_daily.geojson" type="text/javascript"></script>
+    <script src="code/data/last_7d_daily.geojson" type="text/javascript"></script>
+    <script src="code/data/last_21d_daily.geojson" type="text/javascript"></script>
+    <link rel="stylesheet" href="code/src/leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="code/css/leaflet.label.css" />
+    <link rel="stylesheet" href="code/css/style.css"/>
+    <link href="code/src/nvd3-master/nv.d3.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+         $(document).ready(function(){
+         
+                $(".map_help").hide(200);
+                $(".show_mapHelp").show(200);
+      
+            $('.show_mapHelp').hover(function(){
+            $(".map_help").slideToggle(200);
+            });
+        });
+    </script>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Guinea - EBOV</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <!-- <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul> -->
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="epi_content">
+     <h2>Localisation des cas confirmés par sous-préfectures&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+      <div id="map"></div>
+      <script>
+        $(document).ready(function() {
+
+        var cases;
+         var map = L.map('map', { 
+                center: [10, -11.3441], 
+                zoom: 7,    
+                minZoom: 6  
+            });
+
+         var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+});
+
+        /*var sous_pref = omnivore.topojson('code/data/layers/sous_pref_topo.json')
+        .on('ready',function(layer){
+        this.eachLayer(function(sp){
+          sp.setStyle({
+            fillColor: "#ffffbf",
+            color: "#d8b365",
+            weight: 1,
+            opacity: 0.8,
+            fillOpacity: .7})
+        sp.bindPopup(sp.toGeoJSON().properties.name);
+        })
+        });*/
+
+        var sous_pref = L.geoJson(sp, {
+            style: function (feature) {
+                return {fillColor: "#ffffbf",
+                        color: "#d8b365",
+                        weight: 0.8,
+                        opacity: 0.8,
+                        fillOpacity: .7};
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name);
+            }
+        });
+
+        var countries = L.geoJson(countr, {
+            style: function (feature) {
+                return {fillColor: "white",
+                        color: "black",
+                        weight: 1,
+                        opacity: 0.8,
+                        fillOpacity: 0.8};
+            }
+        });
+
+        var prefs = L.geoJson(prfs, {
+            style: function (feature) {
+                return {color: "#8A4117",
+                        weight: 1,
+                        opacity: 0.8};
+            }
+        });
+
+
+        var baseLayers = L.layerGroup([countries, sous_pref, prefs]).addTo(map);
+        
+        var labelmal= new L.Label();
+        labelmal.setContent("<em>MALI</em>");
+        labelmal.setLatLng([11.5,-7.55]);
+        map.showLabel(labelmal);
+        
+        var labelciv = new L.Label();
+        labelciv.setContent("<em>CÔTE D'IVOIRE</em>");
+        labelciv.setLatLng([9.5,-7.55]);
+        map.showLabel(labelciv);
+
+        var labelsle = new L.Label();
+        labelsle.setContent('<em> SIERRA</br>LEONE</em>');
+        labelsle.setLatLng([8.6,-12.2]);
+        map.showLabel(labelsle);
+
+        var labellib = new L.Label();
+        labellib.setContent('<em>LIBERIA</em>');
+        labellib.setLatLng([ 6.8,  -10.5]);
+        map.showLabel(labellib);
+
+        var labelgb = new L.Label();
+        labelgb.setContent('<em>GUINEE</br>BISSAU</em>');
+        labelgb.setLatLng([12.2, -15.2]);
+        map.showLabel(labelgb);
+
+        var labelsen = new L.Label();
+        labelsen.setContent('<em>SENEGAL</em>');
+        labelsen.setLatLng([14.5, -15]);
+        map.showLabel(labelsen);
+
+
+        var cumulative = L.geoJson(data_cumulative, {  
+            onEachFeature: function (feature, layer) {
+                popupContent = "<b>" + feature.properties.name + " </b><br>" +
+                               "<b>" + String(feature.properties.total) +
+                               "</b> cas";
+                // Calculations for radius in function of field 'total'
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                radius =  Math.sqrt(area/Math.PI)*2
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });
+            },
+            pointToLayer: function(feature, latlng) {   
+                // Calculations for radius. Same as bellow
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                return L.circleMarker(latlng, {     
+                    radius: Math.sqrt(area/Math.PI)*2,
+                    /*fillColor: feature.properties.color, */
+                    fillColor: "red", 
+                    color: '#537898',   
+                    weight: 1,  
+                    fillOpacity: 0.6  
+                });
+            }
+        });
+
+        var last_7d = L.geoJson(data_7d, {  
+            onEachFeature: function (feature, layer) {
+                popupContent = "<b>" + feature.properties.name + " </b><br>" +
+                               "<b>" + String(feature.properties.total) +
+                               "</b> cas";
+                // Calculations for radius in function of field 'total'
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                radius =  Math.sqrt(area/Math.PI)*2
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });
+            },
+            pointToLayer: function(feature, latlng) {   
+                // Calculations for radius. Same as bellow
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                return L.circleMarker(latlng, {     
+                    radius: Math.sqrt(area/Math.PI)*2,
+                    /*fillColor: feature.properties.color, */
+                    fillColor: "red", 
+                    color: '#537898',   
+                    weight: 1,  
+                    fillOpacity: 0.6  
+                });
+            }
+        });
+
+        var last_21d = L.geoJson(data_21d, {  
+            onEachFeature: function (feature, layer) {
+                popupContent = "<b>" + feature.properties.name + " </b><br>" +
+                               "<b>" + String(feature.properties.total) +
+                               "</b> cas";
+                // Calculations for radius in function of field 'total'
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                radius =  Math.sqrt(area/Math.PI)*2
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });
+            },
+            pointToLayer: function(feature, latlng) {   
+                // Calculations for radius. Same as bellow
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                return L.circleMarker(latlng, {     
+                    radius: Math.sqrt(area/Math.PI)*2,
+                    /*fillColor: feature.properties.color, */
+                    fillColor: "red", 
+                    color: '#537898',   
+                    weight: 1,  
+                    fillOpacity: 0.6  
+                });
+            }
+        });
+
+
+        var dataInfo = processData(data_per_day);   
+                createPropSymbols(dataInfo.timestamps, data_per_day);  
+                createLegend(dataInfo.min,dataInfo.max);    
+                createSliderUI(dataInfo.timestamps);  
+
+
+        function processData(data) {
+
+            var timestamps = [],    
+                min = Infinity, 
+                max = -Infinity;
+
+            for (var feature in data.features) {    
+
+                var properties = data.features[feature].properties; 
+
+                for (var attribute in properties) { 
+
+                    if ( attribute != 'id' &&   
+                         attribute != 'name' &&   
+                         attribute != 'color') 
+                    {
+                        if ( $.inArray(attribute,timestamps) ===  -1) { 
+                            timestamps.push(attribute);
+                        }
+
+                        if (properties[attribute] < min) {  
+                            min = properties[attribute]; 
+                        }
+                        if (properties[attribute] > max) { 
+                            max = properties[attribute];          
+
+                        }
+                    }
+                }
+            }
+
+            return {    
+                timestamps : timestamps,
+                min : min,
+                max : max
+            }
+        }  // end processData()
+
+// ----------------- Start daily data -----------------
+        function createPropSymbols(timestamps, data) {
+            cases = L.geoJson(data, {      
+
+                pointToLayer: function(feature, latlng) {   
+
+                    return L.circleMarker(latlng, {     
+                    
+                        fillColor: 'red', 
+                        color: '#537898',   
+                        weight: 1,  
+                        fillOpacity: 0.6  
+
+                    });
+                }
+            }).addTo(map);
+            updatePropSymbols(timestamps[0]);   
+
+        } // end createPropSymbols()
+
+        function updatePropSymbols(timestamp) {
+
+            cases.eachLayer(function(layer) {  
+                
+                var props = layer.feature.properties,
+                    radius = calcPropRadius(props[timestamp]);
+
+                fecha2 = new Date(Math.floor(timestamp));
+                /*$(".temporal-legend").text('Week ' + this.value.getDate());*/
+                var fech = fecha2.getDate() + '/' +  parseInt(fecha2.getMonth() + 1) + '/' +  fecha2.getFullYear();
+
+                popupContent = "<b>" + props.name + " </b><br>" +
+                               "<b>" + String(props[timestamp]) +
+                               "</b> cas le " + fech;
+        
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });  
+            });
+        } // end updatePropSymbols
+        function calcPropRadius(attributeValue) {
+                
+            var scaleFactor = 12,  // value dependent upon particular data set
+                area = attributeValue * scaleFactor; 
+
+            return Math.sqrt(area/Math.PI)*2;  
+                
+        } // end calcPropRadius
+        function createLegend(min, max) {
+             
+            if (min < 10) { 
+                min = 1; 
+            }
+            function roundNumber(inNumber) {
+
+                return (Math.round(inNumber/10) * 10);  
+            }
+
+            var legend = L.control( { position: 'bottomright' } );
+
+            legend.onAdd = function(map) {
+
+                var legendContainer = L.DomUtil.create("div", "legend"),  
+                    symbolsContainer = L.DomUtil.create("div", "symbolsContainer"),
+                    classes = [1, 10, 40], 
+
+                    diameter,
+                    diameters = [];
+
+                L.DomEvent.addListener(legendContainer, 'mousedown', function(e) { L.DomEvent.stopPropagation(e); });  
+
+                $(legendContainer).append("<h2 id='legendTitle'>Nombre de cas</h2>");
+                
+                for (var i = 0; i < classes.length; i++) {  
+
+                    legendCircle = L.DomUtil.create("div", "legendCircle");  
+                    diameter = calcPropRadius(classes[i])*2; 
+                    diameters.push(diameter);               
+                    var lastdiameter;                   
+                    if (diameters[i-1]){
+                        lastdiameter = diameters[i-1];
+                    } else {
+                        lastdiameter = 0;
+                    };
+                    $(legendCircle).attr("style", "width: "+diameter+"px; height: "+diameter+
+                        "px; margin-left: -"+((diameter+lastdiameter+2)/2)+"px" );                   
+                    $(legendCircle).append("<span class='legendValue'>"+classes[i]+"<span>");
+                    $(symbolsContainer).append(legendCircle);   
+                };
+                $(legendContainer).append(symbolsContainer); 
+                return legendContainer; 
+
+            };
+
+            legend.addTo(map);  
+        } // end createLegend()
+        function createSliderUI(timestamps) {
+        
+            var sliderControl = L.control({ position: 'bottomleft'} );
+
+            sliderControl.onAdd = function(map) {
+
+                var slider = L.DomUtil.create("input", "range-slider");
+
+                L.DomEvent.addListener(slider, 'mousedown', function(e) { 
+
+                    L.DomEvent.stopPropagation(e); 
+
+                });
+
+                $(slider)
+                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 86400000,'value': String(timestamps[0])})
+
+                    /*.attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 1,'value': String(timestamps[0])})*/
+                    .on('input change', function() {
+
+                        updatePropSymbols($(this).val().toString());
+                        $('output.temporal-legend').removeAttr('id');
+                        fecha2 = new Date(Math.floor(this.value));
+
+                        $(".temporal-legend").text(fecha2.getDate() + '/' +  parseInt(fecha2.getMonth() + 1) + '/' +  fecha2.getFullYear());
+                        if (timestamps.indexOf(this.value) >= timestamps.length-22 && timestamps.indexOf(this.value) < timestamps.length-8) {
+                            $("output.temporal-legend").addClass( "last3weeks" );
+                            $("output.temporal-legend").removeClass( "lastweek");
+                        }
+                        else if (timestamps.indexOf(this.value) >= timestamps.length-8) {
+                            $("output.temporal-legend").removeClass( "last3weeks");
+                            $("output.temporal-legend").addClass( "lastweek");
+
+                        }
+                         else { $("output.temporal-legend").removeClass( "last3weeks");};  
+                        
+                    });
+
+                return slider;
+            }
+
+            sliderControl.addTo(map);
+            createTemporalLegend(timestamps[0]);
+        } // end createSliderUI()
+        function createTemporalLegend(startTimestamp) {
+
+            var temporalLegend = L.control({ position: 'bottomleft' });  
+
+            temporalLegend.onAdd = function(map) {  
+
+                var output = L.DomUtil.create("output", "temporal-legend");
+
+                return output;  
+            }
+
+            temporalLegend.addTo(map);  
+            fecha = new Date(Math.floor(startTimestamp));
+            $(".temporal-legend").text(fecha2.getDate() + '/' +  parseInt(fecha2.getMonth() + 1) + '/' +  fecha2.getFullYear());
+        }   // end createTemporalLegend()
+
+// ----------------- End daily data -----------------
+
+
+// ----------------- Start week data -----------------
+        function createPropSymbols2(timestamps, data) {
+            cases = L.geoJson(data, {      
+
+                pointToLayer: function(feature, latlng) {   
+
+                    return L.circleMarker(latlng, {     
+                    
+                        /*fillColor: "#708598",  */
+                        fillColor: 'red', 
+                        color: '#537898',   
+                        weight: 1,  
+                        fillOpacity: 0.6  
+
+                    });
+                }
+            }).addTo(map);  
+            updatePropSymbols2(timestamps[0]);   
+
+        } // end createPropSymbols()
+        function updatePropSymbols2(timestamp) {
+
+            cases.eachLayer(function(layer) {  
+                
+                var props = layer.feature.properties,
+                    radius = calcPropRadius(props[timestamp]);
+
+                popupContent = "<b>" + props.name + " </b><br>" +
+                                   "<b>" + String(props[timestamp]) +
+                                   "</b> cas dans la semaine " + timestamp;
+                
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });  
+
+            });
+        } // end updatePropSymbols
+        function calcPropRadius2(attributeValue) {
+                
+            var scaleFactor = 12,  // value dependent upon particular data set
+                area = attributeValue * scaleFactor; 
+
+            return Math.sqrt(area/Math.PI)*2;  
+                
+        } // end calcPropRadius
+        function createLegend2(min, max) {
+             
+            if (min < 10) { 
+                min = 1; 
+            }
+            function roundNumber(inNumber) {
+
+                return (Math.round(inNumber/10) * 10);  
+            }
+
+            var legend = L.control( { position: 'bottomright' } );
+
+            legend.onAdd = function(map) {
+
+                var legendContainer = L.DomUtil.create("div", "legend"),  
+                    symbolsContainer = L.DomUtil.create("div", "symbolsContainer"),
+                    classes = [1, 10, 40], 
+
+                    diameter,
+                    diameters = [];
+
+                L.DomEvent.addListener(legendContainer, 'mousedown', function(e) { L.DomEvent.stopPropagation(e); });  
+
+                $(legendContainer).append("<h2 id='legendTitle'>Nombre de cas</h2>");
+                
+                for (var i = 0; i < classes.length; i++) {  
+
+                    legendCircle = L.DomUtil.create("div", "legendCircle");  
+                    diameter = calcPropRadius(classes[i])*2; 
+                    diameters.push(diameter);               
+                    var lastdiameter;                   
+                    if (diameters[i-1]){
+                        lastdiameter = diameters[i-1];
+                    } else {
+                        lastdiameter = 0;
+                    };
+                    $(legendCircle).attr("style", "width: "+diameter+"px; height: "+diameter+
+                        "px; margin-left: -"+((diameter+lastdiameter+2)/2)+"px" );                   
+                    $(legendCircle).append("<span class='legendValue'>"+classes[i]+"<span>");
+                    $(symbolsContainer).append(legendCircle);   
+                };
+                $(legendContainer).append(symbolsContainer); 
+                return legendContainer; 
+
+            };
+
+            legend.addTo(map);  
+        } // end createLegend()
+        function createSliderUI2(timestamps) {
+        
+            var sliderControl = L.control({ position: 'bottomleft'} );
+
+            sliderControl.onAdd = function(map) {
+
+                var slider = L.DomUtil.create("input", "range-slider");
+
+                L.DomEvent.addListener(slider, 'mousedown', function(e) { 
+
+                    L.DomEvent.stopPropagation(e); 
+
+                });
+
+                $(slider)
+                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 1,'value': String(timestamps[0])})
+                    .on('input change', function() {
+
+                        updatePropSymbols2($(this).val().toString());
+                        $('output.temporal-legend').removeAttr('id');
+                        $(".temporal-legend").text('Semaine ' + this.value);
+                    
+                    });
+
+                return slider;
+            }
+
+            sliderControl.addTo(map);
+            createTemporalLegend2(timestamps[0]);
+        } // end createSliderUI()
+        function createTemporalLegend2(startTimestamp) {
+
+            var temporalLegend = L.control({ position: 'bottomleft' });  
+
+            temporalLegend.onAdd = function(map) {  
+
+                var output = L.DomUtil.create("output", "temporal-legend");
+
+                return output;  
+            }
+
+            temporalLegend.addTo(map);  
+            $(".temporal-legend").text('Semaine ' + startTimestamp); 
+        }   // end createTemporalLegend()
+
+// ----------------- End weekly data -----------------
+
+// ----------------- Start drop down -----------------
+
+var dropdmenu = L.control({position: 'topright'});
+dropdmenu.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info dropdmenu');
+    div.innerHTML = '<select class="form-control"><option value="1">Cas confirmés par jours</option><option value="2">Cas confirmés par semaines</option><option value="3">Cas confirmés - 7 derniers jours</option><option value="4">Cas confirmés - 21 derniers jours</option><option value="5">Cas confirmés - 2015</option></select>';
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
+};
+
+dropdmenu.addTo(map);
+
+$("select").change(
+ function () {
+  var val=this.value;
+    if ($(this).val() == "1") {
+        $(".legend").remove();
+        $("output.temporal-legend").remove();
+        $("input.range-slider").remove();
+
+        map.removeLayer(cases);
+        map.removeLayer(cumulative);
+        map.removeLayer(last_7d);
+        map.removeLayer(last_21d);
+
+        var dataInfo = processData(data_per_day);   
+                createPropSymbols(dataInfo.timestamps, data_per_day);  
+                createLegend(dataInfo.min,dataInfo.max);    
+                createSliderUI(dataInfo.timestamps);
+    }
+    else if ($(this).val() == "2") {
+        $(".legend").remove();
+        $("output.temporal-legend").remove();
+        $("input.range-slider").remove();
+
+        map.removeLayer(cases);
+        map.removeLayer(cumulative);
+        map.removeLayer(last_7d);
+        map.removeLayer(last_21d);
+
+        var dataWeek = processData(data_per_week);   
+                createPropSymbols2(dataWeek.timestamps, data_per_week);  
+                createLegend2(dataWeek.min,dataWeek.max);    
+                createSliderUI2(dataWeek.timestamps); 
+    }
+    else if ($(this).val() == "3") {
+      $("output.temporal-legend").remove();
+      $("input.range-slider").remove();
+
+      map.removeLayer(cases);
+      map.removeLayer(cumulative);
+      map.removeLayer(last_21d);
+
+      map.addLayer(last_7d);
+
+
+    }
+    else if ($(this).val() == "4") {
+        $("output.temporal-legend").remove();
+        $("input.range-slider").remove();
+
+        map.removeLayer(cases);
+        map.removeLayer(cumulative);
+        map.removeLayer(last_7d);
+        
+        map.addLayer(last_21d);
+    }
+    // value = "5"
+    else {
+        $("output.temporal-legend").remove();
+        $("input.range-slider").remove();
+
+        map.removeLayer(cases);
+        map.removeLayer(last_7d);
+        map.removeLayer(last_21d);
+
+        map.addLayer(cumulative);
+    }; 
+})
+// ----------------- End drop down -----------------
+
+    var switchOsm = L.control( { position: 'topright' } );
+    switchOsm.onAdd = function(map) {
+    var buttonSwitch = L.DomUtil.create("button", "bswitch btn btn-default");
+    //$(buttonSwitch).text("OpenStreetMap");
+    $(buttonSwitch).append( '<span class=" glyphicon glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonSwitch, 'click', function(e) { 
+
+        if (map.hasLayer(OpenStreetMap_HOT) == true) {
+            map.removeLayer(OpenStreetMap_HOT);
+            map.addLayer(baseLayers);
+            
+            prefs.bringToBack();
+            sous_pref.bringToBack();
+            countries.bringToBack();
+            
+            $("em").show();
+        }
+
+        else{
+            map.addLayer(OpenStreetMap_HOT);
+            $("em").hide();
+            map.removeLayer(baseLayers);
+        };
+      });
+      return buttonSwitch;
+    };
+    switchOsm.addTo(map); 
+
+
+    var fullZoom = L.control( { position: 'topright' } );
+    fullZoom.onAdd = function(map) {
+    var buttonZoom = L.DomUtil.create("button", "bzoom btn btn-default");
+    $(buttonZoom).append( '<span class=" glyphicon glyphicon glyphicon-globe" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonZoom, 'click', function(e) { 
+          map.setView([10, -11.3441], 7);
+      });
+      return buttonZoom;
+    };
+    fullZoom.addTo(map); 
+
+    
+
+    //-------------------------------------------------------------------
+
+    });
+
+    </script>
+
+      
+       <!--  <h1>Bootstrap starter template</h1>
+        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+      </div> -->
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script src="code/src/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>  
+$(function ()  
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 23/03/2015<br />Dernier cas confirmé : 22/03/2015 "});  
+});  
+
+$(function ()  
+{ $(".bswitch").tooltip({placement : 'auto', title: 'Alternez entre un fond OpenStreetMap et les sous préfectures', container: 'body'});  
+}); 
+
+$(function ()  
+{ $(".bzoom").tooltip({placement : 'auto', title: 'Revenir au zoom initial', container: 'body'});  
+}); 
+</script>
+
+  </body>
+</html>
