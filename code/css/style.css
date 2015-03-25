@@ -31,6 +31,30 @@ div, span {
     border: 1px solid black;
 }
 
+div.panel {
+    width: 60%;
+    margin: 0 auto;
+}
+
+span.glyphicon-info-sign {
+    display: inline-block;
+    /*width: 50%;*/
+    float: left;
+}
+
+span.glyphicon-save {
+    display: inline-block;
+    /*width: 50%;*/
+    float: right;
+    cursor:pointer;
+}
+
+
+th[data-sort]{
+    cursor:pointer;
+    text-align: center;
+}
+
 /* Menu déroulant */
 select.form-control {
     width:80%;
