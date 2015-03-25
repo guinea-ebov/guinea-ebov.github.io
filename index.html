@@ -27,10 +27,15 @@
     <script src="code/src/jquery-2.1.1.min.js"></script>
     <script src="code/src/leaflet/leaflet.js"></script>
     <script src="code/src/leaflet/leaflet.label.js"></script>
-    <script src='code/src/leaflet-omnivore.min.js'></script>
+    <script src='code/src/jput-2.js'>></script>
+    <script src='code/src/stupidtable.min.js'>></script>
+    <script src='code/src/table2CSV.js'>></script>
     <script src='code/data/layers/sous_pref.geojson'></script>
     <script src='code/data/layers/countries.geojson'></script>
     <script src='code/data/layers/prefectures.geojson'></script>
+    <script src='code/data/table_7d.json'></script>
+    <script src='code/data/table_21d.json'></script>
+    <script src='code/data/table_cumul.json'></script>
     <script src="code/data/data_per_day.geojson" type="text/javascript"></script>
     <script src="code/data/data_per_week.geojson" type="text/javascript"></script>
     <script src="code/data/cumulative_daily.geojson" type="text/javascript"></script>
@@ -42,15 +47,10 @@
     <link href="code/src/nvd3-master/nv.d3.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript">
-         $(document).ready(function(){
-         
-                $(".map_help").hide(200);
-                $(".show_mapHelp").show(200);
-      
-            $('.show_mapHelp').hover(function(){
-            $(".map_help").slideToggle(200);
-            });
-        });
+    $(function(){
+        $("table").stupidtable();
+        $('div.panel').hide();
+    });
     </script>
   </head>
 
@@ -80,6 +80,29 @@
     <div class="epi_content">
      <h2>Localisation des cas confirmés par sous-préfectures&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
       <div id="map"></div>
+      <br />
+      <div class="panel panel-default">
+      <div class="panel-heading"><a href="#" onClick ="doExport({type:"json"});">JSON</a></div>
+      <table class="table table-striped">
+         <thead>
+            <tr>
+                <th data-sort="string">Préfecture</th>
+                <th data-sort="string">Sous-préfecture</th>
+                <th data-sort="int"># Cas</th>
+            </tr> 
+         </thead>
+         <tbody jput="users" jput-jsondata='[]'>
+            <tr>
+                
+               <td>{{json.pref}}</td>
+               <td>{{json.sous_pref}}</td>
+               <td>{{json.nb_cas}}</td>
+               
+            </tr>
+      </tbody>
+      </table>
+      </div>
+
       <script>
         $(document).ready(function() {
 
@@ -93,19 +116,6 @@
          var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 });
-
-        /*var sous_pref = omnivore.topojson('code/data/layers/sous_pref_topo.json')
-        .on('ready',function(layer){
-        this.eachLayer(function(sp){
-          sp.setStyle({
-            fillColor: "#ffffbf",
-            color: "#d8b365",
-            weight: 1,
-            opacity: 0.8,
-            fillOpacity: .7})
-        sp.bindPopup(sp.toGeoJSON().properties.name);
-        })
-        });*/
 
         var sous_pref = L.geoJson(sp, {
             style: function (feature) {
@@ -344,7 +354,7 @@
                     });
                 }
             }).addTo(map);
-            updatePropSymbols(timestamps[0]);   
+            updatePropSymbols(timestamps[timestamps.length-1]);   
 
         } // end createPropSymbols()
 
@@ -448,7 +458,7 @@
                 });
 
                 $(slider)
-                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 86400000,'value': String(timestamps[0])})
+                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 86400000,'value': timestamps[timestamps.length-1]})
 
                     /*.attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 1,'value': String(timestamps[0])})*/
                     .on('input change', function() {
@@ -475,7 +485,7 @@
             }
 
             sliderControl.addTo(map);
-            createTemporalLegend(timestamps[0]);
+            createTemporalLegend(timestamps[timestamps.length-1]);
         } // end createSliderUI()
         function createTemporalLegend(startTimestamp) {
 
@@ -490,7 +500,8 @@
 
             temporalLegend.addTo(map);  
             fecha = new Date(Math.floor(startTimestamp));
-            $(".temporal-legend").text(fecha2.getDate() + '/' +  parseInt(fecha2.getMonth() + 1) + '/' +  fecha2.getFullYear());
+            $(".temporal-legend").text(fecha.getDate() + '/' +  parseInt(fecha.getMonth() + 1) + '/' +  fecha.getFullYear());
+            $("output.temporal-legend").addClass( "lastweek");
         }   // end createTemporalLegend()
 
 // ----------------- End daily data -----------------
@@ -513,7 +524,7 @@
                     });
                 }
             }).addTo(map);  
-            updatePropSymbols2(timestamps[0]);   
+            updatePropSymbols2(timestamps[timestamps.length-1]);   
 
         } // end createPropSymbols()
         function updatePropSymbols2(timestamp) {
@@ -613,7 +624,7 @@
                 });
 
                 $(slider)
-                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 1,'value': String(timestamps[0])})
+                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 1,'value': timestamps[timestamps.length-1]})
                     .on('input change', function() {
 
                         updatePropSymbols2($(this).val().toString());
@@ -626,8 +637,10 @@
             }
 
             sliderControl.addTo(map);
-            createTemporalLegend2(timestamps[0]);
+            createTemporalLegend2(timestamps[timestamps.length-1]);
         } // end createSliderUI()
+
+        // Affichage de la timeline au départ
         function createTemporalLegend2(startTimestamp) {
 
             var temporalLegend = L.control({ position: 'bottomleft' });  
@@ -674,6 +687,8 @@ $("select").change(
                 createPropSymbols(dataInfo.timestamps, data_per_day);  
                 createLegend(dataInfo.min,dataInfo.max);    
                 createSliderUI(dataInfo.timestamps);
+
+        $('div.panel').hide();
     }
     else if ($(this).val() == "2") {
         $(".legend").remove();
@@ -689,6 +704,8 @@ $("select").change(
                 createPropSymbols2(dataWeek.timestamps, data_per_week);  
                 createLegend2(dataWeek.min,dataWeek.max);    
                 createSliderUI2(dataWeek.timestamps); 
+
+        $('div.panel').hide();
     }
     else if ($(this).val() == "3") {
       $("output.temporal-legend").remove();
@@ -699,6 +716,52 @@ $("select").change(
       map.removeLayer(last_21d);
 
       map.addLayer(last_7d);
+
+      $('div.panel').show();
+      $('div.panel-heading').empty()
+      $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures durant les 7 derniers jours')
+
+      $(function ()  
+            { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+        }); 
+      jPut.users.data = table_7d;
+
+      $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        fichier = 'cas_7_derniers_jours_2015_03_24.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
 
 
     }
@@ -711,6 +774,54 @@ $("select").change(
         map.removeLayer(last_7d);
         
         map.addLayer(last_21d);
+
+        $('div.panel').show();
+        $('div.panel-heading').empty()
+        $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures durant les 21 derniers jours')
+
+        $(function ()  
+            { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+        }); 
+        jPut.users.data = table_21d;
+
+        $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        fichier = 'cas_21_derniers_jours_2015_03_24.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
+
     }
     // value = "5"
     else {
@@ -722,6 +833,54 @@ $("select").change(
         map.removeLayer(last_21d);
 
         map.addLayer(cumulative);
+
+        $('div.panel').show();
+        $('div.panel-heading').empty()
+        $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures en 2015')
+
+        $(function ()  
+            { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+        }); 
+        jPut.users.data = table_cumul;
+
+        $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+        fichier = 'cas_cumul_2015_2015_03_24.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
     }; 
 })
 // ----------------- End drop down -----------------
@@ -774,6 +933,7 @@ $("select").change(
 
     });
 
+
     </script>
 
       
@@ -782,6 +942,7 @@ $("select").change(
       </div> -->
 
     </div><!-- /.container -->
+    
 
 
     <!-- Bootstrap core JavaScript
@@ -793,9 +954,9 @@ $("select").change(
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 24/03/2015<br />Dernier cas confirmé : 23/03/2015 "});  
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 25/03/2015<br />Dernier cas confirmé : 24/03/2015 "});   
 });  
-
+ 
 $(function ()  
 { $(".bswitch").tooltip({placement : 'auto', title: 'Alternez entre un fond OpenStreetMap et les sous préfectures', container: 'body'});  
 }); 
@@ -803,7 +964,9 @@ $(function ()
 $(function ()  
 { $(".bzoom").tooltip({placement : 'auto', title: 'Revenir au zoom initial', container: 'body'});  
 }); 
+
 </script>
 
   </body>
 </html>
+
