@@ -1,7 +1,7 @@
 jQuery.fn.table2CSV = function(options) {
     var options = jQuery.extend({
         separator: ',',
-        header: ['Prefecture', 'Sous-prefecture', '# Cas'],
+        header: [],
         delivery: 'popup' // popup, value
     },
     options);

@@ -155,3 +155,58 @@ h2#legendTitle {
     right: 8px;
     font-size: 10px;
 }
+
+/* Start specific for niveau d'alerte map*/
+.legend_situation {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;   
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+div.dynamic {
+    position:relative;
+    height: 70px;
+    right: 34px;
+
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;   
+}
+.legend_situation {
+    line-height: 18px;
+    color: #555;
+    font-size : 12px;
+    text-align: left;   
+}
+.legend_situation i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+.legendCircleAlerte {
+     border-radius:50%; 
+     border: 1px solid #537898; 
+     background: rgba(255, 166, 47, .6);
+     margin: 4px auto 0;
+     display: inline-block;
+}
+/* Bouton switch last 21 days */
+button.bswitch21d {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    bottom: 80px;
+    padding: 0 0;
+}
+/* End specific for niveau d'alerte map*/
