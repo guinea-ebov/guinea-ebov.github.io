@@ -1,21 +1,16 @@
 body {
   padding-top: 50px;
 }
-
 .epi_content {
   padding: 40px 15px;
   text-align: center;
 }
-
 a#miseAjour {
     width: 20px;
     height: 20px;
     padding: 0 0;
-    /*border-radius:50%; */
 }
-
 div, span {
-    /* make text unselectable */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -23,38 +18,31 @@ div, span {
     -ms-user-select: none;
     user-select: none;
 }
-
 #map {
     width: 75%;
     height: 500px;
     margin: 0 auto;
     border: 1px solid black;
 }
-
 div.panel {
     width: 60%;
     margin: 0 auto;
 }
-
 span.glyphicon-info-sign {
     display: inline-block;
     /*width: 50%;*/
     float: left;
 }
-
 span.glyphicon-save {
     display: inline-block;
     /*width: 50%;*/
     float: right;
     cursor:pointer;
 }
-
-
 th[data-sort]{
     cursor:pointer;
     text-align: center;
 }
-
 /* Menu déroulant */
 select.form-control {
     width:80%;
@@ -210,3 +198,62 @@ button.bswitch21d {
     padding: 0 0;
 }
 /* End specific for niveau d'alerte map*/
+
+/* Start specific for niveau d'alerteCTE*/
+div.cte {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    line-height: 150%;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;   
+}
+/* Menu déroulant */
+select.CTE {
+    width:60%;
+    height: 30px;
+    font-size : 11px;
+    position:relative;
+    top: 34px;
+    left: 102px;
+}
+/* Bouton switch last 21 days */
+button.bswitch21dCTE {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    right: 64px;
+    bottom: 120px;
+    padding: 0 0;
+}
+span#tot1 {
+    position:relative;
+    right: 280px;
+    font-weight: bold;
+}
+span#tot2 {
+    position:relative;
+    left: 15px;
+    font-weight: bold;
+}
+span#tot3 {
+    position:relative;
+    left: 80px;
+    font-weight: bold;
+}
+span#tot4 {
+    position:relative;
+    left: 165px;
+    font-weight: bold;
+}
+span#tot5 {
+    position:relative;
+    left: 250px;
+    font-weight: bold;
+}
+span#tot6 {
+    position:relative;
+    left: 310px;
+    font-weight: bold;
+}
