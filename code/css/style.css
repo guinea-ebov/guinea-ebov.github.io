@@ -4,6 +4,7 @@ body {
 .epi_content {
   padding: 40px 15px;
   text-align: center;
+
 }
 a#miseAjour {
     width: 20px;
@@ -256,4 +257,12 @@ span#tot6 {
     position:relative;
     left: 310px;
     font-weight: bold;
+}
+div.well{
+    width:60%;
+    margin: 0 auto;
+}
+div.alert {
+   width:75%; 
+   margin: 0 auto;
 }

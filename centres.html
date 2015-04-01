@@ -64,7 +64,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'capacité_centres_ebola_2015_03_30.csv'
+        fichier = 'capacité_centres_ebola_2015_03_31.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -105,7 +105,7 @@
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">Home</a></li> -->
             <li><a href="niveau_alerte.html">Niveau d'alerte</a></li>
-            <!-- <li><a href="#contact">Contact</a></li> -->
+            <li><a href="centres.html">Centres</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -114,6 +114,10 @@
         
      <h2>Localisation et capacité des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
       <div id="map"></div>
+      <br />
+      <div class="alert alert-info" role="alert">
+      A l'exception de Conakry, la localisation des centres n'est précise qu'à l'échelle de la ville
+      </div>
       <br />
       <div class="panel panel-default">
       <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola<a href="#" onClick ="doExport({type:"json"});"></a></div>
@@ -140,14 +144,14 @@
                <td>{{json.confirme}}</td>
                <td>{{json.total}}</td>
                
-               
             </tr>
       </tbody>
       </table>
       </div>
       <br />
-
       <div class="panel panel-default"><span id="tot1">Total</span><span id="tot2">7</span><span id="tot3">100</span><span id="tot4">60</span><span  id="tot5">248</span><span id="tot6">408</span></span></div>
+      <br />
+      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_03_31.kml" download>KML</a> ou <a href="code/files/cte_2015_03_31.geojson" download>GeoJSON</a></div>
     <script>
  $(document).ready(function() {
          var legend;
@@ -554,7 +558,7 @@ $("select").change(
          
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 31/03/2015<br />Dernier cas confirmé : 30/03/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 1/04/2015<br />Dernier cas confirmé : 31/03/2015 "});   
 });  
  
 $(function ()  
