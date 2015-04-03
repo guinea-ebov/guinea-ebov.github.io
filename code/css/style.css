@@ -266,3 +266,11 @@ div.alert {
    width:75%; 
    margin: 0 auto;
 }
+/* End specific for niveau d'alerteCTE*/
+
+/* Start specific for epi week*/
+div#chart {
+    width: 75%;
+    height: 400px;
+    margin: 0 auto;
+}
