@@ -22,8 +22,8 @@
 		<SimpleData name="labo">Non</SimpleData>
 		<SimpleData name="suspect">3</SimpleData>
 		<SimpleData name="probable">4</SimpleData>
-		<SimpleData name="confirme">7</SimpleData>
-		<SimpleData name="total">14</SimpleData>
+		<SimpleData name="confirme">19</SimpleData>
+		<SimpleData name="total">26</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.083399772644,9.43000984191894</coordinates></Point>
   </Placemark>
@@ -117,19 +117,6 @@
 		<SimpleData name="total">50</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-9.471010208129879,8.54108047485351</coordinates></Point>
-  </Placemark>
-  <Placemark>
-	<name>CTE Guéckédou</name>
-	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
-		<SimpleData name="type">CTE</SimpleData>
-		<SimpleData name="gere">MSF</SimpleData>
-		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">12</SimpleData>
-		<SimpleData name="probable">0</SimpleData>
-		<SimpleData name="confirme">12</SimpleData>
-		<SimpleData name="total">24</SimpleData>
-	</SchemaData></ExtendedData>
-      <Point><coordinates>-10.1328001022338,8.56171035766601</coordinates></Point>
   </Placemark>
   <Placemark>
 	<name>CTS Conakry</name>
