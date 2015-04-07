@@ -62,7 +62,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'cas_21_derniers_jours_prefectures_2015_04_5.csv'
+        fichier = 'cas_21_derniers_jours_prefectures_2015_04_6.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -264,9 +264,9 @@
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-                var toto = {1 : 'Préfecture active', 2 : 'Préfecture calme', 3 : 'Préfecture en alerte', null : "N'a jamais notifié de cas"};
+                var content_legend = {1 : 'Préfecture active', 2 : 'Préfecture calme', 3 : 'Préfecture en alerte', null : "N'a jamais notifié de cas"};
                 this._div.innerHTML = '<h4>Situation des préfectures</h4>' +  (props ?
-                    '<b>' + props.name + '</b><br />' + toto[props.status]
+                    '<b>' + props.name + '</b><br />' + content_legend[props.status]
                     : 'Survolez une préfecture');
             };
 
@@ -440,7 +440,7 @@
      
 <script>  
     $(function ()  
-    { $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 6/04/2015<br />Dernier cas confirmé : 05/04/2015 "});   
+    { $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 7/04/2015<br />Dernier cas confirmé : 06/04/2015 "});   
     });  
      
     $(function ()  
