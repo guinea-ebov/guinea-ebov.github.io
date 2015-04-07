@@ -3,10 +3,10 @@
 This repository contains all the files of the [guinea-ebov site](http://guinea-ebov.github.io/).
 
 The site contains 4 pages:
-* **index.html**: Daily, weekly and cumulative (last 7 days, last 21 days and since January, 1st 2015) confirmed cases per sous-préfectures. **Updated everyday**
-* **niveau_alerte.html**: Alert level per préfectures. **Updated everyday**
-* **centres.html**: Location and capacity of the Ebola centres. **Updated everyday**
-* **epi_weeks.html**: Confirm, probable and suspect cases per epi week. **Updated every Tuesday**
+* **index.html**: Daily, weekly and cumulative (last 7 days, last 21 days and since January, 1st 2015) confirmed cases per sous-préfectures. ***Updated everyday***
+* **niveau_alerte.html**: Alert level per préfectures. ***Updated everyday***
+* **centres.html**: Location and capacity of the Ebola centres. ***Updated everyday***
+* **epi_weeks.html**: Confirm, probable and suspect cases per epi week. ***Updated every Tuesday***
 
 ###Technologies used###
 It's just static content (HTML, CSS and JS).
