@@ -1,6 +1,13 @@
 body {
   padding-top: 50px;
 }
+a.navbar-brand{
+    width:300px;
+    padding: 0;
+}
+.navbar-brand > img {
+    display: inline;
+}
 .epi_content {
   padding: 40px 15px;
   text-align: center;
