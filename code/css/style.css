@@ -281,3 +281,28 @@ div#chart {
     height: 400px;
     margin: 0 auto;
 }
+/* End specific for epi week*/
+
+/* Start specific for reticence*/
+
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+button.bswitchx {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    right: 32px;
+    padding: 0 0;
+}
+
+/* Bouton zoom initial */
+button.bzoomx {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    bottom: 40px;
+    padding: 0 0;
+    
+}
