@@ -284,7 +284,6 @@ div#chart {
 /* End specific for epi week*/
 
 /* Start specific for reticence*/
-
 hr {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -296,13 +295,25 @@ button.bswitchx {
     right: 32px;
     padding: 0 0;
 }
-
 /* Bouton zoom initial */
 button.bzoomx {
     width: 30px;
     height: 30px;
     position:relative;
     bottom: 40px;
-    padding: 0 0;
-    
+    padding: 0 0;   
+}
+/* End specific for reticence*/
+
+/* Start specific for liens utiles*/
+.liens_utiles {
+    width:75%; 
+    margin: 0 auto;
+    text-align: left;
+    padding:0;
+}
+
+.liens_utiles li {
+    list-style-type:none;
+    margin-top: 10px;
 }
