@@ -19,7 +19,7 @@
 	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
-		<SimpleData name="labo">Non</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
 		<SimpleData name="suspect">3</SimpleData>
 		<SimpleData name="probable">4</SimpleData>
 		<SimpleData name="confirme">19</SimpleData>
@@ -97,7 +97,7 @@
 	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">WAHA</SimpleData>
-		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="labo">Non</SimpleData>
 		<SimpleData name="suspect">12</SimpleData>
 		<SimpleData name="probable">8</SimpleData>
 		<SimpleData name="confirme">30</SimpleData>
