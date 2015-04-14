@@ -3,7 +3,6 @@ var retic_pts = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Falessade", "reticence": "2", "localite": "Faléssadé-centre" }, "geometry": { "type": "Point", "coordinates": [ -13.290920231176198, 10.118407287213273 ] } },
 { "type": "Feature", "properties": { "name": "Dixinn", "reticence": "1", "localite": "Dixinn Port" }, "geometry": { "type": "Point", "coordinates": [ -13.667594488556913, 9.551576617253732 ] } },
 { "type": "Feature", "properties": { "name": "Matoto", "reticence": "1", "localite": "Gbessia-centre" }, "geometry": { "type": "Point", "coordinates": [ -13.539083365021853, 9.592030204314234 ] } }
 ]
