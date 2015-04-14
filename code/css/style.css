@@ -8,6 +8,10 @@ a.navbar-brand{
 .navbar-brand > img {
     display: inline;
 }
+a#nouv {
+    color: white;
+    text-shadow: orange 0.1em 0.1em 0.2em
+}
 .epi_content {
   padding: 40px 15px;
   text-align: center;
@@ -69,7 +73,6 @@ button.bswitch {
     right: 32px;
     padding: 0 0;
 }
-
 /* Bouton zoom initial */
 button.bzoom {
     width: 30px;
@@ -79,6 +82,15 @@ button.bzoom {
     padding: 0 0;
     
 }
+/* Bouton print map */
+button.bprint {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    bottom: 88px;
+    padding: 0 0;   
+}
+
 
 /* Style du slider dans la période des 3 dernieres semaine */
 .last3weeks {
@@ -202,9 +214,18 @@ button.bswitch21d {
     width: 30px;
     height: 30px;
     position:relative;
-    bottom: 80px;
+    bottom: 86px;
     padding: 0 0;
 }
+/* Bouton print map */
+button.bprint_na {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    bottom: 92px;
+    padding: 0 0;   
+}
+
 /* End specific for niveau d'alerte map*/
 
 /* Start specific for niveau d'alerteCTE*/
@@ -234,6 +255,15 @@ button.bswitch21dCTE {
     right: 64px;
     bottom: 120px;
     padding: 0 0;
+}
+/* Bouton print */
+button.bprint_ct {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    bottom: 160px;
+    right: 96px;
+    padding: 0 0;   
 }
 span#tot1 {
     position:relative;
@@ -303,6 +333,15 @@ button.bzoomx {
     bottom: 40px;
     padding: 0 0;   
 }
+/* Bouton print */
+button.bprint_reti {
+    width: 30px;
+    height: 30px;
+    position:relative;
+    bottom: 80px;
+    right: 64px;
+    padding: 0 0;   
+}
 /* End specific for reticence*/
 
 /* Start specific for liens utiles*/
@@ -316,4 +355,21 @@ button.bzoomx {
 .liens_utiles li {
     list-style-type:none;
     margin-top: 10px;
+}
+
+.dlmap {
+   display: none;
+   width:75%; 
+   margin: 0 auto;
+   text-align: right;
+   font-size : 12px
+}
+#wheel{
+    display: none; 
+    width:75%; 
+    margin: 0 auto;
+    text-align: right;
+    font-style: italic;
+    font-size : 12px
+
 }

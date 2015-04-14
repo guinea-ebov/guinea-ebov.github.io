@@ -27,11 +27,14 @@
     <script src="code/src/jquery-2.1.1.min.js"></script>
     
     <script src="code/src/html5slider.js"></script>
+    <script>L_PREFER_CANVAS = true;</script>
     <script src="code/src/leaflet/leaflet.js"></script>
+    <script src='code/src/leaflet-image.js'></script>
     <script src="code/src/leaflet/leaflet.label.js"></script>
     <script src='code/src/jput-2.js'>></script>
     <script src='code/src/stupidtable.min.js'>></script>
     <script src='code/src/table2CSV.js'>></script>
+    <script src='code/src/bowser.min.js'></script>
     <script src='code/data/layers/sous_pref.geojson'></script>
     <script src='code/data/layers/countries.geojson'></script>
     <script src='code/data/layers/prefectures.geojson'></script>
@@ -70,10 +73,11 @@
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">Home</a></li> -->
             <li><a href="niveau_alerte.html">Niveau d'alerte</a></li>
-            <li><a href="reticences.html">Réticences&nbsp;<span class="label label-warning">New</span></a></li>
+            <li><a href="reticences.html">Réticences</a></li>
             <li><a href="centres.html">Centres</a></li>
             <li><a href="epi_weeks.html">Epi weeks</a></li>
-            <li><a href="liens_utiles.html">Liens utiles&nbsp;<span class="label label-warning">New</span></a></li>
+            <li><a href="liens_utiles.html">Liens utiles</a></li>
+            <li><a id="nouv" href="nouveautes.html">Nouveautés</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -81,7 +85,16 @@
     <div class="epi_content">
         
      <h2>Localisation des cas confirmés par sous-préfectures&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+     <div class='dlmap'>
+     <a id="print" href=""></a> | <a href="code/img/legende_cas_confirmes.png" download>Télécharger la légende</a></div>
+     <div  id="wheel" >
+     <img src="code/img/spinning-wheel.gif"/ width="20px" height="20px">
+     Impression en cours...</div>
       <div id="map"></div>
+      <br />
+      <div class="alert alert-info" role="alert">
+      La date considérée ici est la date de notification.
+      </div>
       <br />
       <div class="panel panel-default">
       <div class="panel-heading"><a href="#" onClick ="doExport({type:"json"});"></a></div>
@@ -109,11 +122,49 @@
  $(document).ready(function() {
 
         var cases;
+        var semaine_map;
+        var jour_map;
          var map = L.map('map', { 
                 center: [10, -11.3441], 
                 zoom: 7,    
                 minZoom: 6  
             });
+
+         function doImage(err, canvas) {
+                var img = document.createElement('img');
+                var dimensions = map.getSize();
+                img.width = dimensions.x;
+                img.height = dimensions.y;
+                img.src = canvas.toDataURL("image/png");
+
+                var suffixe_file = $("select").val()[0];
+                var suffix;
+                auj = new Date();
+                auj.setDate(auj.getDate() - 1);
+                auj = auj.getFullYear() + '_' + parseInt(auj.getMonth() + 1) + '_' + auj.getDate(); 
+                if (suffixe_file === "1") {
+                    suffix = jour_map;
+                }
+                else if (suffixe_file === "2") {
+                    suffix = 'semaine_' + semaine_map;
+                }
+                else if (suffixe_file === "3") {
+                    suffix = '7_derniers_jours_' + auj;
+                }
+                else if (suffixe_file === "4") {
+                    suffix = '21_derniers_jours_' + auj;
+                }
+                else{
+                    suffix = '2015_' + auj;
+                };
+                
+                $("a#print").attr("download", 'cas_confirmes_' + suffix + '.png')
+                $("a#print").attr("href", img.src)
+
+                $('#wheel').hide();
+                $("a#print").html("Télécharger la carte");
+                $('.dlmap').fadeIn("slow");
+            }
 
          var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
@@ -128,7 +179,7 @@
                         fillOpacity: .7};
             },
             onEachFeature: function (feature, layer) {
-                layer.bindPopup(feature.properties.name);
+                layer.bindPopup(feature.properties.name, {autoPan: false});
             }
         });
 
@@ -462,6 +513,7 @@ function createSliderUI(timestamps, step) {
                 updatePropSymbols($(this).val().toString(), 'week');
                 $('output.temporal-legend').removeAttr('id');
                 $(".temporal-legend").text('Semaine ' + this.value);
+                semaine_map = this.value;
             });
         }
         // step == 'day'
@@ -474,6 +526,9 @@ function createSliderUI(timestamps, step) {
                 d_date = new Date(Math.floor(this.value));
 
                 $(".temporal-legend").text(d_date.getDate() + '/' +  parseInt(d_date.getMonth() + 1) + '/' +  d_date.getFullYear());
+
+                jour_map = d_date.getFullYear() + '_' + parseInt(d_date.getMonth() + 1) + '_' + d_date.getDate(); 
+
                 if (timestamps.indexOf(this.value) >= timestamps.length-21 && timestamps.indexOf(this.value) < timestamps.length-7) {
                     $("output.temporal-legend").addClass( "last3weeks" );
                     $("output.temporal-legend").removeClass( "lastweek");
@@ -508,6 +563,7 @@ function createTemporalLegend(startTimestamp, step) {
         d_date = new Date(Math.floor(startTimestamp));
         $(".temporal-legend").text(d_date.getDate() + '/' +  parseInt(d_date.getMonth() + 1) + '/' +  d_date.getFullYear());
         $("output.temporal-legend").addClass( "lastweek");
+        jour_map = d_date.getFullYear() + '_' + parseInt(d_date.getMonth() + 1) + '_' + d_date.getDate(); 
     });
 
     temporalLegend.addTo(map);  
@@ -519,6 +575,7 @@ function createTemporalLegend(startTimestamp, step) {
     else{
 
         $(".temporal-legend").text('Semaine ' + startTimestamp); 
+        semaine_map = startTimestamp;
     };
 }
 ///////////////////////////////////////////////////////////////////
@@ -802,6 +859,24 @@ $("select").change(
     };
     fullZoom.addTo(map); 
 
+    var printMap = L.control( { position: 'topright' } );
+    printMap.onAdd = function(map) {
+    var buttonPrint = L.DomUtil.create("button", "bprint btn btn-default");
+    $(buttonPrint).append( '<span class=" glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonPrint, 'click', function(e) { 
+          $('.dlmap').hide();
+          $('#wheel').show();
+          leafletImage(map, doImage);
+      });
+      return buttonPrint;
+    };
+    printMap.addTo(map); 
+
+    if (bowser.msie) {
+      $('button.bprint').hide();
+    }
+
 
     });
 
@@ -832,7 +907,9 @@ $(function ()
 $(function ()  
 { $(".bzoom").tooltip({placement : 'auto', title: 'Revenir au zoom initial', container: 'body'});  
 }); 
-
+$(function ()  
+{ $(".bprint").tooltip({placement : 'auto', title: 'Imprimez la carte', container: 'body'});  
+}); 
 </script>
 
   </body>

@@ -27,12 +27,15 @@
     <script src="code/src/jquery-2.1.1.min.js"></script>
     
     <script src="code/src/html5slider.js"></script>
+    <script>L_PREFER_CANVAS = true;</script>
     <script src="code/src/leaflet/leaflet.js"></script>
+    <script src='code/src/leaflet-image.js'></script>
     <script src="code/src/leaflet/leaflet.label.js"></script>
     <script src='code/src/jput-2.js'>></script>
     <script src='code/src/stupidtable.min.js'>></script>
     <script src='code/src/table2CSV.js'>></script>
     <script src='code/src/turf.min.js'></script>
+    <script src='code/src/bowser.min.js'></script>
     <script src='code/data/layers/sous_pref.geojson'></script>
     <script src='code/data/layers/countries.geojson'></script>
     <script src='code/data/layers/prefectures.geojson'></script>
@@ -105,10 +108,11 @@
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">Home</a></li> -->
             <li><a href="niveau_alerte.html">Niveau d'alerte</a></li>
-            <li><a href="reticences.html">Réticences&nbsp;<span class="label label-warning">New</span></a></li>
+            <li><a href="reticences.html">Réticences</a></li>
             <li><a href="centres.html">Centres</a></li>
             <li><a href="epi_weeks.html">Epi weeks</a></li>
-            <li><a href="liens_utiles.html">Liens utiles&nbsp;<span class="label label-warning">New</span></a></li>
+            <li><a href="liens_utiles.html">Liens utiles</a></li>
+            <li><a id="nouv" href="nouveautes.html">Nouveautés</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -116,6 +120,11 @@
     <div class="epi_content">
         
      <h2>Localisation et capacité des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+     <div class='dlmap'>
+     <a id="print" href=""></a> | <a href="code/img/legende_cas_confirmes_21_derniers_jours_centres.png" download>Télécharger la légende</a></div>
+     <div  id="wheel" >
+     <img src="code/img/spinning-wheel.gif"/ width="20px" height="20px">
+     Impression en cours...</div>
       <div id="map"></div>
       <br />
       <div class="alert alert-info" role="alert">
@@ -164,6 +173,42 @@
                 minZoom: 6  
             });
 
+         function doImage(err, canvas) {
+                var img = document.createElement('img');
+                var dimensions = map.getSize();
+                img.width = dimensions.x;
+                img.height = dimensions.y;
+                img.src = canvas.toDataURL("image/png");
+
+                var suffixe_file = $("select").val()[0];
+                var suffix;
+                auj = new Date();
+                auj.setDate(auj.getDate() - 1);
+                auj = auj.getFullYear() + '_' + parseInt(auj.getMonth() + 1) + '_' + auj.getDate(); 
+                if (suffixe_file === "1") {
+                    suffix = 'centres_ebola_guinee_' + auj;
+                }
+                else if (suffixe_file === "2") {
+                    suffix = 'cte_guinee_' + auj;
+                }
+                else if (suffixe_file === "3") {
+                    suffix = 'cdt_guinee_' + auj;
+                }
+                else if (suffixe_file === "4") {
+                    suffix = 'cts_guinee_' + auj;
+                }
+                else{
+                    suffix = 'labos_guinee_' + auj;
+                };
+                
+                $("a#print").attr("download", suffix + '.png')
+                $("a#print").attr("href", img.src)
+
+                $('#wheel').hide();
+                $("a#print").html("Télécharger la carte");
+                $('.dlmap').fadeIn("slow");
+            }
+
          var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 });
@@ -177,7 +222,7 @@
                         fillOpacity: .7};
             },
             onEachFeature: function (feature, layer) {
-                layer.bindPopup(feature.properties.name);
+                layer.bindPopup(feature.properties.name, {autoPan: false});
             }
         });
 
@@ -550,6 +595,25 @@ $("select").change(
                    };
             switch21d.addTo(map);
 
+        var printMap = L.control( { position: 'topright' } );
+        printMap.onAdd = function(map) {
+        var buttonPrint = L.DomUtil.create("button", "bprint_ct btn btn-default");
+        $(buttonPrint).append( '<span class=" glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>');
+
+          L.DomEvent.addListener(buttonPrint, 'click', function(e) { 
+              $('.dlmap').hide();
+              $('#wheel').show();
+              leafletImage(map, doImage);
+          });
+          
+          return buttonPrint;
+        };
+        printMap.addTo(map); 
+
+        if (bowser.msie) {
+          $('button.bprint_ct').hide();
+        }  
+
     });
     </script>
 
@@ -578,6 +642,9 @@ $(function ()
 $(function ()  
     { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
 }); 
+$(function ()  
+{ $(".bprint_ct").tooltip({placement : 'auto', title: 'Imprimez la carte', container: 'body'});  
+});
 </script>
 
   </body>
