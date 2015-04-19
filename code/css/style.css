@@ -37,7 +37,7 @@ div, span {
     border: 1px solid black;
 }
 div.panel {
-    width: 60%;
+    width: 65%;
     margin: 0 auto;
 }
 span.glyphicon-info-sign {
@@ -56,7 +56,7 @@ th[data-sort]{
     text-align: center;
 }
 /* Menu déroulant */
-select.form-control {
+select.choix_temp {
     width:80%;
     height: 30px;
     font-size : 11px;
@@ -228,7 +228,7 @@ button.bprint_na {
 
 /* End specific for niveau d'alerte map*/
 
-/* Start specific for niveau d'alerteCTE*/
+/* Start specific CTE*/
 div.cte {
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
@@ -272,7 +272,7 @@ span#tot1 {
 }
 span#tot2 {
     position:relative;
-    left: 15px;
+    left: 10px;
     font-weight: bold;
 }
 span#tot3 {
@@ -282,17 +282,17 @@ span#tot3 {
 }
 span#tot4 {
     position:relative;
-    left: 165px;
+    left: 180px;
     font-weight: bold;
 }
 span#tot5 {
     position:relative;
-    left: 250px;
+    left: 280px;
     font-weight: bold;
 }
 span#tot6 {
     position:relative;
-    left: 310px;
+    left: 350px;
     font-weight: bold;
 }
 div.well{
@@ -303,14 +303,32 @@ div.alert {
    width:75%; 
    margin: 0 auto;
 }
-/* End specific for niveau d'alerteCTE*/
+div.alert-warning {
+    display: none;
+    margin: 0 auto;  
+    width:60%;
+}
+div#button {
+    width:18%; 
+    margin: 0 auto;    
+}
+hr#centres {
+    width: 75%;
+    margin: 0 auto;
+}
+/*div#chart {
+    width: 0;
+    height: 0;
+    margin: 0 auto;
+}*/
+/* End specific for CTE*/
 
 /* Start specific for epi week*/
-div#chart {
+/*div#chart {
     width: 75%;
     height: 400px;
     margin: 0 auto;
-}
+}*/
 /* End specific for epi week*/
 
 /* Start specific for reticence*/

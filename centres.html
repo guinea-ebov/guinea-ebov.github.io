@@ -22,6 +22,7 @@
     
     <link rel="stylesheet" href="code/src/leaflet/leaflet.css"/>
     <link rel="stylesheet" href="code/css/leaflet.label.css" />
+    <link href="code/src/nvd3-master/nv.d3.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="code/css/style.css"/>
     <script src="code/src/jquery-2.1.1.min.js"></script>
@@ -36,6 +37,8 @@
     <script src='code/src/table2CSV.js'>></script>
     <script src='code/src/turf.min.js'></script>
     <script src='code/src/bowser.min.js'></script>
+    <script src="code/src/nvd3-master/lib/d3.v3.js"></script>
+    <script src="code/src/nvd3-master/nv.d3.min.js"></script>
     <script src='code/data/layers/sous_pref.geojson'></script>
     <script src='code/data/layers/countries.geojson'></script>
     <script src='code/data/layers/prefectures.geojson'></script>
@@ -47,14 +50,14 @@
             
     <script type="text/javascript">
     $(document).ready(function(){
-            $("table").stupidtable();
+            $("table.capacite").stupidtable();
          jPut.users.data = table_cte_capacite;
 
-        $('.table').each(function () {
+        $('table.capacite').each(function () {
             var $table = $(this);
 
             var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
-            $exportCSV.appendTo('div.panel-heading');
+            $exportCSV.appendTo('div.sit_capacite');
 
             $(function ()  
             { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
@@ -68,6 +71,44 @@
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         fichier = 'capacité_centres_ebola_2015_04_17.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
+        $('table.patients').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.sit_patients');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    header: ['' ,'CTE Conakry', 'CTE Coyah', 'CTE Macenta', 'CTE N’Zerekore', 'CTE Kindia', 'CDT Kerouane', 'CTE Forecariah', 'CDT Siguiri', 'CTS Conakry', 'Total'],
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        fichier = 'situation_patients_centres_ebola_2015_04_17.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -119,7 +160,277 @@
     </nav>
     <div class="epi_content">
         
-     <h2>Localisation et capacité des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+<h2>Etat des lieux des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+<div class="panel panel-default">
+      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 18/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <table class="table patients table-striped">
+         <thead>
+            <tr>
+              <th></th>
+              
+                <th data-sort="int">CTE Conakry</th>
+              
+                <th data-sort="int">CTE Coyah</th>
+              
+                <th data-sort="int">CTE Macenta</th>
+              
+                <th data-sort="int">CTE N’Zerekore</th>
+              
+                <th data-sort="int">CTE Kindia</th>
+              
+                <th data-sort="int">CDT Kerouane</th>
+              
+                <th data-sort="int">CTE Forecariah</th>
+              
+                <th data-sort="int">CDT Siguiri</th>
+              
+                <th data-sort="int">CTS Conakry</th>
+              
+                <th data-sort="int">Total</th>
+              
+            </tr> 
+         </thead>
+         <tbody>
+            <tr>
+               <td>Cas confirmés</td>
+               
+                <td>6</td>
+               
+                <td>14</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>1</td>
+               
+                <td>0</td>
+               
+                <td>1</td>
+               
+                <td>0</td>
+               
+                <td>1</td>
+               
+                <td>23</td>
+               
+            </tr>
+            <tr>
+               <td>Cas suspects</td>
+               
+                <td>6</td>
+               
+                <td>3</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>12</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>21</td>
+               
+            </tr>
+            <tr>
+               <td>Sortis guéris</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+            </tr>
+            <tr>
+               <td>Décédés</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+            </tr>
+            <tr>
+               <td>Total hospitalisés</td>
+               
+                <td>12</td>
+               
+                <td>17</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>1</td>
+               
+                <td>0</td>
+               
+                <td>13</td>
+               
+                <td>0</td>
+               
+                <td>1</td>
+               
+                <td>44</td>
+               
+            </tr>
+      </tbody>
+      </table>
+      </div>
+      <br>
+      <hr id="centres">
+      <h2>Evolution de la féquentation des centres</h2>
+      <div class="alert alert-info aide" role="alert">Cliquez sur les boutons ci-dessous pour choisir les variables à représenter</div>
+      <br>
+    <div class="btn-group">
+      <button type="button" id="centres" class="btn btn-default">Centres</button>
+      <button type="button" id="patients" class="btn btn-default">Statuts</button>
+    </div>
+    <br>
+    <br>
+    <div id='button'></div>
+    <br>
+    <br>
+    <div class="alert alert-warning" role="alert"></div>
+    <br>
+        <div id='chart' style="width: 0; height: 0; margin: 0 auto;">
+            <svg class="chart_cte"></svg>
+        </div>
+    <script type="text/javascript">
+      $(".btn-default").click(function() {
+        $("div.aide").empty();
+        $("div.aide").height("0px");
+        $("div.aide").width("0px");
+        $("div.aide").remove();
+        $("div#chart").height(0);
+        $("div#chart").width(0);
+        if ($(this).attr('id') === 'centres') {
+          $( "div#button" ).html('<select class="form-control choix_var"><option value="" disabled selected style="display:none;">Choisir un centre</option><option value="kerouane_cdt">CDT Kerouane</option><option value="siguiri_cdt">CDT Siguiri</option><option value="conakry_cte">CTE Conakry</option><option value="coyah_cte">CTE Coyah</option><option value="forecariah_cte">CTE Forecariah</option><option value="gueckedou_cte">CTE Gueckedou</option><option value="kindia_cte">CTE Kindia</option><option value="macenta_cte">CTE Macenta</option><option value="n’zerekore_cte">CTE N’Zerekore</option><option value="conakry_cts">CTS Conakry</option><option value="total_conf">Tous les centres</option></select>')
+        }
+        else{
+          $( "div#button" ).html('<select class=" form-control choix_var"><option value="" disabled selected style="display:none;">               Choisir un statut de patient</option><option value="conf">Confirmés</option><option value="susp">Suspects</option><option value="guer">Sortis guéris</option><option value="mort">Décédés</option><option value="tot">Total hospitalisés</option></select>')
+        };
+        $( "div.alert-warning").hide("slow");
+        $( "svg.chart_cte" ).empty();
+        
+        type = $(this).attr('id');
+        
+        $("select").change(function () {
+
+            $("div#chart").height("400px");
+            $("div#chart").width("75%");
+
+        var val=this.value;
+        centre = $(this).val();
+        if (type === 'centres') {
+          if (centre === "forecariah_cte") {
+            $("div.alert-warning" ).text("Le CTE de Forecariah était un centre de transit (CDT) jusqu'au 08/04/2015");
+            $("div.alert-warning" ).show("slow");
+          }
+          else if (centre === "conakry_cts") {
+            $("div.alert-warning").text("Le CTS de Conakry a ouvert le 28/01/2015");
+            $("div.alert-warning" ).show("slow");
+          }
+          else if (centre === "kindia_cte") {
+            $("div.alert-warning").text("Le CTE de Kindia a ouvert le 05/03/2015");
+            $("div.alert-warning" ).show("slow");
+          }
+          else if (centre === "gueckedou_cte") {
+            $("div.alert-warning").text("Le CTE de Guéckédou a fermé le 06/04/2015");
+            $("div.alert-warning" ).show("slow");
+          }
+          else if (centre === "total_conf") {
+            $("div.alert-warning").html("Le CTS de Conakry a ouvert le 28/01/2015<br>Le CTE de Kindia a ouvert le 05/03/2015<br>Le CTE de Guéckédou a fermé le 06/04/2015<br>Le CTE de Forecariah était un centre de transit (CDT) jusqu'au 08/04/2015");
+            $("div.alert-warning" ).show("slow");
+          }
+          else {
+            $("div.alert-warning").hide("slow");
+          };
+        }
+        if (type === 'patients') {
+          $("div.alert-warning").html("Le CTS de Conakry a ouvert le 28/01/2015<br>Le CTE de Kindia a ouvert le 05/03/2015<br>Le CTE de Guéckédou a fermé le 06/04/2015<br>Le CTE de Forecariah était un centre de transit (CDT) jusqu'au 08/04/2015");
+          $("div.alert-warning" ).show();
+        };
+        /*$('h3').html('Situation dans le centre de ' + centre); */
+
+        d3.json('code/data/charts/chart_' + centre + '.json', function(data) {
+        nv.addGraph(function() {
+        var chart = nv.models.stackedAreaChart()
+                      .margin({right: 100})
+                      //We can modify the data accessor functions...
+                      .x(function(d) { return d[0] })   
+                      //...in case your data is formatted differently.
+                      .y(function(d) { return d[1] })   
+                      //Tooltips which show all data points. Very nice!
+                      .useInteractiveGuideline(true)    
+                      //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
+                      .showControls(true)       
+                      .clipEdge(true);
+
+        //Format x-axis labels with custom function.
+        chart.xAxis
+            //.ticks(d3.time.periode, 1)
+            .tickFormat(function(d) { 
+              return d3.time.format('%d/%m/%y')(new Date(d));
+        });
+
+        chart.yAxis
+            .tickFormat(d3.format('d'))
+
+        d3.select('#chart svg')
+          .datum(data)
+          .transition().duration(500)
+          .call(chart);
+
+      //Update the chart when window resizes.
+      nv.utils.windowResize(function() { chart.update() });
+      return chart;
+
+                });      
+            });
+        });
+});
+    </script>
+
+<hr id="centres">
+<h2>Localisation et capacité des centres</h2>
      <div class='dlmap'>
      <a id="print" href=""></a> | <a href="code/img/legende_cas_confirmes_21_derniers_jours_centres.png" download>Télécharger la légende</a></div>
      <div  id="wheel" >
@@ -132,8 +443,8 @@
       </div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola<a href="#" onClick ="doExport({type:"json"});"></a></div>
-      <table class="table table-striped">
+      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 18/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <table class="table capacite table-striped">
          <thead>
             <tr>
                 <th data-sort="string">Nom</th>
@@ -164,6 +475,7 @@
       <div class="panel panel-default"><span id="tot1">Total</span><span id="tot2">6</span><span id="tot3">88</span><span id="tot4">60</span><span  id="tot5">248</span><span id="tot6">396</span></span></div>
       <br />
       <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_04_17.kml" download>KML</a> ou <a href="code/files/cte_2015_04_17.geojson" download>GeoJSON</a></div>
+</div>
     <script>
  $(document).ready(function() {
          var legend;
