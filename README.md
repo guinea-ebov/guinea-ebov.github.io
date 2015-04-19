@@ -14,9 +14,11 @@ The site contains 6 pages:
 It's just static content (HTML, CSS and JS).
 It uses the following libs:
 * [Leaflet](http://leafletjs.com/)
+* [Leaflet-image](https://github.com/mapbox/leaflet-image)
 * [Turf](http://turfjs.org/)
 * [NVD3](http://nvd3.org/)
 * [JQuery](http://jquery.com/)
 * [Stupid-table](https://joequery.github.io/Stupid-Table-Plugin/)
 * [table2CSV](https://github.com/rubo77/table2CSV)
 * [jPut](https://github.com/shabeer-ali-m/jPut)
+* [Bowser](https://github.com/ded/bowser)
