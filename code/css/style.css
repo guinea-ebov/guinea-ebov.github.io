@@ -316,21 +316,7 @@ hr#centres {
     width: 75%;
     margin: 0 auto;
 }
-/*div#chart {
-    width: 0;
-    height: 0;
-    margin: 0 auto;
-}*/
-/* End specific for CTE*/
-
-/* Start specific for epi week*/
-/*div#chart {
-    width: 75%;
-    height: 400px;
-    margin: 0 auto;
-}*/
 /* End specific for epi week*/
-
 /* Start specific for reticence*/
 hr {
     margin-top: 5px;
@@ -361,7 +347,6 @@ button.bprint_reti {
     padding: 0 0;   
 }
 /* End specific for reticence*/
-
 /* Start specific for liens utiles*/
 .liens_utiles {
     width:75%; 
@@ -369,12 +354,10 @@ button.bprint_reti {
     text-align: left;
     padding:0;
 }
-
 .liens_utiles li {
     list-style-type:none;
     margin-top: 10px;
 }
-
 .dlmap {
    display: none;
    width:75%; 
@@ -390,4 +373,9 @@ button.bprint_reti {
     font-style: italic;
     font-size : 12px
 
+}
+/* Start specific for sitreps*/
+.col-md-6 li {
+    list-style-type:none;
+    line-height:22px;
 }
