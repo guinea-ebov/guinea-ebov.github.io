@@ -5,9 +5,6 @@ var retic_pts = {
 "features": [
 { "type": "Feature", "properties": { "name": "Bintimodia", "reticence": "1", "localite": "Kankango" }, "geometry": { "type": "Point", "coordinates": [ -14.361478265327527, 10.614252877836568 ] } },
 { "type": "Feature", "properties": { "name": "Douprou", "reticence": "2", "localite": "Koukoudé" }, "geometry": { "type": "Point", "coordinates": [ -14.320609160710056, 10.257096314285302 ] } },
-{ "type": "Feature", "properties": { "name": "Friguiagbe", "reticence": "2", "localite": "Comoyadi" }, "geometry": { "type": "Point", "coordinates": [ -12.955080436633244, 9.851046834617447 ] } },
-{ "type": "Feature", "properties": { "name": "Tougnifily", "reticence": "2", "localite": "Koutely et Kifinda" }, "geometry": { "type": "Point", "coordinates": [ -14.362780525050347, 10.384689571146374 ] } },
-{ "type": "Feature", "properties": { "name": "Dixinn", "reticence": "1", "localite": "Dixinn Port" }, "geometry": { "type": "Point", "coordinates": [ -13.667594488556913, 9.551576617253732 ] } },
-{ "type": "Feature", "properties": { "name": "Matoto", "reticence": "1", "localite": "Gbessia-centre" }, "geometry": { "type": "Point", "coordinates": [ -13.539083365021853, 9.592030204314234 ] } }
+{ "type": "Feature", "properties": { "name": "Tougnifily", "reticence": "2", "localite": "Koutely et Kifinda" }, "geometry": { "type": "Point", "coordinates": [ -14.362780525050347, 10.384689571146374 ] } }
 ]
 }
