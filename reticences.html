@@ -41,6 +41,7 @@
     <script src="code/data/last_21d_daily.geojson" type="text/javascript"></script>
     <script src="code/data/reticence.geojson" type="text/javascript"></script>
     <script src="code/data/reticence_pts.geojson" type="text/javascript"></script>
+    <script src="code/data/reticence_pts2.geojson" type="text/javascript"></script>
     <script src='code/data/table_cte_capacite.json'></script>
 
 
@@ -145,15 +146,33 @@
             </tr>
          
             <tr>
+              <td>Bintimodia</td>
+              <td>Kankango</td>
+              <td>Autre</td>              
+            </tr>
+         
+            <tr>
               <td>Douprou</td>
               <td>Koukoudé</td>
               <td>Enterrement sécurisé</td>              
             </tr>
          
             <tr>
+              <td>Douprou</td>
+              <td>Koukoudé</td>
+              <td>Suivi des contacts</td>              
+            </tr>
+         
+            <tr>
               <td>Tougnifily</td>
               <td>Koutely et Kifinda</td>
               <td>Enterrement sécurisé</td>              
+            </tr>
+         
+            <tr>
+              <td>Tougnifily</td>
+              <td>Koutely et Kifinda</td>
+              <td>Suivi des contacts</td>              
             </tr>
          
       </tbody>
@@ -272,7 +291,7 @@
 
         var iconCercle = L.icon({
             iconUrl: 'code/src/leaflet/images/circle.png',
-            iconSize: [16, 16]
+            iconSize: [18, 18]
         });
 
         var iconTriangle = L.icon({
@@ -311,9 +330,29 @@
             }
         }).addTo(map);
 
+        var reticence_pts2 = L.geoJson(retic_pts2, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+                if (feature.properties.reticence === "1") {
+                    iconReticence = iconTriangle
+                }
+                else if (feature.properties.reticence === "2") {
+                    iconReticence = iconCercle
+                }
+                else if (feature.properties.reticence === "3") {
+                    iconReticence = iconPentagon
+                }
+                else if (feature.properties.reticence === "4") {
+                    iconReticence = iconCross
+                };
+
+               return L.marker(latlng, {icon: iconReticence});
+            }
+        }).addTo(map);
+
         var jsonName = {'name': []};
         var jsonLocalite = {'localite': []};
-        //console.log(jsonArr);
+
         for(var i=0;i<retic_pts.features.length;i++) {
             var obj = retic_pts.features[i];
 
@@ -343,7 +382,7 @@
 
             var div = L.DomUtil.create('div', 'info legend_situation');
 
-            div.innerHTML = '<h4>Réticences</h4><img src="code/src/leaflet/images/triangle.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Suivi des contacts<br><img src="code/src/leaflet/images/pentagon.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Transfert de cas suspect<br><img src="code/src/leaflet/images/circle.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Enterrement sécurisé<br><img src="code/src/leaflet/images/cross.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Autre type de réticence<hr><i style="background: #BCF5A9; border: 1.5px solid #0B610B"></i>Sous-préfecture avec notification de réticence'
+            div.innerHTML = '<h4>Réticences</h4><img src="code/src/leaflet/images/triangle.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Suivi des contacts<br><img src="code/src/leaflet/images/pentagon.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Transfert de cas suspect<br><img src="code/src/leaflet/images/circle.png" width="18px" height="18px">&nbsp;&nbsp;&nbsp;Enterrement sécurisé<br><img src="code/src/leaflet/images/cross.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Autre type de réticence<hr><i style="background: #BCF5A9; border: 1.5px solid #0B610B"></i>Sous-préfecture avec notification de réticence'
 
             return div;
         };
@@ -363,8 +402,7 @@
                 var content_legend = {'1' : 'Suivi des contacts', '2' : 'Enterrement sécurisé', '3' : 'Transfert de cas suspect', '4' : 'Autre type de réticence'};
                 this._div.innerHTML = (props ?
                     '<b>' + props.name + '</b><br />' +
-                    'Localité : ' + jsonLocalite.localite[jsonName.name.indexOf(props.name)] +  '<br />' +
-                    'Réticence : ' + content_legend[props.reticence] + '<br />'
+                    'Localité : ' + jsonLocalite.localite[jsonName.name.indexOf(props.name)] + '<br />'
                     : 'Survolez une préfecture réticente');
             };
 
