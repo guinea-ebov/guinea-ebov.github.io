@@ -70,7 +70,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'capacité_centres_ebola_2015_04_21.csv'
+        fichier = 'capacité_centres_ebola_2015_04_22.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -108,7 +108,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'situation_patients_centres_ebola_2015_04_21.csv'
+        fichier = 'situation_patients_centres_ebola_2015_04_22.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -143,7 +143,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html"><img src="code/img/who_logo.svg" width="150px" height="50px">&nbsp;Guinea - EBOV</a>
+          <a class="navbar-brand" href="index.html"><img src="code/img/cellule_nationale.png" width="53px" height="51px">&nbsp;Guinea - EBOV</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -155,6 +155,7 @@
             <li><a href="liens_utiles.html">Liens utiles</a></li>
             <li><a href="sitreps.html">Sitreps</a></li>
             <li><a id="nouv" href="nouveautes.html">Nouveautés</a></li>
+            <li><img src="code/img/who_logo.svg" width="150px" height="50px"></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -163,7 +164,7 @@
         
 <h2>Etat des lieux des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
 <div class="panel panel-default">
-      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 22/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 23/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table patients table-striped">
          <thead>
             <tr>
@@ -195,7 +196,7 @@
             <tr>
                <td>Cas confirmés</td>
                
-                <td>2</td>
+                <td>1</td>
                
                 <td>16</td>
                
@@ -203,29 +204,45 @@
                
                 <td>0</td>
                
-                <td>2</td>
-               
-                <td>0</td>
-               
                 <td>1</td>
                
                 <td>0</td>
                
                 <td>0</td>
                
-                <td>21</td>
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>18</td>
                
             </tr>
             <tr>
                <td>Cas suspects</td>
                
-                <td>6</td>
+                <td>8</td>
+               
+                <td>4</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>4</td>
+               
+                <td>0</td>
                
                 <td>2</td>
                
                 <td>0</td>
                
                 <td>0</td>
+               
+                <td>18</td>
+               
+            </tr>
+            <tr>
+               <td>Sortis guéris</td>
                
                 <td>1</td>
                
@@ -237,16 +254,6 @@
                
                 <td>0</td>
                
-                <td>9</td>
-               
-            </tr>
-            <tr>
-               <td>Sortis guéris</td>
-               
-                <td>0</td>
-               
-                <td>2</td>
-               
                 <td>0</td>
                
                 <td>0</td>
@@ -255,13 +262,7 @@
                
                 <td>0</td>
                
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>2</td>
+                <td>1</td>
                
             </tr>
             <tr>
@@ -269,37 +270,9 @@
                
                 <td>0</td>
                
-                <td>0</td>
+                <td>1</td>
                
                 <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-            </tr>
-            <tr>
-               <td>Total hospitalisés</td>
-               
-                <td>8</td>
-               
-                <td>18</td>
-               
-                <td>0</td>
-               
-                <td>0</td>
-               
-                <td>3</td>
                
                 <td>0</td>
                
@@ -309,7 +282,35 @@
                
                 <td>0</td>
                
-                <td>30</td>
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>2</td>
+               
+            </tr>
+            <tr>
+               <td>Total hospitalisés</td>
+               
+                <td>9</td>
+               
+                <td>20</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>5</td>
+               
+                <td>0</td>
+               
+                <td>2</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
+               
+                <td>36</td>
                
             </tr>
       </tbody>
@@ -444,7 +445,7 @@
       </div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 22/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 23/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table capacite table-striped">
          <thead>
             <tr>
@@ -475,7 +476,7 @@
       <br />
       <div class="panel panel-default"><span id="tot1">Total</span><span id="tot2">6</span><span id="tot3">88</span><span id="tot4">60</span><span  id="tot5">248</span><span id="tot6">396</span></span></div>
       <br />
-      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_04_21.kml" download>KML</a> ou <a href="code/files/cte_2015_04_21.geojson" download>GeoJSON</a></div>
+      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_04_22.kml" download>KML</a> ou <a href="code/files/cte_2015_04_22.geojson" download>GeoJSON</a></div>
 </div>
     <script>
  $(document).ready(function() {
@@ -938,7 +939,7 @@ $("select").change(
          
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 22/04/2015<br />Dernier cas confirmé : 21/04/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 23/04/2015<br />Dernier cas confirmé : 22/04/2015 "});   
 });  
  
 $(function ()  
