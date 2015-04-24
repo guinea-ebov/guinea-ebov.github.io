@@ -67,7 +67,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_04_22.csv'
+        fichier = 'reticences_2015_04_23.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -111,7 +111,6 @@
             <li><a href="reticences.html">Réticences</a></li>
             <li><a href="centres.html">Centres</a></li>
             <li><a href="epi_weeks.html">Epi weeks</a></li>
-            <li><a href="stats.html">Stats</a></li>
             <li><a href="liens_utiles.html">Liens utiles</a></li>
             <li><a href="sitreps.html">Sitreps</a></li>
             <li><a id="nouv" href="nouveautes.html">Nouveautés</a></li>
@@ -131,7 +130,7 @@
       <div id="map"></div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 22/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 23/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table table-striped">
          <thead>
             <tr>
@@ -152,12 +151,6 @@
               <td>Bintimodia</td>
               <td>Kankango</td>
               <td>Autre</td>              
-            </tr>
-         
-            <tr>
-              <td>Matoto</td>
-              <td>Kissosso Plateau</td>
-              <td>Suivi des contacts</td>              
             </tr>
          
             <tr>
@@ -494,7 +487,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 23/04/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 24/04/2015 "});   
 });  
  
 $(function ()  
