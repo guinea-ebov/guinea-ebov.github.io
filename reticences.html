@@ -67,7 +67,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_04_23.csv'
+        fichier = 'reticences_2015_04_24.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -131,7 +131,7 @@
       <div id="map"></div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 23/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 24/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table table-striped">
          <thead>
             <tr>
@@ -141,42 +141,6 @@
             </tr> 
          </thead>
          <tbody>
-         
-            <tr>
-              <td>Bintimodia</td>
-              <td>Kankango</td>
-              <td>Suivi des contacts</td>              
-            </tr>
-         
-            <tr>
-              <td>Bintimodia</td>
-              <td>Kankango</td>
-              <td>Autre</td>              
-            </tr>
-         
-            <tr>
-              <td>Douprou</td>
-              <td>Koukoudé</td>
-              <td>Enterrement sécurisé</td>              
-            </tr>
-         
-            <tr>
-              <td>Douprou</td>
-              <td>Koukoudé</td>
-              <td>Suivi des contacts</td>              
-            </tr>
-         
-            <tr>
-              <td>Tougnifily</td>
-              <td>Koutely et Kifinda</td>
-              <td>Enterrement sécurisé</td>              
-            </tr>
-         
-            <tr>
-              <td>Tougnifily</td>
-              <td>Koutely et Kifinda</td>
-              <td>Suivi des contacts</td>              
-            </tr>
          
       </tbody>
       </table>
@@ -488,7 +452,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 24/04/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 25/04/2015 "});   
 });  
  
 $(function ()  
