@@ -1,0 +1,595 @@
+{% extends "base.html" %}
+{% block libs_js %}
+    <script src="code/src/html5slider.js"></script>
+    <script>L_PREFER_CANVAS = true;</script>
+    <script src="code/src/leaflet/leaflet.js"></script>
+    <script src='code/src/leaflet-image.js'></script>
+    <script src="code/src/leaflet/leaflet.label.js"></script>
+    <script src='code/src/jput-2.js'>></script>
+    <script src='code/src/stupidtable.min.js'>></script>
+    <script src='code/src/table2CSV.js'>></script>
+    <script src='code/src/turf.min.js'></script>
+    <script src='code/src/bowser.min.js'></script>
+    <script src='code/data/layers/sous_pref.geojson'></script>
+    <script src='code/data/layers/countries.geojson'></script>
+    <script src='code/data/layers/prefectures.geojson'></script>
+    <script src="code/data/last_21d_daily.geojson" type="text/javascript"></script>
+    <script src="code/data/cte.geojson" type="text/javascript"></script>
+    <script src='code/data/table_cte_capacite.json'></script>
+{% endblock %}
+{% block custom_js %}        
+    <script type="text/javascript">
+    $(document).ready(function(){
+            $("table").stupidtable();
+         jPut.users.data = table_cte_capacite;
+
+        $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    header: ['Nom', 'Tenu par', 'Labo', 'Lits suspects', 'Lits probables', 'Lits confirmes', 'Total lits'],
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        fichier = 'capacité_centres_ebola_{{last_data}}.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
+        });
+    </script>
+{% endblock %}
+{% block code_css %}
+    <link rel="stylesheet" href="code/src/leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="code/css/leaflet.label.css" />
+{% endblock %}
+{% block content %}
+     <h2>Localisation et capacité des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+     <div class='dlmap'>
+     <a id="print" href=""></a> | <a href="code/img/legende_cas_confirmes_21_derniers_jours_centres.png" download>Télécharger la légende</a></div>
+     <div  id="wheel" >
+     <img src="code/img/spinning-wheel.gif"/ width="20px" height="20px">
+     Impression en cours...</div>
+      <div id="map"></div>
+      <br />
+      <div class="alert alert-info" role="alert">
+      A l'exception de Conakry, la localisation des centres n'est précise qu'à l'échelle de la ville
+      </div>
+      <br />
+      <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <table class="table table-striped">
+         <thead>
+            <tr>
+                <th data-sort="string">Nom</th>
+                <th data-sort="string">Géré par</th>
+                <th data-sort="string">Labo</th>
+                <th data-sort="int">Lits<br />Suspects</th>
+                <th data-sort="int">Lits<br />Probables</th>
+                <th data-sort="int">Lits<br />Confirmés</th>
+                <th data-sort="int">Total<br />lits</th>
+            </tr> 
+         </thead>
+         <tbody jput="users" jput-jsondata='[]'>
+            <tr>
+               {% raw %}
+               <td>{{json.name}}</td>
+               <td>{{json.gere}}</td>
+               <td>{{json.labo}}</td>
+               <td>{{json.suspect}}</td>
+               <td>{{json.probable}}</td>
+               <td>{{json.confirme}}</td>
+               <td>{{json.total}}</td>
+               {% endraw %}
+            </tr>
+      </tbody>
+      </table>
+      </div>
+      <br />
+      <div class="panel panel-default"><span id="tot1">Total</span><span id="tot2">{{labos}}</span><span id="tot3">{{suspect}}</span><span id="tot4">{{probable}}</span><span  id="tot5">{{confirme}}</span><span id="tot6">{{total_lits}}</span></span></div>
+      <br />
+      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_{{last_data}}.kml" download>KML</a> ou <a href="code/files/cte_{{last_data}}.geojson" download>GeoJSON</a></div>
+    <script>
+ $(document).ready(function() {
+         var legend;
+         var map = L.map('map', { 
+                center: [10, -11.3441], 
+                zoom: 7,    
+                minZoom: 6  
+            });
+
+         function doImage(err, canvas) {
+                var img = document.createElement('img');
+                var dimensions = map.getSize();
+                img.width = dimensions.x;
+                img.height = dimensions.y;
+                img.src = canvas.toDataURL("image/png");
+
+                var suffixe_file = $("select").val()[0];
+                var suffix;
+                auj = new Date();
+                auj.setDate(auj.getDate() - 1);
+                auj = auj.getFullYear() + '_' + parseInt(auj.getMonth() + 1) + '_' + auj.getDate(); 
+                if (suffixe_file === "1") {
+                    suffix = 'centres_ebola_guinee_' + auj;
+                }
+                else if (suffixe_file === "2") {
+                    suffix = 'cte_guinee_' + auj;
+                }
+                else if (suffixe_file === "3") {
+                    suffix = 'cdt_guinee_' + auj;
+                }
+                else if (suffixe_file === "4") {
+                    suffix = 'cts_guinee_' + auj;
+                }
+                else{
+                    suffix = 'labos_guinee_' + auj;
+                };
+                
+                $("a#print").attr("download", suffix + '.png')
+                $("a#print").attr("href", img.src)
+
+                $('#wheel').hide();
+                $("a#print").html("Télécharger la carte");
+                $('.dlmap').fadeIn("slow");
+            }
+
+         var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+});
+
+        var sous_pref = L.geoJson(sp, {
+            style: function (feature) {
+                return {fillColor: "#ffffbf",
+                        color: "#d8b365",
+                        weight: 0.8,
+                        opacity: 0.8,
+                        fillOpacity: .7};
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name, {autoPan: false});
+            }
+        });
+
+        var countries = L.geoJson(countr, {
+            style: function (feature) {
+                return {fillColor: "white",
+                        color: "black",
+                        weight: 1,
+                        opacity: 0.8,
+                        fillOpacity: 0.8};
+            }
+        });
+
+        var prefs = L.geoJson(prfs, {
+            style: function (feature) {
+                return {color: "#8A4117",
+                        weight: 1,
+                        opacity: 0.8};
+            }
+        });
+
+        var baseLayers = L.layerGroup([countries, sous_pref, prefs]).addTo(map);
+        
+        var labelmal= new L.Label();
+        labelmal.setContent("<em>MALI</em>");
+        labelmal.setLatLng([11.5,-7.55]);
+        map.showLabel(labelmal);
+        
+        var labelciv = new L.Label();
+        labelciv.setContent("<em>CÔTE D'IVOIRE</em>");
+        labelciv.setLatLng([9.5,-7.55]);
+        map.showLabel(labelciv);
+
+        var labelsle = new L.Label();
+        labelsle.setContent('<em> SIERRA</br>LEONE</em>');
+        labelsle.setLatLng([8.6,-12.2]);
+        map.showLabel(labelsle);
+
+        var labellib = new L.Label();
+        labellib.setContent('<em>LIBERIA</em>');
+        labellib.setLatLng([ 6.8,  -10.5]);
+        map.showLabel(labellib);
+
+        var labelgb = new L.Label();
+        labelgb.setContent('<em>GUINEE</br>BISSAU</em>');
+        labelgb.setLatLng([12.2, -15.2]);
+        map.showLabel(labelgb);
+
+        var labelsen = new L.Label();
+        labelsen.setContent('<em>SENEGAL</em>');
+        labelsen.setLatLng([14.5, -15]);
+        map.showLabel(labelsen);
+
+
+        var last_21d = L.geoJson(data_21d, {  
+            onEachFeature: function (feature, layer) {
+                popupContent = "<b>" + feature.properties.name + " </b><br>" +
+                               "<b>" + String(feature.properties.total) +
+                               "</b> cas";
+                // Calculations for radius in function of field 'total'
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                radius =  Math.sqrt(area/Math.PI)*2
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });
+            },
+            pointToLayer: function(feature, latlng) {   
+                // Calculations for radius. Same as bellow
+                var scaleFactor = 12,
+                area = feature.properties.total * scaleFactor;
+                return L.circleMarker(latlng, {     
+                    radius: Math.sqrt(area/Math.PI)*2,
+                    /*fillColor: feature.properties.color, */
+                    fillColor: "red", 
+                    color: '#537898',   
+                    weight: 1,  
+                    fillOpacity: 0.6  
+                });
+            }
+        });
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+
+            info.update(layer.feature.properties);
+        }
+
+        function resetHighlight(e) {
+            ctes.resetStyle(e.target);
+            info.update();
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                /*click: zoomToFeature*/
+            });
+        }
+        var myIcon = L.icon({
+            iconUrl: 'code/src/leaflet/images/health.png',
+            iconSize: [16, 16]
+        });
+        var ctes = L.geoJson(cte, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+
+               return L.marker(latlng, {icon: myIcon});
+            }
+        }).addTo(map);
+
+
+        var info = L.control({position: 'bottomleft'});
+
+            info.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info cte'); // create a div with a class "info"
+                this.update();
+                return this._div;
+            };
+
+            // method that we will use to update the control based on feature properties passed
+            info.update = function (props) {
+  
+                this._div.innerHTML = '<h4>Capacité des centres Ebola</h4>' + (props ?
+                    '<b>' + props.name + '</b><br />' +
+                    'Géré par : ' + props.gere + '<br />' +
+                    'Laboratoire : ' + props.labo + '<br />' +
+                    'Lits confirmés : ' + props.confirme + '<br />' +
+                    'Lits suspects : ' + props.suspect + '<br />' +
+                    'Lits probables : ' + props.probable + '<br />' +
+                    'Total lits : ' + props.total + '<br />'
+                    : 'Survolez un centre');
+            };
+
+            info.addTo(map);
+
+    function calcPropRadius(attributeValue) {
+                
+            var scaleFactor = 12,  // value dependent upon particular data set
+                area = attributeValue * scaleFactor; 
+
+            return Math.sqrt(area/Math.PI)*2;  
+                
+        } // end calcPropRadius
+
+    function createLegend(min, max) {     
+        if (min < 10) { 
+            min = 1; 
+    }
+    function roundNumber(inNumber) {
+
+        return (Math.round(inNumber/10) * 10);  
+    }
+
+    legend = L.control( { position: 'bottomright' } );
+
+    legend.onAdd = function(map) {
+
+        var legendContainer = L.DomUtil.create("div", "legend"),  
+            symbolsContainer = L.DomUtil.create("div", "symbolsContainer"),
+            classes = [1, 10, 40], 
+
+            diameter,
+            diameters = [];
+
+        L.DomEvent.addListener(legendContainer, 'mousedown', function(e) { L.DomEvent.stopPropagation(e); });  
+
+        $(legendContainer).append("<h2 id='legendTitle'>Nombre de cas<br/>confirmés durant les<br/>21 derniers jours</h2>");
+        
+        for (var i = 0; i < classes.length; i++) {  
+
+            legendCircle = L.DomUtil.create("div", "legendCircle");  
+            diameter = calcPropRadius(classes[i])*2; 
+            diameters.push(diameter);               
+            var lastdiameter;                   
+            if (diameters[i-1]){
+                lastdiameter = diameters[i-1];
+            } else {
+                lastdiameter = 0;
+            };
+            $(legendCircle).attr("style", "width: "+diameter+"px; height: "+diameter+
+                "px; margin-left: -"+((diameter+lastdiameter+2)/2)+"px" );                   
+            $(legendCircle).append("<span class='legendValue'>"+classes[i]+"<span>");
+            $(symbolsContainer).append(legendCircle);   
+        };
+        $(legendContainer).append(symbolsContainer); 
+        return legendContainer; 
+    }; 
+}
+// end createLegend()
+createLegend(last_21d.min, last_21d.max); 
+        
+var dropdmenu = L.control({position: 'topright'});
+dropdmenu.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info dropdmenu');
+    div.innerHTML = '<select class="form-control CTE"><option value="1">Tous les centres</option><option value="2">Centre de Traitement Ebola (CTE)</option><option value="3">Centre de Transit (CDT)</option><option value="4">Centre de Traitement des Soignants (CTS)</option><option value="5">Centres avec laboratoire</option></select>';
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
+};
+
+dropdmenu.addTo(map);
+var passage_scope;
+$("select").change(
+ function () {
+  var val = this.value;
+    if ($(this).val() === "1") {
+        map.addLayer(ctes);
+        if (map.hasLayer(passage_scope)) {
+            map.removeLayer(passage_scope);
+        }
+
+    }
+    else if ($(this).val() === "2") {
+        map.removeLayer(ctes);
+        if (map.hasLayer(passage_scope)) {
+            map.removeLayer(passage_scope);
+        }
+        
+        var key = "type";
+        var value = "CTE";
+
+        var filtered = turf.filter(cte, key, value);
+        var l_filtered = L.geoJson(filtered, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+               return L.marker(latlng, {icon: myIcon});
+            }
+        }).addTo(map);
+        passage_scope = l_filtered;
+
+
+    }
+    else if ($(this).val() === "3") {
+        map.removeLayer(ctes);
+        if (map.hasLayer(passage_scope)) {
+            map.removeLayer(passage_scope);
+        }
+        
+        var key = "type";
+        var value = "CDT";
+
+        var filtered = turf.filter(cte, key, value);
+        var l_filtered = L.geoJson(filtered, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+               return L.marker(latlng, {icon: myIcon});
+            }
+        }).addTo(map);
+        passage_scope = l_filtered;
+    }
+    else if ($(this).val() === "4") {
+        map.removeLayer(ctes);
+        if (map.hasLayer(passage_scope)) {
+            map.removeLayer(passage_scope);
+        }
+
+        var key = "type";
+        var value = "CTS";
+
+        var filtered = turf.filter(cte, key, value);
+        var l_filtered = L.geoJson(filtered, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+               return L.marker(latlng, {icon: myIcon});
+            }
+        }).addTo(map);
+        passage_scope = l_filtered;
+    }
+    // value = "5"
+    else {
+        map.removeLayer(ctes);
+        if (map.hasLayer(passage_scope)) {
+            map.removeLayer(passage_scope);
+        }
+
+        var key = "labo";
+        var value = "Oui";
+
+        var filtered = turf.filter(cte, key, value);
+        var l_filtered = L.geoJson(filtered, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+               return L.marker(latlng, {icon: myIcon});
+            }
+        }).addTo(map);
+        passage_scope = l_filtered;
+        
+
+    }; 
+})
+// ----------------- End drop down -----------------
+
+    var switchOsm = L.control( { position: 'topright' } );
+    switchOsm.onAdd = function(map) {
+    var buttonSwitch = L.DomUtil.create("button", "bswitch btn btn-default");
+    //$(buttonSwitch).text("OpenStreetMap");
+    $(buttonSwitch).append( '<span class=" glyphicon glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonSwitch, 'click', function(e) { 
+
+        if (map.hasLayer(OpenStreetMap_HOT) == true) {
+            map.removeLayer(OpenStreetMap_HOT);
+            map.addLayer(baseLayers);
+            
+            prefs.bringToBack();
+            sous_pref.bringToBack();
+            countries.bringToBack();
+            
+            $("em").show();
+        }
+
+        else{
+            map.addLayer(OpenStreetMap_HOT);
+            $("em").hide();
+            map.removeLayer(baseLayers);
+        };
+      });
+      return buttonSwitch;
+    };
+    switchOsm.addTo(map); 
+
+
+    var fullZoom = L.control( { position: 'topright' } );
+    fullZoom.onAdd = function(map) {
+    var buttonZoom = L.DomUtil.create("button", "bzoom btn btn-default");
+    $(buttonZoom).append( '<span class=" glyphicon glyphicon glyphicon-globe" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonZoom, 'click', function(e) { 
+          map.setView([10, -11.3441], 7);
+      });
+      return buttonZoom;
+    };
+    fullZoom.addTo(map); 
+
+
+    var switch21d = L.control( { position: 'topright' } );
+            switch21d.onAdd = function(map) {
+            var buttonSwitch21d = L.DomUtil.create("button", "bswitch21dCTE btn btn-default");
+            $(buttonSwitch21d).append( '<span class=" glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>');
+            /*$(buttonSwitch2).text("Cumulative Data");*/
+
+            L.DomEvent.addListener(buttonSwitch21d, 'click', function(e) { 
+
+            var $this = $(this);
+            if ($this.html() == '<span class=" glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>') {
+                 $this.html( '<span class=" glyphicon glyphicon glyphicon-eye-close" aria-hidden="true"></span>');
+                 map.addLayer(last_21d);
+                 legend.addTo(map)
+            } 
+            else {
+                 $this.html( '<span class=" glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>');
+                 
+                 map.removeLayer(last_21d);
+                 legend.removeFrom(map);
+            };
+            });
+
+            return buttonSwitch21d;
+                   };
+            switch21d.addTo(map);
+
+        var printMap = L.control( { position: 'topright' } );
+        printMap.onAdd = function(map) {
+        var buttonPrint = L.DomUtil.create("button", "bprint_ct btn btn-default");
+        $(buttonPrint).append( '<span class=" glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>');
+
+          L.DomEvent.addListener(buttonPrint, 'click', function(e) { 
+              $('.dlmap').hide();
+              $('#wheel').show();
+              leafletImage(map, doImage);
+          });
+          
+          return buttonPrint;
+        };
+        printMap.addTo(map); 
+
+        if (bowser.msie) {
+          $('button.bprint_ct').hide();
+        }  
+
+    });
+    </script>
+{% endblock %}
+
+{% block custom_js_bottom %}     
+<script>  
+$(function ()  
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : {{ last_update }}<br />Dernier cas confirmé : {{ last_case }} "});   
+});  
+ 
+$(function ()  
+{ $(".bswitch").tooltip({placement : 'auto', title: 'Alternez entre un fond OpenStreetMap et les sous préfectures', container: 'body'});  
+}); 
+
+$(function ()  
+{ $(".bzoom").tooltip({placement : 'auto', title: 'Revenir au zoom initial', container: 'body'});  
+}); 
+
+$(function ()  
+{ $(".bswitch21dCTE").tooltip({placement : 'auto', title: 'Affichez ou cachez le nombre de cas par sous préfectures durant les 21 derniers jours', container: 'body'});  
+});
+$(function ()  
+    { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+}); 
+$(function ()  
+{ $(".bprint_ct").tooltip({placement : 'auto', title: 'Imprimez la carte', container: 'body'});  
+});
+</script>
+{% endblock %}

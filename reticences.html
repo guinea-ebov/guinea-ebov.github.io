@@ -67,7 +67,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_04_26.csv'
+        fichier = 'reticences_2015_04_27.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -131,7 +131,7 @@
       <div id="map"></div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 26/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 27/04/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table table-striped">
          <thead>
             <tr>
@@ -141,6 +141,18 @@
             </tr> 
          </thead>
          <tbody>
+         
+            <tr>
+              <td>Tondon</td>
+              <td>Sitou</td>
+              <td>Suivi des contacts</td>              
+            </tr>
+         
+            <tr>
+              <td>Sikhourou</td>
+              <td>dalonyah</td>
+              <td>Enterrement sécurisé</td>              
+            </tr>
          
       </tbody>
       </table>
@@ -452,7 +464,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 27/04/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 28/04/2015 "});   
 });  
  
 $(function ()  

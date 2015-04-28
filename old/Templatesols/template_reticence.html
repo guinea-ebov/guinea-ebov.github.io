@@ -1,0 +1,423 @@
+{% extends "base.html" %}
+{% block libs_js %}  
+    <script src="code/src/html5slider.js"></script>
+    <script>L_PREFER_CANVAS = true;</script>
+    <script src="code/src/leaflet/leaflet.js"></script>
+    <script src='code/src/leaflet-image.js'></script>
+    <script src="code/src/leaflet/leaflet.label.js"></script>
+    <script src='code/src/jput-2.js'>></script>
+    <script src='code/src/stupidtable.min.js'>></script>
+    <script src='code/src/table2CSV.js'>></script>
+    <script src='code/src/bowser.min.js'></script>
+    <script src='code/data/layers/sous_pref.geojson'></script>
+    <script src='code/data/layers/countries.geojson'></script>
+    <script src='code/data/layers/prefectures.geojson'></script>
+    <script src="code/data/last_21d_daily.geojson" type="text/javascript"></script>
+    <script src="code/data/reticence.geojson" type="text/javascript"></script>
+    <script src="code/data/reticence_pts.geojson" type="text/javascript"></script>
+    <script src="code/data/reticence_pts2.geojson" type="text/javascript"></script>
+    <script src='code/data/table_cte_capacite.json'></script>
+{% endblock %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+            $("table").stupidtable();
+
+        $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    header: ['Sous-prefecture', 'Localite', 'Reticence'],
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        fichier = 'reticences_{{ last_data }}.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
+        });
+    </script>
+{% endblock %}
+
+{% block code_css %}
+    <link rel="stylesheet" href="code/src/leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="code/css/leaflet.label.css" />
+{% endblock %}
+{% block content %}       
+     <h2>Réticences signalées par les équipes de la riposte/suivi&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
+      <div class='dlmap'>
+     <a id="print" href=""></a> | <a href="code/img/legende_reticences.png" download>Télécharger la légende</a></div>
+     <div  id="wheel" >
+     <img src="code/img/spinning-wheel.gif"/ width="20px" height="20px">
+     Impression en cours...</div>
+      <div id="map"></div>
+      <br />
+      <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du {{ yesterday_n }}<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <table class="table table-striped">
+         <thead>
+            <tr>
+                <th data-sort="string">Sous-préfecture</th>
+                <th data-sort="string">Localité</th>
+                <th data-sort="string">Type de réticence</th>
+            </tr> 
+         </thead>
+         <tbody>
+         {% for reticence in reticences %}
+            <tr>
+              <td>{{ reticence.name }}</td>
+              <td>{{ reticence.localite }}</td>
+              <td>{{ reticence.reticence }}</td>              
+            </tr>
+         {% endfor %}
+      </tbody>
+      </table>
+      </div>
+    <script>
+ $(document).ready(function() {
+         var legend;
+         var map = L.map('map', { 
+                center: [10, -11.3441], 
+                zoom: 7,    
+                minZoom: 6  
+            });
+
+         function doImage(err, canvas) {
+                var img = document.createElement('img');
+                var dimensions = map.getSize();
+                img.width = dimensions.x;
+                img.height = dimensions.y;
+                img.src = canvas.toDataURL("image/png");
+
+                auj = new Date();
+                auj.setDate(auj.getDate() - 1);
+                auj = auj.getFullYear() + '_' + parseInt(auj.getMonth() + 1) + '_' + auj.getDate(); 
+
+                
+                $("a#print").attr("download", 'reticences_' + auj + '.png')
+                $("a#print").attr("href", img.src)
+
+                $('#wheel').hide();
+                $("a#print").html("Télécharger la carte");
+                $('.dlmap').fadeIn("slow");
+            }
+
+         var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+});
+
+        var sous_pref = L.geoJson(sp, {
+            style: function (feature) {
+                return {fillColor: "#ffffbf",
+                        color: "#d8b365",
+                        weight: 0.8,
+                        opacity: 0.8,
+                        fillOpacity: .7};
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name, {autoPan: false});
+            }
+        });
+
+        var countries = L.geoJson(countr, {
+            style: function (feature) {
+                return {fillColor: "white",
+                        color: "black",
+                        weight: 1,
+                        opacity: 0.8,
+                        fillOpacity: 0.8};
+            }
+        });
+
+        var prefs = L.geoJson(prfs, {
+            style: function (feature) {
+                return {color: "#8A4117",
+                        weight: 1,
+                        opacity: 0.8};
+            }
+        });
+
+        var baseLayers = L.layerGroup([countries, sous_pref, prefs]).addTo(map);
+        
+        var labelmal= new L.Label();
+        labelmal.setContent("<em>MALI</em>");
+        labelmal.setLatLng([11.5,-7.55]);
+        map.showLabel(labelmal);
+        
+        var labelciv = new L.Label();
+        labelciv.setContent("<em>CÔTE D'IVOIRE</em>");
+        labelciv.setLatLng([9.5,-7.55]);
+        map.showLabel(labelciv);
+
+        var labelsle = new L.Label();
+        labelsle.setContent('<em> SIERRA</br>LEONE</em>');
+        labelsle.setLatLng([8.6,-12.2]);
+        map.showLabel(labelsle);
+
+        var labellib = new L.Label();
+        labellib.setContent('<em>LIBERIA</em>');
+        labellib.setLatLng([ 6.8,  -10.5]);
+        map.showLabel(labellib);
+
+        var labelgb = new L.Label();
+        labelgb.setContent('<em>GUINEE</br>BISSAU</em>');
+        labelgb.setLatLng([12.2, -15.2]);
+        map.showLabel(labelgb);
+
+        var labelsen = new L.Label();
+        labelsen.setContent('<em>SENEGAL</em>');
+        labelsen.setLatLng([14.5, -15]);
+        map.showLabel(labelsen);
+
+        function style(feature) {
+            return {
+                fillColor: '#BCF5A9',
+                weight: 1.2,
+                opacity: 1,
+                color: '#0B610B',
+                fillOpacity: 0.6
+            };
+        }
+
+        reticence_poly = L.geoJson(retic, {
+            style: style //,
+            //onEachFeature: onEachFeature
+        }).addTo(map);
+
+        var iconCercle = L.icon({
+            iconUrl: 'code/src/leaflet/images/circle.png',
+            iconSize: [18, 18]
+        });
+
+        var iconTriangle = L.icon({
+            iconUrl: 'code/src/leaflet/images/triangle.png',
+            iconSize: [16, 16]
+        });
+
+        var iconPentagon = L.icon({
+            iconUrl: 'code/src/leaflet/images/pentagon.png',
+            iconSize: [14, 14]
+        });
+
+        var iconCross = L.icon({
+            iconUrl: 'code/src/leaflet/images/cross.png',
+            iconSize: [16, 16]
+        });
+
+
+        var reticence_pts = L.geoJson(retic_pts, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+                if (feature.properties.reticence === "1") {
+                    iconReticence = iconTriangle
+                }
+                else if (feature.properties.reticence === "2") {
+                    iconReticence = iconCercle
+                }
+                else if (feature.properties.reticence === "3") {
+                    iconReticence = iconPentagon
+                }
+                else if (feature.properties.reticence === "4") {
+                    iconReticence = iconCross
+                };
+
+               return L.marker(latlng, {icon: iconReticence});
+            }
+        }).addTo(map);
+
+        var reticence_pts2 = L.geoJson(retic_pts2, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+                if (feature.properties.reticence === "1") {
+                    iconReticence = iconTriangle
+                }
+                else if (feature.properties.reticence === "2") {
+                    iconReticence = iconCercle
+                }
+                else if (feature.properties.reticence === "3") {
+                    iconReticence = iconPentagon
+                }
+                else if (feature.properties.reticence === "4") {
+                    iconReticence = iconCross
+                };
+
+               return L.marker(latlng, {icon: iconReticence});
+            }
+        }).addTo(map);
+
+        var jsonName = {'name': []};
+        var jsonLocalite = {'localite': []};
+
+        for(var i=0;i<retic_pts.features.length;i++) {
+            var obj = retic_pts.features[i];
+
+            jsonName['name'].push(obj.properties.name);
+            jsonLocalite['localite'].push(obj.properties.localite);
+        };
+
+        function highlightFeature(e) {
+            var layer = e.target;
+            info.update(layer.feature.properties);
+        }
+
+        function resetHighlight(e) {
+            info.update();
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight
+            });
+        }
+
+        var legend_situation = L.control({position: 'bottomleft'});
+
+        legend_situation.onAdd = function (map) {
+
+            var div = L.DomUtil.create('div', 'info legend_situation');
+
+            div.innerHTML = '<h4>Réticences</h4><img src="code/src/leaflet/images/triangle.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Suivi des contacts<br><img src="code/src/leaflet/images/pentagon.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Transfert de cas suspect<br><img src="code/src/leaflet/images/circle.png" width="18px" height="18px">&nbsp;&nbsp;&nbsp;Enterrement sécurisé<br><img src="code/src/leaflet/images/cross.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;Autre type de réticence<hr><i style="background: #BCF5A9; border: 1.5px solid #0B610B"></i>Sous-préfecture avec notification de réticence'
+
+            return div;
+        };
+
+        legend_situation.addTo(map);
+
+        var info = L.control({position: 'bottomleft'});
+
+            info.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info cte'); 
+                this.update();
+                return this._div;
+            };
+
+            // method that we will use to update the control based on feature properties passed
+            info.update = function (props) {
+                var content_legend = {'1' : 'Suivi des contacts', '2' : 'Enterrement sécurisé', '3' : 'Transfert de cas suspect', '4' : 'Autre type de réticence'};
+                this._div.innerHTML = (props ?
+                    '<b>' + props.name + '</b><br />' +
+                    'Localité : ' + jsonLocalite.localite[jsonName.name.indexOf(props.name)] + '<br />'
+                    : 'Survolez une préfecture réticente');
+            };
+
+        info.addTo(map);
+
+    
+// ----------------- End drop down -----------------
+
+    var switchOsm = L.control( { position: 'topright' } );
+    switchOsm.onAdd = function(map) {
+    var buttonSwitch = L.DomUtil.create("button", "bswitchx btn btn-default");
+    //$(buttonSwitch).text("OpenStreetMap");
+    $(buttonSwitch).append( '<span class=" glyphicon glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonSwitch, 'click', function(e) { 
+
+        if (map.hasLayer(OpenStreetMap_HOT) == true) {
+            map.removeLayer(OpenStreetMap_HOT);
+            map.addLayer(baseLayers);
+            map.addLayer(reticence_poly);
+            
+            prefs.bringToBack();
+            sous_pref.bringToBack();
+            countries.bringToBack();
+            
+            $("em").show();
+        }
+
+        else{
+            map.addLayer(OpenStreetMap_HOT);
+            $("em").hide();
+            map.removeLayer(baseLayers);
+            map.removeLayer(reticence_poly);
+        };
+      });
+      return buttonSwitch;
+    };
+    switchOsm.addTo(map); 
+
+
+    var fullZoom = L.control( { position: 'topright' } );
+    fullZoom.onAdd = function(map) {
+    var buttonZoom = L.DomUtil.create("button", "bzoomx btn btn-default");
+    $(buttonZoom).append( '<span class=" glyphicon glyphicon glyphicon-globe" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonZoom, 'click', function(e) { 
+          map.setView([10, -11.3441], 7);
+      });
+      return buttonZoom;
+    };
+    fullZoom.addTo(map);
+
+    var printMap = L.control( { position: 'topright' } );
+        printMap.onAdd = function(map) {
+        var buttonPrint = L.DomUtil.create("button", "bprint_reti btn btn-default");
+        $(buttonPrint).append( '<span class=" glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>');
+
+          L.DomEvent.addListener(buttonPrint, 'click', function(e) { 
+              $('.dlmap').hide();
+              $('#wheel').show();
+              leafletImage(map, doImage);
+          });
+          
+          return buttonPrint;
+        };
+        printMap.addTo(map); 
+
+        if (bowser.msie) {
+          $('button.bprint_reti').hide();
+        }   
+
+    });
+    </script>
+{% endblock %}
+{% block custom_js_bottom %} 
+<script>  
+$(function ()  
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : {{last_update}} "});   
+});  
+ 
+$(function ()  
+{ $(".bswitchx").tooltip({placement : 'auto', title: 'Alternez entre un fond OpenStreetMap et les sous préfectures', container: 'body'});  
+}); 
+
+$(function ()  
+{ $(".bzoomx").tooltip({placement : 'auto', title: 'Revenir au zoom initial', container: 'body'});  
+}); 
+
+$(function ()  
+    { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+}); 
+$(function ()  
+{ $(".bprint_reti").tooltip({placement : 'auto', title: 'Imprimez la carte', container: 'body'});  
+});
+</script>
+{% endblock %}
