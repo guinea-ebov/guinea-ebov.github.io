@@ -8,7 +8,7 @@ The site contains 8 pages:
 * **reticences.html**: Location of the reluctance. ***Updated everyday***
 * **centres.html**: Location and capacity of the Ebola centres. ***Updated everyday***
 * **epi_weeks.html**: Confirmed, probable and suspect cases per epi week. ***Updated every Tuesday***
-* **stats.html**: Gender and age stats for confirmed cases.
+* **stats.html**: Gender and age stats for confirmed cases. ***Updated everyday***
 * **liens_utiles.html**: Useful links on the Ebola situation in Guinea and in the region.
 * **sitreps.html**: Daily and weekly sitreps available for download (PDF). ***Updated everyday***
 
