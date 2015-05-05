@@ -23,4 +23,3 @@ It uses the following libs:
 * [Stupid-table](https://joequery.github.io/Stupid-Table-Plugin/)
 * [table2CSV](https://github.com/rubo77/table2CSV)
 * [jPut](https://github.com/shabeer-ali-m/jPut)
-* [Bowser](https://github.com/ded/bowser)
