@@ -34,7 +34,6 @@
     <script src='code/src/jput-2.js'>></script>
     <script src='code/src/stupidtable.min.js'>></script>
     <script src='code/src/table2CSV.js'>></script>
-    <script src='code/src/bowser.min.js'></script>
     <script src='code/data/layers/sous_pref.geojson'></script>
     <script src='code/data/layers/countries.geojson'></script>
     <script src='code/data/layers/prefectures.geojson'></script>
@@ -67,7 +66,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_05_3.csv'
+        fichier = 'reticences_2015_05_4.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -132,7 +131,7 @@
       <br />
       
         <div class="alert alert-info" role="alert">
-          Aucune réticence notifiée à la date du 3/05/2015.
+          Aucune réticence notifiée à la date du 4/05/2015.
         </div>
       
     <script>
@@ -427,7 +426,7 @@
         };
         printMap.addTo(map); 
 
-        if (bowser.msie) {
+        if (L.Browser.ie) {
           $('button.bprint_reti').hide();
         }   
 
@@ -442,7 +441,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 4/05/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 5/05/2015 "});   
 });  
  
 $(function ()  

@@ -35,7 +35,6 @@
     <script src='code/src/jput-2.js'>></script>
     <script src='code/src/stupidtable.min.js'>></script>
     <script src='code/src/table2CSV.js'>></script>
-    <script src='code/src/bowser.min.js'></script>
     <script src='code/data/layers/countries.geojson'></script>
     <script src='code/data/situation_prefectures.geojson'></script>
     <script src='code/data/table_pref_21.json'></script>
@@ -65,7 +64,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'cas_21_derniers_jours_prefectures_2015_05_3.csv'
+        fichier = 'cas_21_derniers_jours_prefectures_2015_05_4.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -475,7 +474,7 @@
         };
         printMap.addTo(map); 
 
-        if (bowser.msie) {
+        if (L.Browser.ie) {
           $('button.bprint_na').hide();
         }  
 
@@ -492,7 +491,7 @@
      
 <script>  
     $(function ()  
-    { $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 4/05/2015<br />Dernier cas confirmé : 03/05/2015 "});   
+    { $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 5/05/2015<br />Dernier cas confirmé : 04/05/2015 "});   
     });  
      
     $(function ()  
