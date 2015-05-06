@@ -1,5 +1,6 @@
 *.py
 *.sqlite
+test.html
 
 python/
 utils/
