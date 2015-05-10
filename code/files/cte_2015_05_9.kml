@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="OGRGeoJSON" id="OGRGeoJSON">
+	<SimpleField name="type" type="string"></SimpleField>
+	<SimpleField name="gere" type="string"></SimpleField>
+	<SimpleField name="labo" type="string"></SimpleField>
+	<SimpleField name="suspect" type="int"></SimpleField>
+	<SimpleField name="probable" type="int"></SimpleField>
+	<SimpleField name="confirme" type="int"></SimpleField>
+	<SimpleField name="total" type="int"></SimpleField>
+</Schema>
+<Folder><name>OGRGeoJSON</name>
+  <Placemark>
+	<name>CDT Siguiri</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CDT</SimpleData>
+		<SimpleData name="gere">Ministère de la santé</SimpleData>
+		<SimpleData name="labo">Non</SimpleData>
+		<SimpleData name="suspect">4</SimpleData>
+		<SimpleData name="probable">6</SimpleData>
+		<SimpleData name="confirme">10</SimpleData>
+		<SimpleData name="total">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-9.174579620361319,11.418999671936</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE Forécariah</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="suspect">3</SimpleData>
+		<SimpleData name="probable">4</SimpleData>
+		<SimpleData name="confirme">19</SimpleData>
+		<SimpleData name="total">26</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-13.083399772644,9.43000984191894</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE Kindia</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">CREMS</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="suspect">8</SimpleData>
+		<SimpleData name="probable">8</SimpleData>
+		<SimpleData name="confirme">46</SimpleData>
+		<SimpleData name="total">62</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-12.857799530029199,10.049200057983301</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE Coyah</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">Brigade Cubaine</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="suspect">12</SimpleData>
+		<SimpleData name="probable">8</SimpleData>
+		<SimpleData name="confirme">40</SimpleData>
+		<SimpleData name="total">60</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-13.387499809265099,9.70631027221679</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE Donka</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">MSF</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="suspect">21</SimpleData>
+		<SimpleData name="probable">4</SimpleData>
+		<SimpleData name="confirme">25</SimpleData>
+		<SimpleData name="total">50</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-13.6830997467041,9.535519599914551</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CDT Kérouané</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CDT</SimpleData>
+		<SimpleData name="gere">Ministère de la santé</SimpleData>
+		<SimpleData name="labo">Non</SimpleData>
+		<SimpleData name="suspect">4</SimpleData>
+		<SimpleData name="probable">6</SimpleData>
+		<SimpleData name="confirme">10</SimpleData>
+		<SimpleData name="total">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-9.003109931945801,9.274109840393059</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE N'Zerekore</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">ALIMA</SimpleData>
+		<SimpleData name="labo">Non</SimpleData>
+		<SimpleData name="suspect">12</SimpleData>
+		<SimpleData name="probable">8</SimpleData>
+		<SimpleData name="confirme">30</SimpleData>
+		<SimpleData name="total">50</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-8.819580078125,7.75591993331909</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE Beyla</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">WAHA</SimpleData>
+		<SimpleData name="labo">Non</SimpleData>
+		<SimpleData name="suspect">12</SimpleData>
+		<SimpleData name="probable">8</SimpleData>
+		<SimpleData name="confirme">30</SimpleData>
+		<SimpleData name="total">50</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-8.64838027954101,8.69013023376464</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTE Macenta</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTE</SimpleData>
+		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="suspect">12</SimpleData>
+		<SimpleData name="probable">8</SimpleData>
+		<SimpleData name="confirme">30</SimpleData>
+		<SimpleData name="total">50</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-9.471010208129879,8.54108047485351</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CTS Conakry</name>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="type">CTS</SimpleData>
+		<SimpleData name="gere">Armée Française</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
+		<SimpleData name="suspect">0</SimpleData>
+		<SimpleData name="probable">0</SimpleData>
+		<SimpleData name="confirme">8</SimpleData>
+		<SimpleData name="total">8</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-13.6143999099731,9.5787296295166</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>
