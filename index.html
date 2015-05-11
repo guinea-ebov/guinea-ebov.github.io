@@ -40,9 +40,11 @@
     <script src='code/data/table_7d.json'></script>
     <script src='code/data/table_21d.json'></script>
     <script src='code/data/table_cumul.json'></script>
+    <script src='code/data/table_cumul_2015.json'></script>
     <script src="code/data/data_per_day.geojson" type="text/javascript"></script>
     <script src="code/data/data_per_week.geojson" type="text/javascript"></script>
     <script src="code/data/cumulative_daily.geojson" type="text/javascript"></script>
+    <script src="code/data/cumulative_daily_2015.geojson" type="text/javascript"></script>
     <script src="code/data/last_7d_daily.geojson" type="text/javascript"></script>
     <script src="code/data/last_21d_daily.geojson" type="text/javascript"></script>
 
@@ -126,6 +128,8 @@
         var cases;
         var semaine_map;
         var jour_map;
+        var scaleFactor = 11;
+        var multiplicateur = 1.7;
          var map = L.map('map', { 
                 center: [10, -11.3441], 
                 zoom: 7,    
@@ -156,8 +160,11 @@
                 else if (suffixe_file === "4") {
                     suffix = '21_derniers_jours_' + auj;
                 }
+                else if (suffixe_file === "5") {
+                    suffix = 'cumul_2015_' + auj;
+                }
                 else{
-                    suffix = '2015_' + auj;
+                    suffix = 'cumul_' + auj;
                 };
                 
                 $("a#print").attr("download", 'cas_confirmes_' + suffix + '.png')
@@ -243,9 +250,8 @@
                                "<b>" + String(feature.properties.total) +
                                "</b> cas";
                 // Calculations for radius in function of field 'total'
-                var scaleFactor = 12,
                 area = feature.properties.total * scaleFactor;
-                radius =  Math.sqrt(area/Math.PI)*2
+                radius =  Math.sqrt(area/Math.PI) * multiplicateur
                 layer.setRadius(radius);
                 layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
                 layer.on({
@@ -261,10 +267,44 @@
             },
             pointToLayer: function(feature, latlng) {   
                 // Calculations for radius. Same as bellow
-                var scaleFactor = 12,
                 area = feature.properties.total * scaleFactor;
                 return L.circleMarker(latlng, {     
-                    radius: Math.sqrt(area/Math.PI)*2,
+                    radius: Math.sqrt(area/Math.PI) * multiplicateur,
+                    /*fillColor: feature.properties.color, */
+                    fillColor: "red", 
+                    color: '#537898',   
+                    weight: 1,  
+                    fillOpacity: 0.6  
+                });
+            }
+        });
+
+        var cumulative_2015 = L.geoJson(data_cumulative_2015, {  
+            onEachFeature: function (feature, layer) {
+                popupContent = "<b>" + feature.properties.name + " </b><br>" +
+                               "<b>" + String(feature.properties.total) +
+                               "</b> cas";
+                // Calculations for radius in function of field 'total'
+                area = feature.properties.total * scaleFactor;
+                radius =  Math.sqrt(area/Math.PI) * multiplicateur
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });
+            },
+            pointToLayer: function(feature, latlng) {   
+                // Calculations for radius. Same as bellow
+                area = feature.properties.total * scaleFactor;
+                return L.circleMarker(latlng, {     
+                    radius: Math.sqrt(area/Math.PI) * multiplicateur,
                     /*fillColor: feature.properties.color, */
                     fillColor: "red", 
                     color: '#537898',   
@@ -280,9 +320,8 @@
                                "<b>" + String(feature.properties.total) +
                                "</b> cas";
                 // Calculations for radius in function of field 'total'
-                var scaleFactor = 12,
                 area = feature.properties.total * scaleFactor;
-                radius =  Math.sqrt(area/Math.PI)*2
+                radius =  Math.sqrt(area/Math.PI) * multiplicateur
                 layer.setRadius(radius);
                 layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
                 layer.on({
@@ -298,10 +337,9 @@
             },
             pointToLayer: function(feature, latlng) {   
                 // Calculations for radius. Same as bellow
-                var scaleFactor = 12,
                 area = feature.properties.total * scaleFactor;
                 return L.circleMarker(latlng, {     
-                    radius: Math.sqrt(area/Math.PI)*2,
+                    radius: Math.sqrt(area/Math.PI) * multiplicateur,
                     /*fillColor: feature.properties.color, */
                     fillColor: "red", 
                     color: '#537898',   
@@ -317,9 +355,8 @@
                                "<b>" + String(feature.properties.total) +
                                "</b> cas";
                 // Calculations for radius in function of field 'total'
-                var scaleFactor = 12,
                 area = feature.properties.total * scaleFactor;
-                radius =  Math.sqrt(area/Math.PI)*2
+                radius =  Math.sqrt(area/Math.PI) * multiplicateur
                 layer.setRadius(radius);
                 layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
                 layer.on({
@@ -335,10 +372,9 @@
             },
             pointToLayer: function(feature, latlng) {   
                 // Calculations for radius. Same as bellow
-                var scaleFactor = 12,
                 area = feature.properties.total * scaleFactor;
                 return L.circleMarker(latlng, {     
-                    radius: Math.sqrt(area/Math.PI)*2,
+                    radius: Math.sqrt(area/Math.PI) * multiplicateur,
                     /*fillColor: feature.properties.color, */
                     fillColor: "red", 
                     color: '#537898',   
@@ -439,9 +475,8 @@ function updatePropSymbols(timestamp, step) {
 } 
 
 function calcPropRadius(attributeValue) {         
-    var scaleFactor = 12,  // value dependent upon particular data set
         area = attributeValue * scaleFactor; 
-    return Math.sqrt(area/Math.PI)*2;       
+    return Math.sqrt(area/Math.PI) * multiplicateur;       
 }
 // end calcPropRadius
 
@@ -462,7 +497,7 @@ function createLegend(min, max) {
 
         var legendContainer = L.DomUtil.create("div", "legend"),  
             symbolsContainer = L.DomUtil.create("div", "symbolsContainer"),
-            classes = [1, 10, 40], 
+            classes = [1, 50, 100], 
 
             diameter,
             diameters = [];
@@ -474,7 +509,7 @@ function createLegend(min, max) {
         for (var i = 0; i < classes.length; i++) {  
 
             legendCircle = L.DomUtil.create("div", "legendCircle");  
-            diameter = calcPropRadius(classes[i])*2; 
+            diameter = calcPropRadius(classes[i]) * multiplicateur; 
             diameters.push(diameter);               
             var lastdiameter;                   
             if (diameters[i-1]){
@@ -515,7 +550,14 @@ function createSliderUI(timestamps, step) {
                 updatePropSymbols($(this).val().toString(), 'week');
                 $('output.temporal-legend').removeAttr('id');
                 $(".temporal-legend").text('Semaine ' + this.value);
-                semaine_map = this.value;
+                if (this.value <= 53) {
+                    $(".temporal-legend").text('Semaine ' + this.value + ' de 2014');
+                    semaine_map = this.value + '_2014';
+                }   
+                else{
+                    $(".temporal-legend").text('Semaine ' + String(this.value - 53) + ' de 2015');
+                    semaine_map = String(this.value - 53) + '_2015';
+                };
             });
         }
         // step == 'day'
@@ -575,9 +617,14 @@ function createTemporalLegend(startTimestamp, step) {
         $("output.temporal-legend").addClass( "lastweek");
     }
     else{
-
-        $(".temporal-legend").text('Semaine ' + startTimestamp); 
-        semaine_map = startTimestamp;
+        if (startTimestamp <= 53) {
+            $(".temporal-legend").text('Semaine ' + startTimestamp + ' de 2014');
+            semaine_map = startTimestamp + '_2014';
+        }
+        else{
+        $(".temporal-legend").text('Semaine ' + String(startTimestamp - 53) + ' de 2015'); 
+        semaine_map = String(startTimestamp - 53) + '_2015';
+        };
     };
 }
 ///////////////////////////////////////////////////////////////////
@@ -594,7 +641,7 @@ function createTemporalLegend(startTimestamp, step) {
 var dropdmenu = L.control({position: 'topright'});
 dropdmenu.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info dropdmenu');
-    div.innerHTML = '<select class="form-control choix_temp"><option value="1">Cas confirmés par jours</option><option value="2">Cas confirmés par semaines</option><option value="3">Cas confirmés - 7 derniers jours</option><option value="4">Cas confirmés - 21 derniers jours</option><option value="5">Cas confirmés - 2015</option></select>';
+    div.innerHTML = '<select class="form-control choix_temp"><option value="1">Cas confirmés par jours</option><option value="2">Cas confirmés par semaines</option><option value="3">Cas confirmés - 7 derniers jours</option><option value="4">Cas confirmés - 21 derniers jours</option><option value="5">Cas confirmés - 2015</option><option value="6">Cas confirmés - depuis le début</option></select>';
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
 };
@@ -613,6 +660,7 @@ $("select").change(
         map.removeLayer(cumulative);
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
+        map.removeLayer(cumulative_2015);
 
         var dataInfo = processData(data_per_day);   
                 createPropSymbols(dataInfo.timestamps, data_per_day, 'day');  
@@ -630,6 +678,7 @@ $("select").change(
         map.removeLayer(cumulative);
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
+        map.removeLayer(cumulative_2015);
 
         var dataWeek = processData(data_per_week);   
                 createPropSymbols(dataWeek.timestamps, data_per_week, 'week');  
@@ -645,6 +694,7 @@ $("select").change(
       map.removeLayer(cases);
       map.removeLayer(cumulative);
       map.removeLayer(last_21d);
+      map.removeLayer(cumulative_2015);
 
       map.addLayer(last_7d);
 
@@ -704,6 +754,7 @@ $("select").change(
         map.removeLayer(cases);
         map.removeLayer(cumulative);
         map.removeLayer(last_7d);
+        map.removeLayer(cumulative_2015);
         
         map.addLayer(last_21d);
 
@@ -756,7 +807,67 @@ $("select").change(
 
 
     }
-    // value = "5"
+    else if ($(this).val() == "5") {
+        $("output.temporal-legend").remove();
+        $("input.range-slider").remove();
+
+        map.removeLayer(cases);
+        map.removeLayer(last_7d);
+        map.removeLayer(last_21d);
+        map.removeLayer(cumulative);
+
+        map.addLayer(cumulative_2015);
+
+        $('div.panel').show();
+        $('div.panel-heading').empty()
+        $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures en 2015')
+
+        $(function ()  
+            { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+        }); 
+        jPut.users.data = table_cumul_2015;
+
+        $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    header: ['Prefecture', 'Sous-prefecture', '# Cas'],
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+        fichier = 'cas_cumul_2015_2015_05_10.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
+    }
+    // value = "6"
     else {
         $("output.temporal-legend").remove();
         $("input.range-slider").remove();
@@ -764,12 +875,13 @@ $("select").change(
         map.removeLayer(cases);
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
+        map.removeLayer(cumulative_2015);
 
         map.addLayer(cumulative);
 
         $('div.panel').show();
         $('div.panel-heading').empty()
-        $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures en 2015')
+        $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures depuis le début')
 
         $(function ()  
             { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
