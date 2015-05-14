@@ -1,6 +1,9 @@
 body {
   padding-top: 50px;
 }
+div.container {
+    box-sizing: content-box;
+}
 a.navbar-brand{
     width:200px;
     padding: 0;
