@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Daily report (data, maps and graphs) of the Ebola outbreak in Guinea, Rapport journalier (données, cartes, graphes) de l'épidémie Ebola en Guinée, 2014, 2015, VHF">
+    <meta name="author" content="WHO, OMS">
+    <title>Guinea - EBOV</title>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61269519-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <!-- Bootstrap core CSS -->
+    <link href="code/src/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="code/src/leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="code/css/leaflet.label.css" />
+
+    <link rel="stylesheet" href="code/css/style.css"/>
+    <script src="code/src/jquery-2.1.1.min.js"></script>
+     
+    <script>L_PREFER_CANVAS = true;</script>
+    <script src="code/src/leaflet/leaflet.js"></script>
+    <script src='code/src/leaflet-image.js'></script>
+    <script src="code/src/leaflet/leaflet.label.js"></script>
+    <script src='code/src/turf.min.js'>></script>
+    <script src='code/src/jput-2.js'>></script>
+    <script src='code/src/stupidtable.min.js'>></script>
+    <script src='code/src/table2CSV.js'>></script>
+    <script src='code/data/layers/countries.geojson'></script>
+    <script src='code/data/situation_prefectures.geojson'></script>
+    <script src="code/data/staff.geojson" type="text/javascript"></script>
+
+
+     
+    
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html"><img src="code/img/cellule_nationale.png" width="53px" height="51px">&nbsp;Guinea - EBOV</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <!-- <li class="active"><a href="#">Home</a></li> -->
+            <li><a href="niveau_alerte.html">Niveau d'alerte</a></li>
+            <li><a href="reticences.html">Réticences</a></li>
+            <li><a href="centres.html">Centres</a></li>
+            <li><a href="epi_weeks.html">Epi weeks</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="liens_utiles.html">Liens utiles</a></li>
+            <li><a href="sitreps.html">Sitreps</a></li>
+            <li><a id="nouv" href="nouveautes.html">Nouveautés</a></li>
+            <li><img src="code/img/who_logo.svg" width="150px" height="50px"></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="epi_content">
+                     
+     <h2>Nombre de personnel OMS-CDC par préfectures à la date du 13/05/2015</h2>
+      <div class='dlmap'>
+     <a id="print" href=""></a></div>
+     <div  id="wheel" >
+     <img src="code/img/spinning-wheel.gif"/ width="20px" height="20px">
+     Impression en cours...</div>
+      <div id="map"></div>
+      <br />      
+    <script>
+ $(document).ready(function() {
+         var legend;
+         var map = L.map('map', { 
+                center: [10, -11.3441], 
+                zoom: 7,    
+                minZoom: 6  
+            });
+
+         function doImage(err, canvas) {
+                var img = document.createElement('img');
+                var dimensions = map.getSize();
+                img.width = dimensions.x;
+                img.height = dimensions.y;
+                img.src = canvas.toDataURL("image/png");
+
+               
+                $("a#print").attr("download", 'personnel_OMS_CDC_2015_05_13.png')
+                $("a#print").attr("href", img.src)
+
+                $('#wheel').hide();
+                $("a#print").html("Télécharger la carte");
+                $('.dlmap').fadeIn("slow");
+            }
+
+         var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+});
+
+
+        var countries = L.geoJson(countr, {
+            style: function (feature) {
+                return {fillColor: "white",
+                        color: "black",
+                        weight: 1,
+                        opacity: 0.8,
+                        fillOpacity: 0.8};
+            }
+        });
+
+        var prefectures = L.geoJson(prefs, {
+            style: function (feature) {
+                return {fillColor: "#ffffbf",
+                        color: "#8A4117",
+                        weight: 1,
+                        opacity: 0.8,
+                        fillOpacity: 0.8};
+            }
+        });
+
+        var baseLayers = L.layerGroup([countries, prefectures]).addTo(map);
+        
+        var labelmal= new L.Label();
+        labelmal.setContent("<em>MALI</em>");
+        labelmal.setLatLng([11.5,-7.55]);
+        map.showLabel(labelmal);
+        
+        var labelciv = new L.Label();
+        labelciv.setContent("<em>CÔTE D'IVOIRE</em>");
+        labelciv.setLatLng([9.5,-7.55]);
+        map.showLabel(labelciv);
+
+        var labelsle = new L.Label();
+        labelsle.setContent('<em> SIERRA</br>LEONE</em>');
+        labelsle.setLatLng([8.6,-12.2]);
+        map.showLabel(labelsle);
+
+        var labellib = new L.Label();
+        labellib.setContent('<em>LIBERIA</em>');
+        labellib.setLatLng([ 6.8,  -10.5]);
+        map.showLabel(labellib);
+
+        var labelgb = new L.Label();
+        labelgb.setContent('<em>GUINEE</br>BISSAU</em>');
+        labelgb.setLatLng([12.2, -15.2]);
+        map.showLabel(labelgb);
+
+        var labelsen = new L.Label();
+        labelsen.setContent('<em>SENEGAL</em>');
+        labelsen.setLatLng([14.5, -15]);
+        map.showLabel(labelsen);
+
+        function style(feature) {
+            return {
+                fillColor: '#BCF5A9',
+                weight: 1.2,
+                opacity: 1,
+                color: '#0B610B',
+                fillOpacity: 0.6
+            };
+        }
+
+        var classif = [
+          [0, 10, 1],
+          [11, 25, 2],
+          [26, 50, 3],
+          [51, 100, 3.5],
+          [101, 10000, 4.2]
+        ];
+        var reclassed = turf.reclass(staff, 'total', 'size', classif);
+
+        var personnel = L.geoJson(reclassed, {  
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+                              
+               return L.marker(latlng, {icon: L.icon({
+            iconUrl: 'code/src/leaflet/images/staff.png',
+            iconSize: [6.5* feature.properties.size, 18* feature.properties.size]
+        })});
+            }
+        }).addTo(map);
+
+
+        function highlightFeature(e) {
+            var layer = e.target;
+            info.update(layer.feature.properties);
+        }
+
+        function resetHighlight(e) {
+            info.update();
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight
+            });
+        }
+
+        var info = L.control({position: 'bottomleft'});
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info cte'); 
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (props) {
+
+             if (props) {
+                if (props.central) {
+                this._div.innerHTML ='<b>' + props.name + '</b><br />' +
+                'Au niveau central : ' + props.central + '<br />' +
+                'Dixinn : ' + props.dixinn + '<br />' +
+                'Kaloum : ' + props.kaloum + '<br />' +
+                'Matam : ' + props.matam + '<br />' +
+                'Matoto : ' + props.matoto + '<br />' +
+                'Ratoma : ' + props.ratoma + '<br />' +
+                'Aéroport : ' + props.aeroport + '<br />' +
+                'Total : ' + props.total + '<br />'}
+                else{
+                    this._div.innerHTML ='<b>' + props.name + '</b><br />' +
+                    'Total : ' + props.total + '<br />'
+                };
+            }
+            else {
+                this._div.innerHTML ='Survolez une préfecture'};
+
+       };
+
+        info.addTo(map);
+
+    var switchOsm = L.control( { position: 'topright' } );
+    switchOsm.onAdd = function(map) {
+    var buttonSwitch = L.DomUtil.create("button", "bswitchx btn btn-default");
+    //$(buttonSwitch).text("OpenStreetMap");
+    $(buttonSwitch).append( '<span class=" glyphicon glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonSwitch, 'click', function(e) { 
+
+        if (map.hasLayer(OpenStreetMap_HOT) == true) {
+            map.removeLayer(OpenStreetMap_HOT);
+            map.addLayer(baseLayers);
+            map.addLayer(reticence_poly);
+            
+            prefs.bringToBack();
+            sous_pref.bringToBack();
+            countries.bringToBack();
+            
+            $("em").show();
+        }
+
+        else{
+            map.addLayer(OpenStreetMap_HOT);
+            $("em").hide();
+            map.removeLayer(baseLayers);
+            map.removeLayer(reticence_poly);
+        };
+      });
+      return buttonSwitch;
+    };
+    switchOsm.addTo(map); 
+
+
+    var fullZoom = L.control( { position: 'topright' } );
+    fullZoom.onAdd = function(map) {
+    var buttonZoom = L.DomUtil.create("button", "bzoomx btn btn-default");
+    $(buttonZoom).append( '<span class=" glyphicon glyphicon glyphicon-globe" aria-hidden="true"></span>');
+
+      L.DomEvent.addListener(buttonZoom, 'click', function(e) { 
+          map.setView([10, -11.3441], 7);
+      });
+      return buttonZoom;
+    };
+    fullZoom.addTo(map);
+
+    var printMap = L.control( { position: 'topright' } );
+        printMap.onAdd = function(map) {
+        var buttonPrint = L.DomUtil.create("button", "bprint_reti btn btn-default");
+        $(buttonPrint).append( '<span class=" glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>');
+
+          L.DomEvent.addListener(buttonPrint, 'click', function(e) { 
+              $('.dlmap').hide();
+              $('#wheel').show();
+              leafletImage(map, doImage);
+          });
+          
+          return buttonPrint;
+        };
+        printMap.addTo(map); 
+
+        if (L.Browser.ie) {
+          $('button.bprint_reti').hide();
+        }   
+
+    });
+    </script>
+
+    </div>
+
+    </div>
+      
+    <script src="code/src/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    
+
+       
+<script> 
+$(function ()  
+{ $(".bprint_reti").tooltip({placement : 'auto', title: 'Imprimez la carte', container: 'body'});  
+});  
+$(function ()  
+{ $(".bswitchx").tooltip({placement : 'auto', title: 'Alternez entre un fond OpenStreetMap et les sous préfectures', container: 'body'});  
+}); 
+
+$(function ()  
+{ $(".bzoomx").tooltip({placement : 'auto', title: 'Revenir au zoom initial', container: 'body'});  
+});
+</script>
+
+  </body>
+</html>
