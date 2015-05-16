@@ -456,9 +456,17 @@ function updatePropSymbols(timestamp, step) {
     }
     // step == 'week'
     else {
-        popupContent = "<b>" + props.name + " </b><br>" +
+        if (timestamp <= 53) {
+            popupContent = "<b>" + props.name + " </b><br>" +
                        "<b>" + String(props[timestamp]) +
-                       "</b> cas dans la semaine " + timestamp;
+                       "</b> cas dans la semaine " + timestamp + " de 2014";
+        }
+        else{
+            popupContent = "<b>" + props.name + " </b><br>" +
+                       "<b>" + String(props[timestamp]) +
+                       "</b> cas dans la semaine " + String(timestamp - 53) + " de 2015";
+        };
+        
     };               
     layer.setRadius(radius);
     layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
