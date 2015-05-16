@@ -3,7 +3,7 @@ var retic_pts = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Tanene", "reticence": "4", "localite": "Dembayah" }, "geometry": { "type": "Point", "coordinates": [ -13.748377008041247, 10.128866533623004 ] } },
+{ "type": "Feature", "properties": { "name": "Tanene", "reticence": "1", "localite": "Dembayah" }, "geometry": { "type": "Point", "coordinates": [ -13.748377008041247, 10.128866533623004 ] } },
 { "type": "Feature", "properties": { "name": "Falessade", "reticence": "2", "localite": null }, "geometry": { "type": "Point", "coordinates": [ -13.290920231176198, 10.118407287213273 ] } }
 ]
 }
