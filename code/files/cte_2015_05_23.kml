@@ -30,10 +30,10 @@
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">3</SimpleData>
-		<SimpleData name="probable">4</SimpleData>
-		<SimpleData name="confirme">19</SimpleData>
-		<SimpleData name="total">26</SimpleData>
+		<SimpleData name="suspect">5</SimpleData>
+		<SimpleData name="probable">6</SimpleData>
+		<SimpleData name="confirme">12</SimpleData>
+		<SimpleData name="total">23</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.083399772644,9.43000984191894</coordinates></Point>
   </Placemark>
