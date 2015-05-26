@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
-<Document id="root_doc">
-<Schema name="OGRGeoJSON" id="OGRGeoJSON">
-	<SimpleField name="type" type="string"></SimpleField>
-	<SimpleField name="gere" type="string"></SimpleField>
-	<SimpleField name="labo" type="string"></SimpleField>
-	<SimpleField name="suspect" type="int"></SimpleField>
-	<SimpleField name="probable" type="int"></SimpleField>
-	<SimpleField name="confirme" type="int"></SimpleField>
-	<SimpleField name="total" type="int"></SimpleField>
-</Schema>
-<Folder><name>OGRGeoJSON</name>
+<Document><Folder><name>OGRGeoJSON</name>
   <Placemark>
 	<name>CDT Siguiri</name>
 	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
@@ -30,10 +20,10 @@
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">5</SimpleData>
-		<SimpleData name="probable">6</SimpleData>
-		<SimpleData name="confirme">12</SimpleData>
-		<SimpleData name="total">23</SimpleData>
+		<SimpleData name="suspect">3</SimpleData>
+		<SimpleData name="probable">4</SimpleData>
+		<SimpleData name="confirme">19</SimpleData>
+		<SimpleData name="total">26</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.083399772644,9.43000984191894</coordinates></Point>
   </Placemark>
@@ -142,4 +132,13 @@
       <Point><coordinates>-13.6143999099731,9.5787296295166</coordinates></Point>
   </Placemark>
 </Folder>
+<Schema name="OGRGeoJSON" id="OGRGeoJSON">
+	<SimpleField name="type" type="string"></SimpleField>
+	<SimpleField name="gere" type="string"></SimpleField>
+	<SimpleField name="labo" type="string"></SimpleField>
+	<SimpleField name="suspect" type="int"></SimpleField>
+	<SimpleField name="probable" type="int"></SimpleField>
+	<SimpleField name="confirme" type="int"></SimpleField>
+	<SimpleField name="total" type="int"></SimpleField>
+</Schema>
 </Document></kml>
