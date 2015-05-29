@@ -3,6 +3,6 @@ var retic_pts2 = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Banguigny", "reticence": "1", "localite": "Thianguigay" }, "geometry": { "type": "Point", "coordinates": [ -13.539013045600621, 10.675419497049152 ] } }
+{ "type": "Feature", "properties": { "name": "Banguigny", "reticence": "4", "localite": "Horèguilinthiowol" }, "geometry": { "type": "Point", "coordinates": [ -13.539013045600621, 10.675419497049152 ] } }
 ]
 }
