@@ -2,14 +2,13 @@
 
 This repository contains all the files of the [guinea-ebov site](http://guinea-ebov.github.io/) developed and maintained by WHO in Guinea.
 
-The site contains 9 pages:
+The site contains 8 pages:
 * **index.html**: Daily, weekly and cumulative (last 7 days, last 21 days,  since January 1st 2015 and since the beginning) confirmed cases per sous-préfectures. ***Updated everyday***
 * **niveau_alerte.html**: Alert level per préfectures. ***Updated everyday***
 * **reticences.html**: Location of the reluctance. ***Updated everyday***
 * **centres.html**: Location and capacity of the Ebola centres. ***Updated everyday***
 * **epi_weeks.html**: Confirmed, probable and suspect cases per epi week. ***Updated every Tuesday***
 * **stats.html**: Gender and age stats for confirmed cases. ***Updated everyday***
-* **personnel.html**: Number of WHO/CDC staff per préfectures. ***Updated everyday***
 * **liens_utiles.html**: Useful links on the Ebola situation in Guinea and in the region.
 * **sitreps.html**: Daily and weekly sitreps available for download (PDF). ***Updated everyday***
 
