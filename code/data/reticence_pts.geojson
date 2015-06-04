@@ -5,7 +5,9 @@ var retic_pts = {
 "features": [
 { "type": "Feature", "properties": { "name": "Tanene", "reticence": "3", "localite": "Tanene-centre" }, "geometry": { "type": "Point", "coordinates": [ -13.748377008041247, 10.128866533623004 ] } },
 { "type": "Feature", "properties": { "name": "Banguigny", "reticence": "1", "localite": "Kaouda baila" }, "geometry": { "type": "Point", "coordinates": [ -13.539013045600621, 10.675419497049152 ] } },
+{ "type": "Feature", "properties": { "name": "Dubreka-Centre", "reticence": "3", "localite": "Plateau" }, "geometry": { "type": "Point", "coordinates": [ -13.475141516603003, 9.786664501813362 ] } },
 { "type": "Feature", "properties": { "name": "Fria-Centre", "reticence": "2", "localite": "Tahiré et Kounsikhimbeli" }, "geometry": { "type": "Point", "coordinates": [ -13.628543706164857, 10.404815999171344 ] } },
-{ "type": "Feature", "properties": { "name": "Kamsar", "reticence": "3", "localite": "Kamsar-centre" }, "geometry": { "type": "Point", "coordinates": [ -14.539841608211141, 10.632321405319722 ] } }
+{ "type": "Feature", "properties": { "name": "Kamsar", "reticence": "3", "localite": "Kamsar-centre" }, "geometry": { "type": "Point", "coordinates": [ -14.539841608211141, 10.632321405319722 ] } },
+{ "type": "Feature", "properties": { "name": "Khorira", "reticence": "2", "localite": "Khorira-centre" }, "geometry": { "type": "Point", "coordinates": [ -13.526316626444084, 9.948862569079084 ] } }
 ]
 }
