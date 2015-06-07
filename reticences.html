@@ -64,7 +64,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_06_5.csv'
+        fichier = 'reticences_2015_06_6.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -130,7 +130,7 @@
       <br />
       
       <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 5/06/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 6/06/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table table-striped">
          <thead>
             <tr>
@@ -140,6 +140,12 @@
             </tr> 
          </thead>
          <tbody>
+         
+            <tr>
+              <td>Banguigny</td>
+              <td>Kaoudabaila</td>
+              <td>Enterrement sécurisé</td>              
+            </tr>
          
             <tr>
               <td>Banguigny</td>
@@ -458,7 +464,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 6/06/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 7/06/2015 "});   
 });  
  
 $(function ()  

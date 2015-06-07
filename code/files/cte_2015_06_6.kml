@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
-<Document><Folder><name>OGRGeoJSON</name>
+<Document id="root_doc">
+<Schema name="OGRGeoJSON" id="OGRGeoJSON">
+	<SimpleField name="type" type="string"></SimpleField>
+	<SimpleField name="gere" type="string"></SimpleField>
+	<SimpleField name="labo" type="string"></SimpleField>
+	<SimpleField name="suspect" type="int"></SimpleField>
+	<SimpleField name="probable" type="int"></SimpleField>
+	<SimpleField name="confirme" type="int"></SimpleField>
+	<SimpleField name="total" type="int"></SimpleField>
+</Schema>
+<Folder><name>OGRGeoJSON</name>
   <Placemark>
 	<name>CDT Siguiri</name>
 	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
@@ -132,13 +142,4 @@
       <Point><coordinates>-13.6143999099731,9.5787296295166</coordinates></Point>
   </Placemark>
 </Folder>
-<Schema name="OGRGeoJSON" id="OGRGeoJSON">
-	<SimpleField name="type" type="string"></SimpleField>
-	<SimpleField name="gere" type="string"></SimpleField>
-	<SimpleField name="labo" type="string"></SimpleField>
-	<SimpleField name="suspect" type="int"></SimpleField>
-	<SimpleField name="probable" type="int"></SimpleField>
-	<SimpleField name="confirme" type="int"></SimpleField>
-	<SimpleField name="total" type="int"></SimpleField>
-</Schema>
 </Document></kml>
