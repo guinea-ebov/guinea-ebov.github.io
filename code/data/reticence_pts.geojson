@@ -3,7 +3,8 @@ var retic_pts = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Kakossa", "reticence": "3", "localite": "Kakossa-centre" }, "geometry": { "type": "Point", "coordinates": [ -13.454786300570557, 9.472742925244834 ] } },
-{ "type": "Feature", "properties": { "name": "Maneah", "reticence": "2", "localite": "Kolotoyah" }, "geometry": { "type": "Point", "coordinates": [ -13.440782097985, 9.717125116750783 ] } }
+{ "type": "Feature", "properties": { "name": "Fria-Centre", "reticence": "2", "localite": "Centre" }, "geometry": { "type": "Point", "coordinates": [ -13.628543706164857, 10.404815999171344 ] } },
+{ "type": "Feature", "properties": { "name": "Friguiagbe", "reticence": "2", "localite": "Centre" }, "geometry": { "type": "Point", "coordinates": [ -12.955080436633244, 9.851046834617447 ] } },
+{ "type": "Feature", "properties": { "name": "Tormelin", "reticence": "2", "localite": "Centre" }, "geometry": { "type": "Point", "coordinates": [ -13.739811885017117, 10.357359008980961 ] } }
 ]
 }
