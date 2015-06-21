@@ -136,8 +136,8 @@
 		<SimpleData name="labo">Oui</SimpleData>
 		<SimpleData name="suspect">0</SimpleData>
 		<SimpleData name="probable">0</SimpleData>
-		<SimpleData name="confirme">8</SimpleData>
-		<SimpleData name="total">8</SimpleData>
+		<SimpleData name="confirme">5</SimpleData>
+		<SimpleData name="total">5</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.6143999099731,9.5787296295166</coordinates></Point>
   </Placemark>
