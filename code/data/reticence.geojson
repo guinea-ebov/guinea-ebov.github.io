@@ -2,6 +2,6 @@ var retic = {
 "type": "FeatureCollection",
                                                                                 
 "features": [
-
+{ "type": "Feature", "properties": { "name": "Matam", "reticence": "2", "localite": "Bonfi Marché" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -13.6475, 9.5618 ], [ -13.6342, 9.558 ], [ -13.6606, 9.5394 ], [ -13.6867, 9.5218 ], [ -13.6897, 9.5237 ], [ -13.6754, 9.5412 ], [ -13.6475, 9.5618 ] ] ] } }
 ]
 }
