@@ -147,10 +147,10 @@
 		<SimpleData name="type">CDT</SimpleData>
 		<SimpleData name="gere">IMC(International Medical Corps)</SimpleData>
 		<SimpleData name="labo">oui</SimpleData>
-		<SimpleData name="suspect">2</SimpleData>
-		<SimpleData name="probable">0</SimpleData>
-		<SimpleData name="confirme">0</SimpleData>
-		<SimpleData name="total">2</SimpleData>
+		<SimpleData name="suspect">3</SimpleData>
+		<SimpleData name="probable">2</SimpleData>
+		<SimpleData name="confirme">5</SimpleData>
+		<SimpleData name="total">10</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-14.594434,10.671065</coordinates></Point>
   </Placemark>
