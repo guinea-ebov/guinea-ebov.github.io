@@ -69,7 +69,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'capacité_centres_ebola_2015_07_13.csv'
+        fichier = 'capacité_centres_ebola_2015_07_14.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -107,7 +107,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'situation_patients_centres_ebola_2015_07_13.csv'
+        fichier = 'situation_patients_centres_ebola_2015_07_14.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -165,7 +165,7 @@
         
 <h2>Etat des lieux des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
 <div class="panel panel-default">
-      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 13/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 14/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table patients table-striped">
          <thead>
             <tr>
@@ -197,31 +197,31 @@
             <tr>
                <td>Cas confirmés</td>
                
-                <td>11</td>
+                <td>12</td>
                
                 <td>0</td>
                
                 <td>0</td>
                
                 <td>0</td>
+               
+                <td>2</td>
+               
+                <td>1</td>
                
                 <td>3</td>
                
-                <td>1</td>
-               
-                <td>4</td>
-               
                 <td>0</td>
                
                 <td>1</td>
                
-                <td>20</td>
+                <td>19</td>
                
             </tr>
             <tr>
                <td>Cas suspects</td>
                
-                <td>4</td>
+                <td>1</td>
                
                 <td>0</td>
                
@@ -239,7 +239,7 @@
                
                 <td>0</td>
                
-                <td>11</td>
+                <td>8</td>
                
             </tr>
             <tr>
@@ -253,15 +253,15 @@
                
                 <td>0</td>
                
-                <td>0</td>
-               
-                <td>0</td>
-               
                 <td>1</td>
                
                 <td>0</td>
                
                 <td>1</td>
+               
+                <td>0</td>
+               
+                <td>0</td>
                
                 <td>2</td>
                
@@ -293,7 +293,7 @@
             <tr>
                <td>Total hospitalisés</td>
                
-                <td>15</td>
+                <td>13</td>
                
                 <td>0</td>
                
@@ -301,17 +301,17 @@
                
                 <td>0</td>
                
-                <td>5</td>
+                <td>4</td>
                
                 <td>2</td>
                
-                <td>8</td>
+                <td>7</td>
                
                 <td>0</td>
                
                 <td>1</td>
                
-                <td>31</td>
+                <td>27</td>
                
             </tr>
       </tbody>
@@ -446,7 +446,7 @@
       </div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 13/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 14/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table capacite table-striped">
          <thead>
             <tr>
@@ -477,7 +477,7 @@
       <br />
       <div class="panel panel-default"><span id="tot1">Total</span><span id="tot2">6</span><span id="tot3">94</span><span id="tot4">60</span><span  id="tot5">220</span><span id="tot6">374</span></span></div>
       <br />
-      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_07_13.kml" download>KML</a> ou <a href="code/files/cte_2015_07_13.geojson" download>GeoJSON</a></div>
+      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_07_14.kml" download>KML</a> ou <a href="code/files/cte_2015_07_14.geojson" download>GeoJSON</a></div>
 </div>
     <script>
  $(document).ready(function() {
@@ -940,7 +940,7 @@ $("select").change(
          
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 14/07/2015<br />Dernier cas confirmé : 13/07/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 15/07/2015<br />Dernier cas confirmé : 14/07/2015 "});   
 });  
  
 $(function ()  
