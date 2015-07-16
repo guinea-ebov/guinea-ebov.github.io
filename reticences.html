@@ -64,7 +64,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_07_14.csv'
+        fichier = 'reticences_2015_07_15.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -129,9 +129,27 @@
       <div id="map"></div>
       <br />
       
-        <div class="alert alert-info" role="alert">
-          Aucune réticence notifiée à la date du 14/07/2015.
-        </div>
+      <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 15/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <table class="table table-striped">
+         <thead>
+            <tr>
+                <th data-sort="string">Sous-préfecture</th>
+                <th data-sort="string">Localité</th>
+                <th data-sort="string">Type de réticence</th>
+            </tr> 
+         </thead>
+         <tbody>
+         
+            <tr>
+              <td>Benty</td>
+              <td>Koloteyah</td>
+              <td>Transfert de cas suspect</td>              
+            </tr>
+         
+      </tbody>
+      </table>
+      </div>
       
     <script>
  $(document).ready(function() {
@@ -440,7 +458,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 15/07/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 16/07/2015 "});   
 });  
  
 $(function ()  
