@@ -3,6 +3,7 @@ var retic_pts = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Benty", "reticence": "3", "localite": "Koloteyah" }, "geometry": { "type": "Point", "coordinates": [ -13.156248745921662, 9.100153168699499 ] } }
+{ "type": "Feature", "properties": { "name": "Kindia-Centre", "reticence": "2", "localite": "Koliady" }, "geometry": { "type": "Point", "coordinates": [ -12.79113859317436, 10.016349364843782 ] } },
+{ "type": "Feature", "properties": { "name": "Maneah", "reticence": "3", "localite": "Sanoya textile" }, "geometry": { "type": "Point", "coordinates": [ -13.440782097985, 9.717125116750783 ] } }
 ]
 }

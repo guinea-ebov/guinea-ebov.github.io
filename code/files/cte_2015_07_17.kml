@@ -54,7 +54,7 @@
 	<name>CTE Coyah</name>
 	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
 		<SimpleData name="type">CTE</SimpleData>
-		<SimpleData name="gere">Brigade Cubaine</SimpleData>
+		<SimpleData name="gere">Ministère de la santé</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
 		<SimpleData name="suspect">12</SimpleData>
 		<SimpleData name="probable">8</SimpleData>
@@ -127,19 +127,6 @@
 		<SimpleData name="total">30</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-9.471010208129879,8.54108047485351</coordinates></Point>
-  </Placemark>
-  <Placemark>
-	<name>CTS Conakry</name>
-	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
-		<SimpleData name="type">CTS</SimpleData>
-		<SimpleData name="gere">Armée Française</SimpleData>
-		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">0</SimpleData>
-		<SimpleData name="probable">0</SimpleData>
-		<SimpleData name="confirme">5</SimpleData>
-		<SimpleData name="total">5</SimpleData>
-	</SchemaData></ExtendedData>
-      <Point><coordinates>-13.6143999099731,9.5787296295166</coordinates></Point>
   </Placemark>
   <Placemark>
 	<name>CDT Kamsar</name>
