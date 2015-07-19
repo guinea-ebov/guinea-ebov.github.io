@@ -5,10 +5,10 @@
 	<SimpleField name="type" type="string"></SimpleField>
 	<SimpleField name="gere" type="string"></SimpleField>
 	<SimpleField name="labo" type="string"></SimpleField>
-	<SimpleField name="suspect" type="int"></SimpleField>
-	<SimpleField name="probable" type="int"></SimpleField>
-	<SimpleField name="confirme" type="int"></SimpleField>
-	<SimpleField name="total" type="int"></SimpleField>
+	<SimpleField name="suspect" type="string"></SimpleField>
+	<SimpleField name="probable" type="string"></SimpleField>
+	<SimpleField name="confirme" type="string"></SimpleField>
+	<SimpleField name="total" type="string"></SimpleField>
 </Schema>
 <Folder><name>OGRGeoJSON</name>
   <Placemark>
@@ -69,10 +69,6 @@
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">MSF</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">5</SimpleData>
-		<SimpleData name="probable">0</SimpleData>
-		<SimpleData name="confirme">10</SimpleData>
-		<SimpleData name="total">15</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.6830997467041,9.535519599914551</coordinates></Point>
   </Placemark>

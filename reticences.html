@@ -64,7 +64,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2015_07_17.csv'
+        fichier = 'reticences_2015_07_18.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -130,7 +130,7 @@
       <br />
       
       <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 17/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 18/07/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table table-striped">
          <thead>
             <tr>
@@ -142,8 +142,14 @@
          <tbody>
          
             <tr>
-              <td>Kindia-Centre</td>
-              <td>Koliady</td>
+              <td>Kolaboui</td>
+              <td>Centre</td>
+              <td>Enterrement sécurisé</td>              
+            </tr>
+         
+            <tr>
+              <td>Sougueta</td>
+              <td>Centre</td>
               <td>Enterrement sécurisé</td>              
             </tr>
          
@@ -464,7 +470,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 18/07/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 19/07/2015 "});   
 });  
  
 $(function ()  
