@@ -91,10 +91,10 @@
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">ALIMA</SimpleData>
 		<SimpleData name="labo">Non</SimpleData>
-		<SimpleData name="suspect">12</SimpleData>
-		<SimpleData name="probable">8</SimpleData>
-		<SimpleData name="confirme">30</SimpleData>
-		<SimpleData name="total">50</SimpleData>
+		<SimpleData name="suspect">3</SimpleData>
+		<SimpleData name="probable">0</SimpleData>
+		<SimpleData name="confirme">3</SimpleData>
+		<SimpleData name="total">6</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-8.819580078125,7.75591993331909</coordinates></Point>
   </Placemark>
