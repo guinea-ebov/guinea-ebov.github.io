@@ -3,6 +3,6 @@ var retic_pts = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Kindia-Centre", "reticence": "2", "localite": "Manquepas, Kassia, Kabapastoria (CU)" }, "geometry": { "type": "Point", "coordinates": [ -12.79113859317436, 10.016349364843782 ] } }
+{ "type": "Feature", "properties": { "name": "Kindia-Centre", "reticence": "2", "localite": "Fissa ecole (CU)" }, "geometry": { "type": "Point", "coordinates": [ -12.79113859317436, 10.016349364843782 ] } }
 ]
 }
