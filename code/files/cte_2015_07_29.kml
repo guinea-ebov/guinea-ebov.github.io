@@ -128,8 +128,8 @@
 	<name>CDT Kamsar</name>
 	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
 		<SimpleData name="type">CDT</SimpleData>
-		<SimpleData name="gere">IMC(International Medical Corps)</SimpleData>
-		<SimpleData name="labo">oui</SimpleData>
+		<SimpleData name="gere">IMC (International Medical Corps)</SimpleData>
+		<SimpleData name="labo">Oui</SimpleData>
 		<SimpleData name="suspect">3</SimpleData>
 		<SimpleData name="probable">2</SimpleData>
 		<SimpleData name="confirme">5</SimpleData>
