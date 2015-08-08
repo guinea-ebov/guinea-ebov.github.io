@@ -3,8 +3,6 @@ var retic_pts = {
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Baguinet", "reticence": "2", "localite": "legedougou" }, "geometry": { "type": "Point", "coordinates": [ -13.492112399236399, 10.5541017305521 ] } },
-{ "type": "Feature", "properties": { "name": "Kindia-Centre", "reticence": "2", "localite": "Yewlé" }, "geometry": { "type": "Point", "coordinates": [ -12.79113859317436, 10.016349364843782 ] } },
-{ "type": "Feature", "properties": { "name": "Matoto", "reticence": "2", "localite": "Camp alpha yaya" }, "geometry": { "type": "Point", "coordinates": [ -13.539083365021853, 9.592030204314234 ] } }
+{ "type": "Feature", "properties": { "name": "Kindia-Centre", "reticence": "2", "localite": "Kassia" }, "geometry": { "type": "Point", "coordinates": [ -12.79113859317436, 10.016349364843782 ] } }
 ]
 }
