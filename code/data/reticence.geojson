@@ -2,6 +2,6 @@ var retic = {
 "type": "FeatureCollection",
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Maneah", "reticence": "2", "localite": "Bentourayah" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -13.3824, 9.7552 ], [ -13.4152, 9.6958 ], [ -13.4661, 9.6843 ], [ -13.4885, 9.673 ], [ -13.4997, 9.6891 ], [ -13.4752, 9.7219 ], [ -13.4751, 9.7329 ], [ -13.4465, 9.7369 ], [ -13.427, 9.7503 ], [ -13.3889, 9.7619 ], [ -13.3824, 9.7552 ] ] ] } }
+
 ]
 }
