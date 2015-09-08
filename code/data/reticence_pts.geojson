@@ -1,8 +1,7 @@
 var retic_pts = {
 "type": "FeatureCollection",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "name": "Ratoma", "reticence": "1", "localite": "Kaporo Rail" }, "geometry": { "type": "Point", "coordinates": [ -13.577926841936121, 9.677124237666835 ] } }
+
 ]
 }
