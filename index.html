@@ -39,6 +39,7 @@
     <script src='code/data/layers/prefectures.geojson'></script>
     <script src='code/data/table_7d.json'></script>
     <script src='code/data/table_21d.json'></script>
+    <script src='code/data/table_3m.json'></script>
     <script src='code/data/table_cumul.json'></script>
     <script src='code/data/table_cumul_2015.json'></script>
     <script src="code/data/data_per_day.geojson" type="text/javascript"></script>
@@ -47,6 +48,7 @@
     <script src="code/data/cumulative_daily_2015.geojson" type="text/javascript"></script>
     <script src="code/data/last_7d_daily.geojson" type="text/javascript"></script>
     <script src="code/data/last_21d_daily.geojson" type="text/javascript"></script>
+    <script src="code/data/last_3m_daily.geojson" type="text/javascript"></script>
 
 
      
@@ -89,7 +91,7 @@
     </nav>
     <div class="epi_content">
         
-    <a href="code/files/map/cas_villages_2015_11_19.pdf"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;Carte des cas confirmés par villages durant les 21 derniers jours à la date du 19/11/2015</a>
+    <a href="code/files/map/cas_villages_2015_11_20.pdf"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;Carte des cas confirmés par villages durant les 21 derniers jours à la date du 20/11/2015</a>
      <h2>Localisation des cas confirmés par sous-préfectures&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
      <div class='dlmap'>
      <a id="print" href=""></a> | <a href="code/img/legende_cas_confirmes.png" download>Télécharger la légende</a></div>
@@ -165,9 +167,14 @@
                 else if (suffixe_file === "5") {
                     suffix = 'cumul_2015_' + auj;
                 }
-                else{
+                else if (suffixe_file === "6"){
                     suffix = 'cumul_' + auj;
+                }
+                // 3 derniers mois
+                else{
+                    suffix = '3_derniers_mois_' + auj;
                 };
+                
                 
                 $("a#print").attr("download", 'cas_confirmes_' + suffix + '.png')
                 $("a#print").attr("href", img.src)
@@ -352,6 +359,41 @@
         });
 
         var last_21d = L.geoJson(data_21d, {  
+            onEachFeature: function (feature, layer) {
+                popupContent = "<b>" + feature.properties.name + " </b><br>" +
+                               "<b>" + String(feature.properties.total) +
+                               "</b> cas";
+                // Calculations for radius in function of field 'total'
+                area = feature.properties.total * scaleFactor;
+                radius =  Math.sqrt(area/Math.PI) * multiplicateur
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) }); 
+                layer.on({
+                    mouseover: function(e) {
+                        this.openPopup();
+                        this.setStyle({color: 'yellow', weight: 2});
+                    },
+                    mouseout: function(e) {
+                        this.closePopup();
+                        this.setStyle({color: '#537898', weight: 1});     
+                    }
+                });
+            },
+            pointToLayer: function(feature, latlng) {   
+                // Calculations for radius. Same as bellow
+                area = feature.properties.total * scaleFactor;
+                return L.circleMarker(latlng, {     
+                    radius: Math.sqrt(area/Math.PI) * multiplicateur,
+                    /*fillColor: feature.properties.color, */
+                    fillColor: "red", 
+                    color: '#537898',   
+                    weight: 1,  
+                    fillOpacity: 0.6  
+                });
+            }
+        });
+
+        var last_3m = L.geoJson(data_3m, {  
             onEachFeature: function (feature, layer) {
                 popupContent = "<b>" + feature.properties.name + " </b><br>" +
                                "<b>" + String(feature.properties.total) +
@@ -651,7 +693,7 @@ function createTemporalLegend(startTimestamp, step) {
 var dropdmenu = L.control({position: 'topright'});
 dropdmenu.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info dropdmenu');
-    div.innerHTML = '<select class="form-control choix_temp"><option value="1">Cas confirmés par jours</option><option value="2">Cas confirmés par semaines</option><option value="3">Cas confirmés - 7 derniers jours</option><option value="4">Cas confirmés - 21 derniers jours</option><option value="5">Cas confirmés - 2015</option><option value="6">Cas confirmés - depuis le début</option></select>';
+    div.innerHTML = '<select class="form-control choix_temp"><option value="1">Cas confirmés par jours</option><option value="2">Cas confirmés par semaines</option><option value="3">Cas confirmés - 7 derniers jours</option><option value="4">Cas confirmés - 21 derniers jours</option><option value="5">Cas confirmés - 2015</option><option value="6">Cas confirmés - depuis le début</option><option value="7">Cas confirmés - 3 derniers mois</option></select>';
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
 };
@@ -671,6 +713,7 @@ $("select").change(
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
         map.removeLayer(cumulative_2015);
+        map.removeLayer(last_3m);
 
         var dataInfo = processData(data_per_day);   
                 createPropSymbols(dataInfo.timestamps, data_per_day, 'day');  
@@ -689,6 +732,7 @@ $("select").change(
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
         map.removeLayer(cumulative_2015);
+        map.removeLayer(last_3m);
 
         var dataWeek = processData(data_per_week);   
                 createPropSymbols(dataWeek.timestamps, data_per_week, 'week');  
@@ -705,6 +749,7 @@ $("select").change(
       map.removeLayer(cumulative);
       map.removeLayer(last_21d);
       map.removeLayer(cumulative_2015);
+      map.removeLayer(last_3m);
 
       map.addLayer(last_7d);
 
@@ -734,7 +779,7 @@ $("select").change(
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'cas_7_derniers_jours_2015_11_19.csv'
+        fichier = 'cas_7_derniers_jours_2015_11_20.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -765,6 +810,7 @@ $("select").change(
         map.removeLayer(cumulative);
         map.removeLayer(last_7d);
         map.removeLayer(cumulative_2015);
+        map.removeLayer(last_3m);
         
         map.addLayer(last_21d);
 
@@ -794,7 +840,7 @@ $("select").change(
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'cas_21_derniers_jours_2015_11_19.csv'
+        fichier = 'cas_21_derniers_jours_2015_11_20.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -825,6 +871,7 @@ $("select").change(
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
         map.removeLayer(cumulative);
+        map.removeLayer(last_3m);
 
         map.addLayer(cumulative_2015);
 
@@ -855,7 +902,7 @@ $("select").change(
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 
-        fichier = 'cas_cumul_2015_2015_05_10.csv'
+        fichier = 'cas_cumul_2015_2015_11_20.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -877,8 +924,7 @@ $("select").change(
         });
 
     }
-    // value = "6"
-    else {
+    else if ($(this).val() == "6")  {
         $("output.temporal-legend").remove();
         $("input.range-slider").remove();
 
@@ -886,6 +932,7 @@ $("select").change(
         map.removeLayer(last_7d);
         map.removeLayer(last_21d);
         map.removeLayer(cumulative_2015);
+        map.removeLayer(last_3m);
 
         map.addLayer(cumulative);
 
@@ -916,7 +963,7 @@ $("select").change(
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 
-        fichier = 'cas_cumul_2015_2015_11_19.csv'
+        fichier = 'cas_cumul_2015_2015_11_20.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -937,7 +984,69 @@ $("select").change(
 
         });
 
-    }; 
+    }
+    // value = "7"
+    else {
+        $("output.temporal-legend").remove();
+        $("input.range-slider").remove();
+
+        map.removeLayer(cases);
+        map.removeLayer(last_7d);
+        map.removeLayer(last_21d);
+        map.removeLayer(cumulative_2015);
+        map.removeLayer(cumulative);
+
+        map.addLayer(last_3m);
+
+        $('div.panel').show();
+        $('div.panel-heading').empty()
+        $('div.panel-heading').append('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Nombre de cas confirmés par sous-préfectures durant les 3 derniers mois')
+
+        $(function ()  
+            { $(".glyphicon-info-sign").tooltip({placement : 'auto', title: "Cliquez sur les colonnes du tableau pour le réordonner", container: 'body'});  
+        }); 
+        jPut.users.data = table_3m;
+
+        $('.table').each(function () {
+            var $table = $(this);
+
+            var $exportCSV = $('<span class="glyphicon glyphicon-save" aria-hidden="true">');
+            $exportCSV.appendTo('div.panel-heading');
+
+            $(function ()  
+            { $(".glyphicon-save").tooltip({placement : 'auto', title: "Cliquez pour sauvegarder au format CSV", container: 'body'});  
+            });
+
+            $exportCSV.click(function () {
+                var csv = $table.table2CSV({
+                    header: ['Prefecture', 'Sous-prefecture', '# Cas'],
+                    delivery: 'value'
+                });
+ 
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+        fichier = 'cas_3_derniers_mois_2015_11_20.csv'
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, fichier);
+        } 
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fichier);
+                link.style = "visibility:hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+            });
+
+        });
+
+    };
 })
 // ----------------- End drop down -----------------
 
@@ -1021,7 +1130,7 @@ $("select").change(
      
     <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 20/11/2015<br />Dernier cas confirmé : 27/10/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 21/11/2015<br />Dernier cas confirmé : 27/10/2015 "});   
 });  
  
 $(function ()  
