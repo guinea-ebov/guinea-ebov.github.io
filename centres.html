@@ -69,7 +69,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'capacité_centres_ebola_2015_11_29.csv'
+        fichier = 'capacité_centres_ebola_2015_11_30.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -107,7 +107,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'situation_patients_centres_ebola_2015_11_29.csv'
+        fichier = 'situation_patients_centres_ebola_2015_11_30.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -165,7 +165,7 @@
         
 <h2>Etat des lieux des centres&nbsp;<a href="#" id="miseAjour" class="btn btn-info" rel="popover" data-html="true"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></h2>
 <div class="panel panel-default">
-      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 29/11/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading sit_patients">Situation des patients  dans les centres fonctionnels à la date du 30/11/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table patients table-striped">
          <thead>
             <tr>
@@ -438,7 +438,7 @@
       </div>
       <br />
       <div class="panel panel-default">
-      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 29/11/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
+      <div class="panel-heading sit_capacite"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Capacité des centres Ebola à la date du 30/11/2015<a href="#" onClick ="doExport({type:"json"});"></a></div>
       <table class="table capacite table-striped">
          <thead>
             <tr>
@@ -469,7 +469,7 @@
       <br />
       <div class="panel panel-default"><span id="tot1">Total</span><span id="tot2">6</span><span id="tot3">87</span><span id="tot4">44</span><span  id="tot5">182</span><span id="tot6">313</span></span></div>
       <br />
-      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_11_29.kml" download>KML</a> ou <a href="code/files/cte_2015_11_29.geojson" download>GeoJSON</a></div>
+      <div class="well">Télécharger les données géographiques aux formats <a href="code/files/cte_2015_11_30.kml" download>KML</a> ou <a href="code/files/cte_2015_11_30.geojson" download>GeoJSON</a></div>
 </div>
     <script>
  $(document).ready(function() {
@@ -932,7 +932,7 @@ $("select").change(
          
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 30/11/2015<br />Dernier cas confirmé : 27/10/2015 "});   
+{ $("#miseAjour").popover({title: '<b>Dates de mises à jour</b>', content: "Dernière mise à jour : 1/12/2015<br />Dernier cas confirmé : 27/10/2015 "});   
 });  
  
 $(function ()  
