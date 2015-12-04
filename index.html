@@ -690,7 +690,7 @@ function createTemporalLegend(startTimestamp, step) {
             semaine_map = startTimestamp + '_2014';
         }
         // 2015
-        else (startTimestamp > 53 && startTimestamp <= 106){
+        else if (startTimestamp > 53 && startTimestamp <= 106){
         $(".temporal-legend").text('Semaine ' + String(startTimestamp - 53) + ' de 2015'); 
         semaine_map = String(startTimestamp - 53) + '_2015';
         }
