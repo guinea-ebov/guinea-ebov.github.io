@@ -30,10 +30,10 @@
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">5</SimpleData>
-		<SimpleData name="probable">6</SimpleData>
-		<SimpleData name="confirme">12</SimpleData>
-		<SimpleData name="total">23</SimpleData>
+		<SimpleData name="suspect">7</SimpleData>
+		<SimpleData name="probable">0</SimpleData>
+		<SimpleData name="confirme">7</SimpleData>
+		<SimpleData name="total">14</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.083399772644,9.43000984191894</coordinates></Point>
   </Placemark>
@@ -56,10 +56,10 @@
 		<SimpleData name="type">CTE</SimpleData>
 		<SimpleData name="gere">Ministère de la santé</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">12</SimpleData>
-		<SimpleData name="probable">8</SimpleData>
-		<SimpleData name="confirme">40</SimpleData>
-		<SimpleData name="total">60</SimpleData>
+		<SimpleData name="suspect">10</SimpleData>
+		<SimpleData name="probable">5</SimpleData>
+		<SimpleData name="confirme">25</SimpleData>
+		<SimpleData name="total">40</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-13.387499809265099,9.70631027221679</coordinates></Point>
   </Placemark>
@@ -118,9 +118,9 @@
 		<SimpleData name="gere">Croix-Rouge Française</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
 		<SimpleData name="suspect">12</SimpleData>
-		<SimpleData name="probable">8</SimpleData>
-		<SimpleData name="confirme">10</SimpleData>
-		<SimpleData name="total">30</SimpleData>
+		<SimpleData name="probable">5</SimpleData>
+		<SimpleData name="confirme">8</SimpleData>
+		<SimpleData name="total">25</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-9.471010208129879,8.54108047485351</coordinates></Point>
   </Placemark>
@@ -130,10 +130,10 @@
 		<SimpleData name="type">CDT</SimpleData>
 		<SimpleData name="gere">IMC (International Medical Corps)</SimpleData>
 		<SimpleData name="labo">Oui</SimpleData>
-		<SimpleData name="suspect">3</SimpleData>
+		<SimpleData name="suspect">4</SimpleData>
 		<SimpleData name="probable">2</SimpleData>
-		<SimpleData name="confirme">5</SimpleData>
-		<SimpleData name="total">10</SimpleData>
+		<SimpleData name="confirme">2</SimpleData>
+		<SimpleData name="total">8</SimpleData>
 	</SchemaData></ExtendedData>
       <Point><coordinates>-14.594434,10.671065</coordinates></Point>
   </Placemark>
