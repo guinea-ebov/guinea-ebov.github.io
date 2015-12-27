@@ -1,1 +1,1 @@
-var table_21d = [{"pref": "Boke", "nb_cas": 2, "sous_pref": "Kamsar"}, {"pref": "Conakry", "nb_cas": 1, "sous_pref": "Matam"}, {"pref": "Conakry", "nb_cas": 1, "sous_pref": "Ratoma"}, {"pref": "Dubreka", "nb_cas": 8, "sous_pref": "Tanene"}, {"pref": "Forecariah", "nb_cas": 2, "sous_pref": "Farmoriah"}]
+var table_21d = [{"pref": "Conakry", "nb_cas": 1, "sous_pref": "Matam"}, {"pref": "Conakry", "nb_cas": 1, "sous_pref": "Ratoma"}, {"pref": "Dubreka", "nb_cas": 2, "sous_pref": "Tanene"}]
