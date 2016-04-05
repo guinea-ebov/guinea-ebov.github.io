@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://demo.phppointofsale.com/index.php/sales -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" src="./php_files/653e27187f"></script><script src="./php_files/nr-918.min.js"></script><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"UQcFWVNbGwEDU1RVDwE="};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(11),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,-1!==o.indexOf("dev")&&(s.dev=!0),-1!==o.indexOf("nr_dev")&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,o){try{d?d-=1:i("err",[o||new UncaughtException(t,e,n)])}catch(s){try{i("ierr",[s,(new Date).getTime(),!0])}catch(c){}}return"function"==typeof f?f.apply(this,a(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t){i("err",[t,(new Date).getTime()])}var i=t("handle"),a=t(12),s=t("ee"),c=t("loader"),f=window.onerror,u=!1,d=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(l){"stack"in l&&(t(5),t(4),"addEventListener"in window&&t(3),c.xhrWrappable&&t(6),u=!0)}s.on("fn-start",function(t,e,n){u&&(d+=1)}),s.on("fn-err",function(t,e,n){u&&(this.thrown=!0,o(n))}),s.on("fn-end",function(){u&&!this.thrown&&d>0&&(d-=1)}),s.on("internal-error",function(t){i("ierr",[t,(new Date).getTime(),!0])})},{}],3:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t(13)(a),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){if(t[1]){var n=t[1];if("function"==typeof n){var r=c(n,"nr@wrapped",function(){return s(n,"fn-",null,n.name||"anonymous")});this.wrapped=t[1]=r}else"function"==typeof n.handleEvent&&s.inPlace(n,["handleEvent"],"fn-")}}),a.on(d+"-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{}],4:[function(t,e,n){var r=t("ee").get("raf"),o=t(13)(r);e.exports=r,o.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],5:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t(13)(i);e.exports=i,a.inPlace(window,["setTimeout","setImmediate"],"setTimer-"),a.inPlace(window,["setInterval"],"setInterval-"),a.inPlace(window,["clearTimeout","clearImmediate"],"clearTimeout-"),i.on("setInterval-start",r),i.on("setTimer-start",o)},{}],6:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,v,"fn-",s)}function i(t){y.push(t),h&&(g=-g,x.data=g)}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(3);var f=t("ee"),u=f.get("xhr"),d=t(13)(u),l=NREUM.o,p=l.XHR,h=l.MO,m="readystatechange",v=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];e.exports=u;var w=window.XMLHttpRequest=function(t){var e=new p(t);try{u.emit("new-xhr",[e],e),e.addEventListener(m,o,!1)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(p,w),w.prototype=p.prototype,d.inPlace(w.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),h){var g=1,x=document.createTextNode(g);new h(a).observe(x,{characterData:!0})}else f.on("fn-end",function(t){t[0]&&t[0].type===m||a()})},{}],7:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;l>r;r++)t.removeEventListener(d[r],this.listener,!1);if(!e.aborted){if(n.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var i=o(t,this.lastSize);if(i&&(n.rxSize=i),this.sameOrigin){var a=t.getResponseHeader("X-NewRelic-App-Data");a&&(e.cat=a.split(", ").pop())}}else e.status=0;n.cbTime=this.cbTime,u.emit("xhr-done",[t],t),c("xhr",[e,n,this.startTime])}}}function o(t,e){var n=t.responseType;if("json"===n&&null!==e)return e;var r="arraybuffer"===n||"blob"===n||"json"===n?t.response:t.responseText;return i(r)}function i(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}function a(t,e){var n=f(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}var s=t("loader");if(s.xhrWrappable){var c=t("handle"),f=t(8),u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(10),m=window.XMLHttpRequest;s.features.xhr=!0,t(6),u.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,h&&(h>34||10>h)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},a(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),u.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var a=i(r);a&&(n.txSize=a)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}};for(var s=0;l>s;s++)e.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),u.on("xhr-load-added",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],e)}),u.on("removeEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],e)}),u.on("fn-start",function(t,e,n){e instanceof m&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),u.on("fn-end",function(t,e){this.xhrCbStart&&u.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{}],8:[function(t,e,n){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!e.protocol||":"===e.protocol||e.protocol===n.protocol,a=e.hostname===document.domain&&e.port===n.port;return r.sameOrigin=i&&(!e.hostname||a),r}},{}],9:[function(t,e,n){function r(t,e){return function(){o(t,[(new Date).getTime()].concat(a(arguments)),null,e)}}var o=t("handle"),i=t(11),a=t(12);"undefined"==typeof window.newrelic&&(newrelic=NREUM);var s=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit"],c=["addPageAction"],f="api-";i(s,function(t,e){newrelic[e]=r(f+e,"api")}),i(c,function(t,e){newrelic[e]=r(f+e)}),e.exports=newrelic,newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),o("err",[t,(new Date).getTime()])}},{}],10:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],11:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],12:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],13:[function(t,e,n){function r(t){return!(t&&"function"==typeof t&&t.apply&&!t[a])}var o=t("ee"),i=t(12),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;e.exports=function(t){function e(t,e,n,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof n?n(r,a):n||{}}catch(u){d([u,"",[r,a,o],s])}f(e+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(l){throw f(e+"err",[r,a,l],s),l}finally{f(e+"end",[r,a,c],s)}}return r(t)?t:(e||(e=""),nrWrapper[a]=t,u(t,nrWrapper),nrWrapper)}function n(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function f(e,n,r){if(!c){c=!0;try{t.emit(e,n,r)}catch(o){d([o,e,n,r])}c=!1}}function u(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){d([r])}for(var o in t)s.call(t,o)&&(e[o]=t[o]);return e}function d(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=o),e.inPlace=n,e.flag=a,e}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?s(t,a,i):i()}function n(n,r,o){t&&t(n,r,o);for(var i=e(o),a=l(n),s=a.length,c=0;s>c;c++)a[c].apply(i,r);var u=f[v[n]];return u&&u.push([y,n,r,i]),i}function d(t,e){m[t]=l(t).concat(e)}function l(t){return m[t]||[]}function p(t){return u[t]=u[t]||o(n)}function h(t,e){c(t,function(t,n){e=e||"feature",v[n]=e,e in f||(f[e]=[])})}var m={},v={},y={on:d,emit:n,get:p,listeners:l,context:e,buffer:h};return y}function i(){return new r}var a="nr@context",s=t("gos"),c=t(11),f={},u={},d=e.exports=o();d.backlog=f},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!m++){var t=h.info=NREUM.info,e=u.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){c(l,function(e,n){t[e]||(t[e]=n)});var n="https"===d.split(":")[0]||t.sslForHttp;h.proto=n?"https://":"http://",s("mark",["onload",a()],null,"api");var r=u.createElement("script");r.src=h.proto+t.agent,e.parentNode.insertBefore(r,e)}}}function o(){"complete"===u.readyState&&i()}function i(){s("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var s=t("handle"),c=t(11),f=window,u=f.document;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:f.XMLHttpRequest,REQ:f.Request,EV:f.Event,PR:f.Promise,MO:f.MutationObserver},t(9);var d=""+location,l={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-918.min.js"},p=window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent),h=e.exports={offset:a(),origin:d,features:{},xhrWrappable:p};u.addEventListener?(u.addEventListener("DOMContentLoaded",i,!1),f.addEventListener("load",r,!1)):(u.attachEvent("onreadystatechange",o),f.attachEvent("onload",r)),s("mark",["firstbyte",a()],null,"api");var m=0},{}]},{},["loader",2,7]);</script>
+    <title>Demo - PHP Point Of Sale | Easy to use Online POS Software</title>
+	<link rel="icon" href="https://demo.phppointofsale.com/favicon.ico" type="image/x-icon">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> <!--320-->
+	<!--<base href="https://demo.phppointofsale.com/">--><base href=".">
+	
+	<link rel="icon" href="https://demo.phppointofsale.com/favicon.ico" type="image/x-icon">
+	<script type="text/javascript">
+		var SITE_URL= "https://demo.phppointofsale.com/index.php";
+		var BASE_URL= "https://demo.phppointofsale.com/";
+		var ENABLE_SOUNDS = false;
+		var JS_DATE_FORMAT = "DD-MM-YYYY";
+		var JS_TIME_FORMAT = "hh:mm a";
+		var LOCALE =  "en";
+		var IS_MOBILE = false;
+		var DISABLE_QUICK_EDIT = false;
+	</script>
+			<link rel="stylesheet" type="text/css" href="./php_files/all.css">
+				<script src="./php_files/all.js" type="text/javascript" charset="UTF-8"></script>
+		<script type="text/javascript">
+		COMMON_SUCCESS = "Success";
+		COMMON_ERROR = "Error";
+		
+		bootbox.addLocale('ar', {
+		    OK : 'حسنا',
+		    CANCEL : 'إلغاء',
+		    CONFIRM : 'تأكيد'			
+		});
+		
+		bootbox.addLocale('km', {
+		    OK :'យល់ព្រម',
+		    CANCEL : 'បោះបង់',
+		    CONFIRM : 'បញ្ជាក់ការ'			
+		});
+		bootbox.setLocale(LOCALE);
+		$.ajaxSetup ({
+			cache: false,
+			headers: { "cache-control": "no-cache" }
+		});
+		toastr.options = {
+		  "closeButton": true,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": false,
+		  "positionClass": "toast-top-right",
+		  "preventDuplicates": false,
+		  "onclick": null,
+		  "showDuration": "300",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
+		
+    $.fn.editableform.buttons = 
+      '<button tabindex="-1" type="submit" class="btn btn-primary btn-sm editable-submit">'+
+        '<i class="icon ti-check"></i>'+
+      '</button>'+
+      '<button tabindex="-1" type="button" class="btn btn-default btn-sm editable-cancel">'+
+        '<i class="icon ti-close"></i>'+
+      '</button>';
+	  
+ 	  $.fn.editable.defaults.emptytext = "Empty";
+		
+		$(document).ready(function()
+		{
+			$(".wrapper.mini-bar .left-bar").hover(
+			   function() {
+			     $(this).parent().removeClass('mini-bar');
+			   }, function() {
+			     $(this).parent().addClass('mini-bar');
+			   }
+			 );
+
+		    $('.menu-bar').click(function(e){                  
+		    	e.preventDefault();
+		        $(".wrapper").toggleClass('mini-bar');        
+		    }); 
+    					
+			//Ajax submit current location
+			$(".set_employee_current_location_id").on('click',function(e)
+			{
+				e.preventDefault();
+
+				var location_id = $(this).data('location-id');
+				$.ajax({
+				    type: 'POST',
+				    url: 'https://demo.phppointofsale.com/index.php/home/set_employee_current_location_id',
+				    data: { 
+				        'employee_current_location_id': location_id, 
+				    },
+				    success: function(){
+				    	window.location.reload(true);	
+				    }
+				});
+				
+			});
+			
+			$(".set_employee_language").on('click',function(e)
+			{
+				e.preventDefault();
+
+				var language_id = $(this).data('language-id');
+				$.ajax({
+				    type: 'POST',
+				    url: 'https://demo.phppointofsale.com/index.php/employees/set_language',
+				    data: { 
+				        'employee_language_id': language_id, 
+				    },
+				    success: function(){
+				    	window.location.reload(true);	
+				    }
+				});
+				
+			});
+			
+							//Keep session alive by sending a request every 5 minutes
+				setInterval(function(){$.get('https://demo.phppointofsale.com/index.php/home/keep_alive');}, 300000);
+					});
+	</script>
+
+</head>
+<body>
+	<div class="modal fade hidden-print" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+	<div class="modal fade hidden-print" id="myModalDisableClose" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static"></div>
+	
+	<div class="wrapper sales-bar mini-bar">
+		<div class="left-bar hidden-print" tabindex="0" style="overflow: hidden; outline: none;">
+			<div class="admin-logo" style="">
+				<div class="logo-holder pull-left">
+					<img src="./php_files/header_logo.png" class="hidden-print logo" id="header-logo" alt="">				</div>
+				<!-- logo-holder -->
+							
+			</div>
+			<!-- admin-logo -->
+
+			<ul class="list-unstyled menu-parent" id="mainMenu">
+			
+				
+				<li>
+					<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/home" class="waves-effect waves-light">
+						<i class="icon ti-dashboard"></i>
+						<span class="text">Dashboard</span>
+					</a></li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/customers" class="waves-effect waves-light">
+							<i class="icon ti-user"></i>
+							<span class="text">Customers</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/items" class="waves-effect waves-light">
+							<i class="icon ti-harddrive"></i>
+							<span class="text">Items</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/item_kits" class="waves-effect waves-light">
+							<i class="icon ti-harddrives"></i>
+							<span class="text">Item Kits</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/suppliers" class="waves-effect waves-light">
+							<i class="icon ti-download"></i>
+							<span class="text">Suppliers</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/reports" class="waves-effect waves-light">
+							<i class="icon ti-bar-chart"></i>
+							<span class="text">Reports</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/receivings" class="waves-effect waves-light">
+							<i class="icon ti-cloud-down"></i>
+							<span class="text">Receivings</span>
+						</a>
+					</li>
+									<li class="active">
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/sales" class="waves-effect waves-light">
+							<i class="icon ti-shopping-cart"></i>
+							<span class="text">Sales</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/expenses" class="waves-effect waves-light">
+							<i class="icon ti-money"></i>
+							<span class="text">Expenses</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/employees" class="waves-effect waves-light">
+							<i class="icon ti-id-badge"></i>
+							<span class="text">Employees</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/giftcards" class="waves-effect waves-light">
+							<i class="icon ti-credit-card"></i>
+							<span class="text">Gift Cards</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/config" class="waves-effect waves-light">
+							<i class="icon ti-settings"></i>
+							<span class="text">Store Config</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/locations" class="waves-effect waves-light">
+							<i class="icon ti-home"></i>
+							<span class="text">Locations</span>
+						</a>
+					</li>
+									<li>
+						<a tabindex="-1" href="https://demo.phppointofsale.com/index.php/messages" class="waves-effect waves-light">
+							<i class="icon ti-email"></i>
+							<span class="text">Messages</span>
+						</a>
+					</li>
+												
+                <li>
+					<a href="https://demo.phppointofsale.com/index.php/home/logout" tabindex="-1"><i class="icon ti-power-off"></i><span class="text">Logout</span></a>
+                </li>
+			</ul>
+		</div>
+		<!-- left-bar -->
+
+		<div class="content" id="content">
+		<div class="overlay hidden-print"></div>			
+			<div class="top-bar hidden-print">				
+				<nav class="navbar navbar-default top-bar">
+					<div class="menu-bar-mobile" id="open-left"><i class="ti-menu"></i></div>
+					<div class="nav navbar-nav top-elements navbar-breadcrumb hidden-xs">
+						 <a tabindex="-1" href="https://demo.phppointofsale.com/index.php/home">Dashboard</a><a class="current" tabindex="-1" href="https://demo.phppointofsale.com/index.php/sales">Sales</a>					</div>	
+
+					<ul class="nav navbar-nav navbar-right top-elements">															
+										<li>
+						
+												<a href="javascript:void(0);" class="visible-lg">
+							10:10 pm							04-04-2016						</a>
+					</li>
+																<li class="dropdown">
+							<a tabindex="-1" href="https://demo.phppointofsale.com/#" class="fullscreen" data-toggle="" role="button" aria-expanded="false"><i class="ion-arrow-expand  icon-notification"></i></a>
+						</li>
+						<li class="dropdown">
+							<a tabindex="-1" data-target="#" class="" data-toggle="" role="button" aria-expanded="false"><i class="ion-bag  icon-notification"></i><span class="badge info-number cart cart-number count">0</span></a>
+						</li>
+
+																
+						<li class="dropdown">
+							<a href="https://demo.phppointofsale.com/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="ion-ios-bell-outline  icon-notification"></i><span class="badge info-number count " id="unread_message_count">0</span></a>
+								<ul class="dropdown-menu animated fadeInUp wow message_drop neat_drop animated" data-wow-duration="1500ms" role="menu" style="visibility: visible; animation-duration: 1500ms; animation-name: fadeInUp;">
+																	<li class="bottom-links">
+										<a href="https://demo.phppointofsale.com/index.php/messages" class="last_info">View all messages</a>
+									</li>
+																		
+									
+										<li class="bottom-links">
+											<a href="https://demo.phppointofsale.com/index.php/messages/sent_messages" class="last_info">View Sent Messages</a>
+										</li>
+									
+										<li class="bottom-links">
+											<a href="https://demo.phppointofsale.com/index.php/messages/send_message" class="last_info">Send Message</a>
+										</li>
+																	</ul>
+						</li>
+																	<li class="dropdown">
+							<a href="https://demo.phppointofsale.com/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> test <span class="drop-icon"><i class="ion ion-chevron-down"></i></span></a>
+								<ul class="dropdown-menu animated fadeInUp wow locations-drop locations-drop neat_drop animated" data-wow-duration="1500ms" role="menu" style="visibility: visible; animation-duration: 1500ms; animation-name: fadeInUp;">
+																	<li><a class="set_employee_current_location_id" data-location-id="1" href="https://demo.phppointofsale.com/index.php/home/set_employee_current_location_id/1"><span class="badge" style="background-color:">&nbsp;</span> Default </a></li>
+																	<li><a class="set_employee_current_location_id" data-location-id="2" href="https://demo.phppointofsale.com/index.php/home/set_employee_current_location_id/2"><span class="badge" style="background-color:#ceacac">&nbsp;</span> Euro Salon </a></li>
+																	<li><a class="set_employee_current_location_id" data-location-id="3" href="https://demo.phppointofsale.com/index.php/home/set_employee_current_location_id/3"><span class="badge" style="background-color:">&nbsp;</span> test </a></li>
+																</ul>
+							</li>	
+
+																		
+						
+
+						
+						<li class="dropdown">
+							<a tabindex="-1" href="https://demo.phppointofsale.com/#" class="dropdown-toggle avatar_width" data-toggle="dropdown" role="button" aria-expanded="false"><span class="avatar-holder">
+
+							<img src="./php_files/avatar-default.jpg" alt=""></span>
+
+							<span class="avatar_info hidden-sm">John Doe</span></a>
+							<ul class="dropdown-menu user-dropdown animated fadeInUp wow avatar_drop neat_drop animated" data-wow-duration="1500ms" role="menu" style="visibility: visible; animation-duration: 1500ms; animation-name: fadeInUp;">
+																
+									<li><a href="https://demo.phppointofsale.com/index.php/config" tabindex="-1"><i class="ion-android-settings"></i><span class="text">Settings</span></a></li>
+																<li>
+									<a tabindex="-1" id="switch_user" href="https://demo.phppointofsale.com/index.php/login/switch_user/0" data-toggle="modal" data-target="#myModalDisableClose"><i class="ion-ios-toggle-outline"></i><span class="text">Switch User</span></a>
+								</li>
+								<li>
+									<a tabindex="-1" title="" href="https://demo.phppointofsale.com/index.php/login/edit_profile" data-toggle="modal" data-target="#myModal"><i class="ion-edit"></i><span class="text">Edit profile</span></a>
+								</li>
+																
+								<li>
+								<a href="https://demo.phppointofsale.com/index.php/home/logout" class="logout_button" tabindex="-1"><i class="ion-power"></i><span class="text">Logout</span></a>								</li>			
+							</ul>
+						</li>							
+					</ul>
+				</nav>
+			</div>
+			<!-- top-bar -->
+			<div class="main-content">
+ 
+<div id="sales_page_holder">
+ <div id="sale-grid-big-wrapper" class="clearfix register">
+	<div class="row">
+		<div class="clearfix" id="category_item_selection_wrapper">
+  <div class="">
+		<div class="spinner" id="grid-loader" style="display: none;">
+		  <div class="rect1"></div>
+		  <div class="rect2"></div>
+		  <div class="rect3"></div>
+		</div>
+
+  		<div class="text-center">
+	  		<div id="grid_selection" class="btn-group" role="group">
+				<a href="javascript:void(0);" class="btn active btn btn-grid" id="by_category">Categories</a>
+				<a href="javascript:void(0);" class=" btn btn-grid" id="by_tag">Tags</a>
+			</div>
+		</div>
+
+    	<div id="grid_breadcrumbs"><a href="javascript:void(0);" class="category_breadcrumb_item" data-category_id="0">All</a></div>
+		<div id="category_item_selection" class="row register-grid"><div class="category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6"><p> <i class="ion-archive"></i> cold drink</p></div><div class="category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6"><p> <i class="ion-archive"></i> computer</p></div><div class="category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6"><p> <i class="ion-archive"></i> Device</p></div><div class="category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6"><p> <i class="ion-archive"></i> iphone</p></div><div class="category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6"><p> <i class="ion-archive"></i> shampoo</p></div></div>
+		<div class="pagination hidden-print alternate text-center categories"></div>
+	</div>
+</div>
+	</div>
+</div>
+
+<div id="register_container" class="sales clearfix">
+  <a tabindex="-1" href="https://demo.phppointofsale.com/#" class="dismissfullscreen hidden"><i class="ion-close-circled"></i></a>
+				
+		
+<div class="row register">
+	<div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 no-padding-right no-padding-left">
+		<div class="register-box register-items-form">
+			<div class="item-form">
+				<!-- Item adding form -->
+				
+								<form action="https://demo.phppointofsale.com/index.php/sales/add" id="add_item_form" class="form-inline" autocomplete="off" method="post" accept-charset="utf-8">
+					<div class="input-group input-group-mobile contacts">
+						<span class="input-group-addon">
+							<a href="https://demo.phppointofsale.com/index.php/items/view/-1/1/sale" class="none add-new-item" title="New Item" id="new-item-mobile" tabindex="-1"><i class="icon ti-pencil-alt"></i> <span class="register-btn-text">New Item</span></a>						</span>
+						<div class="input-group-addon register-mode sale-mode dropdown">
+							<a href="https://demo.phppointofsale.com/index.php/#" class="none active" tabindex="-1" title="Sale" id="select-mode-1" data-target="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="icon ti-shopping-cart"></i> <span class="register-btn-text">Sale</span></a>					        <ul class="dropdown-menu sales-dropdown">
+					        					        	<li><a tabindex="-1" href="https://demo.phppointofsale.com/#" data-mode="return" class="change-mode">Return</a></li>
+					                					</ul>
+						</div>
+						
+						<span class="input-group-addon grid-buttons ">
+							<a href="https://demo.phppointofsale.com/index.php/#" class="none show-grid" tabindex="-1" title="Show Grid"><i class="icon ti-layout"></i> <span class="register-btn-text">Show Grid</span></a>							<a href="https://demo.phppointofsale.com/index.php/#" class="none hide-grid hidden" tabindex="-1" title="Hide Grid"><i class="icon ti-layout"></i> <span class="register-btn-text">Hide Grid</span></a>						</span>
+					</div>
+					
+					<div class="input-group contacts register-input-group">
+
+						<!-- Css Loader  -->
+						<div class="spinner" id="ajax-loader" style="display:none">
+						  <div class="rect1"></div>
+						  <div class="rect2"></div>
+						  <div class="rect3"></div>
+						</div>
+						
+						<span class="input-group-addon">
+							<a href="https://demo.phppointofsale.com/index.php/items/view/-1/1/sale" class="none add-new-item" title="New Item" id="new-item" tabindex="-1"><i class="icon ti-pencil-alt"></i></a>						</span>
+						<span role="status" aria-live="polite" class="ui-helper-hidden-accessible">No search results.</span><input type="text" id="item" name="item" class="add-item-input pull-left ui-autocomplete-input" placeholder="Enter item name or scan barcode" autocomplete="off">
+		
+						<div class="input-group-addon register-mode sale-mode dropdown">
+							<a href="https://demo.phppointofsale.com/index.php/#" class="none active" tabindex="-1" title="Sale" id="select-mode-2" data-target="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="icon ti-shopping-cart"></i>Sale</a>					        <ul class="dropdown-menu sales-dropdown">
+					        					        	<li><a tabindex="-1" href="https://demo.phppointofsale.com/#" data-mode="return" class="change-mode">Return</a></li>
+					                					</ul>
+						</div>
+						
+						<span class="input-group-addon grid-buttons ">
+							<a href="https://demo.phppointofsale.com/index.php/#" class="none show-grid" tabindex="-1" title="Show Grid"><i class="icon ti-layout"></i> Show Grid</a>							<a href="https://demo.phppointofsale.com/index.php/#" class="none hide-grid hidden" tabindex="-1" title="Hide Grid"><i class="icon ti-layout"></i> Hide Grid</a>						</span>
+					</div>
+
+					
+				</form>
+			</div>
+		</div>
+		<!-- Register Items. @contains : Items table -->
+		<div class="register-box register-items paper-cut">
+			<div class="register-items-holder">
+									
+					<table id="register" class="table table-hover">
+
+					<thead>
+						<tr class="register-items-header">
+							<th></th>
+							<th class="item_name_heading">Item Name</th>
+							<th class="sales_price">Price</th>
+							<th class="sales_quantity">Qty.</th>
+							<th class="sales_discount">Disc %</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+				
+					<tbody class="register-item-content">
+												<tr class="cart_content_area">
+							<td colspan="6">
+								<div class="text-center text-warning"> <h3>There are no items in the cart<span class="flatGreenc"> [Sales]</span></h3></div>
+							</td>
+						</tr>
+												</tbody>
+					</table>
+					
+			</div>
+
+			<!-- End of Sales or Return Mode -->
+						<!-- End of Store Account Payment Mode -->
+
+		</div>
+		<!-- /.Register Items -->
+	</div>
+	<!-- /.Col-lg-8 @end of left Column -->
+
+	<!-- col-lg-4 @start of right Column -->
+	<div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 no-padding-right">
+		<div class="register-box register-right">
+
+			<!-- Sale Top Buttons  -->
+			<div class="sale-buttons">
+				<!-- Extra links -->
+				<div class="btn-group">
+					<button type="button" class="btn btn-more dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<i class="ion-android-more-horizontal"></i>
+					</button>
+					<ul class="dropdown-menu sales-dropdown" role="menu">						
+																					<li>
+								<a href="https://demo.phppointofsale.com/index.php/sales/new_giftcard" class="" title="Sell GiftCard"><i class="ion-card"></i> Sell GiftCard</a>									</li>
+														
+							<li>
+							<a href="https://demo.phppointofsale.com/index.php/sales/suspended" class="" title="Suspended Sales"><i class="ion-ios-list-outline"></i> Suspended Sales</a>								</li>
+							
+																<li>
+									<a href="https://demo.phppointofsale.com/index.php/reports/sales_generator" class="" title="Search Sales"><i class="ion-search"></i> Search Sales</a> 
+									</li>
+																
+																
+								<li>
+									<a href="https://demo.phppointofsale.com/index.php/sales/batch_sale" class="none suspended_sales_btn" title="Batch sale"><i class="ion-bag"></i> Batch sale</a>								</li>					
+						
+						
+
+						<li>
+							<a href="https://demo.phppointofsale.com/#look-up-receipt" class="look-up-receipt" data-toggle="modal"><i class="ion-document"></i> Lookup Receipt</a>						</li>						
+						
+						
+												<li><a href="https://demo.phppointofsale.com/index.php/sales/customer_display/3" class="" target="_blank"><i class="ion-ios-monitor-outline"></i> Customer Facing Display</a></li>
+						
+						<li>
+							<a href="https://demo.phppointofsale.com/index.php/sales/open_drawer" class="" target="_blank"><i class="ion-android-open"></i> Pop Open Cash Drawer</a>						</li>	
+						
+							
+						
+												
+												
+
+					</ul>
+				</div>
+							
+		</div>
+
+		<!-- If customer is added to the sale -->
+		
+		<div class="customer-form">
+
+			<!-- if the customer is not set , show customer adding form -->
+			<form action="https://demo.phppointofsale.com/index.php/sales/select_customer" id="select_customer_form" autocomplete="off" class="form-inline" method="post" accept-charset="utf-8">
+				<div class="input-group contacts">
+					<span class="input-group-addon">
+						<a href="https://demo.phppointofsale.com/index.php/customers/view/-1/1" class="none" title="New Customer" id="new-customer" tabindex="-1"><i class="ion-person-add"></i></a>					</span>
+					<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" id="customer" name="customer" class="add-customer-input ui-autocomplete-input" placeholder="Type customer name..." autocomplete="off">
+				</div>
+			</form>
+
+		</div> 
+			</div>
+
+	<div class="register-box register-summary paper-cut">
+
+		<!-- Tiers if its greater than 1 -->
+				<div class="tier-group">
+			<a tabindex="-1" href="https://demo.phppointofsale.com/#" class="item-tier ">
+				Item Tiers: <span class="selected-tier">None</span>
+			</a>
+						<div class="list-group item-tiers">
+								<a tabindex="-1" href="https://demo.phppointofsale.com/#" data-value="0" class="list-group-item">None</a>	
+								<a tabindex="-1" href="https://demo.phppointofsale.com/#" data-value="1" class="list-group-item">Passen</a>	
+							</div>						
+					</div>
+		 
+
+		<!-- Tiers if its greater than 1 -->
+		 
+		
+		<ul class="list-group">
+					<li class="list-group-item global-discount-group">
+				<div class="key">Discount all Items by Percent: 	</div>
+				<div class="value pull-right">
+					<a href="https://demo.phppointofsale.com/#" id="discount_all_percent" class="xeditable editable editable-click editable-empty" data-validate-number="false" data-placement="left" data-type="text" data-pk="1" data-name="discount_all_percent" data-url="https://demo.phppointofsale.com/index.php/sales/discount_all" data-title="Discount all Items by Percent" data-emptytext="Set Discount" data-placeholder="Set Discount">Set Discount</a>				</div>
+			</li>
+			
+			<li class="list-group-item global-discount-group">
+				<div class="key">Discount Entire Sale: 	</div>
+				<div class="value pull-right">
+				 <a href="https://demo.phppointofsale.com/#" id="discount_all_flat" class="xeditable editable editable-click editable-empty" data-validate-number="false" data-placement="left" data-type="text" data-pk="1" data-name="discount_all_flat" data-url="https://demo.phppointofsale.com/index.php/sales/discount_all" data-title="Discount Entire Sale" data-emptytext="Set Discount" data-placeholder="Set Discount (% or fixed)">Set Discount</a>
+				</div>
+			</li>
+			
+			
+
+		<li class="sub-total list-group-item">
+			<span class="key">Sub Total:</span>
+			<span class="value">$0.00</span>
+		</li>
+		
+		
+		
+				</ul>
+
+		<div class="amount-block">
+			<div class="total amount">
+				<div class="side-heading">
+					Total				</div>
+				<div class="amount total-amount" data-speed="1000" data-currency="$" data-decimals="2">
+					$0.00				</div>
+			</div>
+			<div class="total amount-due">
+				<div class="side-heading">
+					Amount Due				</div>
+				<div class="amount">
+					$0.00				</div>
+			</div>
+		</div>
+		<!-- ./amount block -->
+
+			<!-- Finish Sale Button Handler -->
+							<div id="finish_sale" class="finish-sale">
+					<form action="https://demo.phppointofsale.com/index.php/sales/start_cc_processing?provider=mercury" id="finish_sale_form" autocomplete="off" method="post" accept-charset="utf-8">
+					</form>				</div>
+			
+						
+						<!-- End of complete sale button -->
+	</div>
+</div>
+</div>
+
+<a href="https://demo.phppointofsale.com/#" class="pull-right visible-lg" id="keyboard_toggle">Keyboard shortcuts help</a>
+
+<div id="keyboardhelp" style="display: none;background-color:white;padding:12px;" title="Keyboard shortcuts help">
+  
+  <div>
+  	<span>[F4]  =&gt; Completes current sale</span><br>
+  	<span>[F2]  =&gt; Set focus on item search</span><br>
+  	<span>[F7]  =&gt; Set focus on payment amount field</span><br>
+  	<span>[ESC] =&gt; Cancel current sale</span><br>
+  </div>
+  
+</div>
+</div>
+
+<div class="modal fade look-up-receipt" id="look-up-receipt" role="dialog" aria-labelledby="lookUpReceipt" aria-hidden="true">
+    <div class="modal-dialog customer-recent-sales">
+      	<div class="modal-content">
+	        <div class="modal-header">
+	          	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+	          	<h4 class="modal-title" id="lookUpReceipt">Lookup Receipt</h4>
+	        </div>
+	        <div class="modal-body">
+	          	<form action="https://demo.phppointofsale.com/index.php/sales/receipt_validate" class="look-up-receipt-form" autocomplete="off" method="post" accept-charset="utf-8">
+				
+	          		<span class="text-danger text-center has-error look-up-receipt-error"></span>
+					<input type="text" class="form-control text-center" name="sale_id" id="sale_id" placeholder="Sale ID">
+					<input type="submit" name="submit_look_up_receipt_form" value="Lookup Receipt" class="btn btn-block btn-primary">
+				</form>	        </div>
+    	</div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+	<script type="text/javascript">
+			</script>
+
+<script type="text/javascript" language="javascript">
+	
+	var submitting = false;
+	
+	$(document).ready(function(){
+	
+		$( "#keyboard_toggle" ).click(function(e) {
+			e.preventDefault();
+			$( "#keyboardhelp" ).toggle();
+		});
+		
+    $.fn.editable.defaults.mode = 'popup';     
+
+	$('.fullscreen').on('click',function (e) {
+		e.preventDefault();
+		salesRecvFullScreen();
+		$.get('https://demo.phppointofsale.com/index.php/home/set_fullscreen/1');
+	});
+
+	$('.dismissfullscreen').on('click',function (e) {
+		e.preventDefault();
+		salesRecvDismissFullscren();
+		$.get('https://demo.phppointofsale.com/index.php/home/set_fullscreen/0');
+	});
+	    
+    $('.xeditable').editable({
+    	validate: function(value) {
+            if ($.isNumeric(value) == '' && $(this).data('validate-number')) {
+					return "Only numbers are allowed";
+            }
+        },
+    	success: function(response, newValue) {
+			 last_focused_id = $(this).attr('id');
+ 			 $("#register_container").html(response);
+		}
+    });
+
+    $('.xeditable').on('shown', function(e, editable) {
+    	editable.input.postrender = function() {
+			//Set timeout needed when calling price_to_change.editable('show') (Not sure why)
+			setTimeout(function() {
+         editable.input.$input.select();
+		}, 50);
+    };
+	});
+	
+	 $('.xeditable').on('hidden', function(e, editable) {
+		 last_focused_id = $(this).attr('id');
+		 $('#'+last_focused_id).focus();
+		 $('#'+last_focused_id).select();
+	 });
+	
+				
+		// Look up receipt form handling
+		
+		$('#look-up-receipt').on('shown.bs.modal', function() {
+	          $('#sale_id').focus();
+	    });
+			
+		$('.look-up-receipt-form').on('submit',function(e){
+			e.preventDefault();
+
+			$('.look-up-receipt-form').ajaxSubmit({
+				success:function(response)
+				{
+					if(response.success)
+					{
+						window.location.href = 'https://demo.phppointofsale.com/index.php/sales/receipt/'+$("#sale_id").val();
+					}
+					else
+					{
+						$('.look-up-receipt-error').html(response.message);
+					}
+				},
+				dataType:'json'
+			});
+		});
+
+		//Set Item tier after selection
+		$('.item-tiers a').on('click',function(e){
+			e.preventDefault();
+
+			$('.selected-tier').html($(this).text());
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_tier_id', {tier_id: $(this).data('value')}, function(response)
+			{
+				$('.item-tiers').slideToggle("fast", function()
+				{
+					$("#register_container").html(response);					
+				});
+			});
+		});
+
+		//Slide Toggle item tier options
+		$('.item-tier').on('click',function(e){
+			e.preventDefault();
+			$('.item-tiers').slideToggle("fast");
+		});
+
+
+		//Set Item tier after selection
+		$('.select-sales-persons a').on('click',function(e){
+			e.preventDefault();
+
+			$('.selected-sales-person').html($(this).text());
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_sold_by_employee_id', {sold_by_employee_id: $(this).data('value')}, function()
+			{
+				$('.select-sales-persons').slideToggle("fast");
+				$("#register_container").load('https://demo.phppointofsale.com/index.php/sales/reload');
+			});
+		});
+
+		//Slide Toggle item tier options
+		$('.select-sales-person').on('click',function(e){
+			e.preventDefault();
+			$('.select-sales-persons').slideToggle("fast");
+		});
+		
+		checkPaymentTypeGiftcard();
+		checkPaymentTypePoints();
+		
+
+
+		$('#toggle_email_receipt').on('click',function(e) {
+			e.preventDefault();
+	        var checkBoxes = $("#email_receipt");
+	        checkBoxes.prop("checked", !checkBoxes.prop("checked")).trigger("change");
+	        $(this).toggleClass('email-checked');
+
+		})
+
+		$('#email_receipt').change(function(e) 
+		{	
+			e.preventDefault();
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_email_receipt', {email_receipt: $('#email_receipt').is(':checked') ? '1' : '0'});
+		});
+
+		// Customer form script
+		$('#item,#customer').click(function()
+		{
+			$(this).attr('value','');
+		});
+
+
+		// if #mode is changed
+		$('.change-mode').click(function(e){
+			e.preventDefault();
+			if ($(this).data('mode') == "store_account_payment") { // Hiding the category grid
+				$('#show_hide_grid_wrapper, #category_item_selection_wrapper').fadeOut();
+			}else { // otherwise, show the categories grid
+				$('#show_hide_grid_wrapper, #show_grid').fadeIn();
+				$('#hide_grid').fadeOut();
+			}
+			$.post('https://demo.phppointofsale.com/index.php/sales/change_mode', {mode: $(this).data('mode')}, function(response)
+			{
+				$("#register_container").html(response);
+			});
+		});
+		
+
+									if (last_focused_id && last_focused_id != 'item')
+				{
+					$('#'+last_focused_id).focus();
+					$('#'+last_focused_id).select();
+				}
+							$(document).focusin(function(event) 
+			{
+				last_focused_id = $(event.target).attr('id');
+			});
+			
+			
+			$('#select_customer_form').ajaxForm({target: "#register_container", beforeSubmit: salesBeforeSubmit});
+			$('#add_item_form').ajaxForm({target: "#register_container", beforeSubmit: salesBeforeSubmit, success: itemScannedSuccess});
+			
+			$( "#item" ).autocomplete({
+		 		source: 'https://demo.phppointofsale.com/index.php/sales/item_search',
+				delay: 150,
+		 		autoFocus: false,
+		 		minLength: 0,
+		 		select: function( event, ui ) 
+		 		{
+					$( "#item" ).val(ui.item.value);
+		 			$('#add_item_form').ajaxSubmit({target: "#register_container", beforeSubmit: salesBeforeSubmit, success: itemScannedSuccess});
+
+		 		},
+			}).data("ui-autocomplete")._renderItem = function (ul, item) {
+		         return $("<li class='item-suggestions'></li>")
+		             .data("item.autocomplete", item)
+			           .append('<a class="suggest-item"><div class="item-image">' +
+									'<img src="' + item.image + '" alt="">' +
+								'</div>' +
+								'<div class="details">' +
+									'<div class="name">' + 
+										item.label +
+									'</div>' +
+									'<span class="attributes">' +
+										'Category' + ' : <span class="value">' + (item.category ? item.category : "None") + '</span>' +
+									'</span>' +
+								'</div>')
+		             .appendTo(ul);
+		     };
+
+
+			
+		
+
+			$( "#customer" ).autocomplete({
+		 		source: 'https://demo.phppointofsale.com/index.php/sales/customer_search',
+				delay: 150,
+		 		autoFocus: false,
+		 		minLength: 0,
+		 		select: function( event, ui ) 
+		 		{
+		 			$.post('https://demo.phppointofsale.com/index.php/sales/select_customer', {customer: ui.item.value }, function(response)
+					{
+						$("#register_container").html(response);
+					});
+		 		},
+			}).data("ui-autocomplete")._renderItem = function (ul, item) {
+		         return $("<li class='customer-badge suggestions'></li>")
+		             .data("item.autocomplete", item)
+			           .append('<a class="suggest-item"><div class="avatar">' +
+									'<img src="' + item.avatar + '" alt="">' +
+								'</div>' +
+								'<div class="details">' +
+									'<div class="name">' + 
+										item.label +
+									'</div>' + 
+									'<span class="email">' +
+										item.subtitle + 
+									'</span>' +
+								'</div></a>')
+		             .appendTo(ul);
+		     };
+	     
+	     
+
+		$('#customer').blur(function()
+		{
+			$(this).attr('value',"Type customer name...");
+		});
+		
+		$('#change_sale_date_enable').is(':checked') ? $("#change_sale_date_picker").show() : $("#change_sale_date_picker").hide(); 
+
+		$('#change_sale_date_enable').click(function() {
+			if( $(this).is(':checked')) {
+				$("#change_sale_date_picker").show();
+			} else {
+				$("#change_sale_date_picker").hide();
+			}
+		});
+		
+		$('#comment').change(function() 
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_comment', {comment: $('#comment').val()});
+		});
+						
+		$('#show_comment_on_receipt').change(function() 
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_comment_on_receipt', {show_comment_on_receipt:$('#show_comment_on_receipt').is(':checked') ? '1' : '0'});
+		});
+		
+				
+		date_time_picker_field($("#change_sale_date"), JS_DATE_FORMAT + " "+JS_TIME_FORMAT);
+		
+      $("#change_sale_date").on("dp.change", function(e) {
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_change_sale_date', {change_sale_date: $('#change_sale_date').val()});			
+      });
+		
+		//Input change
+		$("#change_sale_date").change(function(){
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_change_sale_date', {change_sale_date: $('#change_sale_date').val()});			
+		});
+
+		$('#change_sale_date_enable').change(function() 
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_change_sale_date_enable', {change_sale_date_enable: $('#change_sale_date_enable').is(':checked') ? '1' : '0'});
+		});
+		
+
+		$('.delete-item, .delete-payment, #delete_customer, .delete-tax').click(function(event)
+		{
+			event.preventDefault();
+			$("#register_container").load($(this).attr('href'));	
+		});
+		
+		
+		$('#redeem_discount,#unredeem_discount').click(function(event)
+		{
+			event.preventDefault();
+			$("#register_container").load($(this).attr('href'));	
+		});
+
+		//Layaway Sale
+		$("#layaway_sale_button").click(function(e)
+		{
+			e.preventDefault();
+			bootbox.confirm("Are you sure you want to suspend this sale?", function(result)
+			{
+				if(result)
+				{
+					$.post('https://demo.phppointofsale.com/index.php/sales/set_comment', {comment: $('#comment').val()}, function() {
+														$("#register_container").load('https://demo.phppointofsale.com/index.php/sales/suspend');
+											});
+				}
+			});
+		});
+
+		//Estimate Sale
+		$("#estimate_sale_button").click(function(e)
+		{
+			e.preventDefault();
+			bootbox.confirm("Are you sure you want to suspend this sale?", function(result)
+			{
+				if(result)
+				{
+					$.post('https://demo.phppointofsale.com/index.php/sales/set_comment', {comment: $('#comment').val()}, function() {
+													$("#register_container").load('https://demo.phppointofsale.com/index.php/sales/suspend/2');
+											});
+				}
+			});
+		});
+
+		//Cancel Sale
+		$("#cancel_sale_button").click(function(e)
+		{
+			e.preventDefault();
+			bootbox.confirm("Are you sure you want to clear this sale? All items will cleared.", function(result)
+			{
+				if (result)
+				{
+					$('#cancel_sale_form').ajaxSubmit({target: "#register_container", beforeSubmit: salesBeforeSubmit});
+				}
+			});
+		});
+		//Select Payment
+		$('.select-payment').on('click',selectPayment);
+		
+								
+		function selectPayment(e)
+		{
+			e.preventDefault();
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_selected_payment', {payment: $(this).data('payment')});
+			$('#payment_types').val($(this).data('payment'));
+						// start_cc_processing
+			$('.select-payment').removeClass('active');
+			$(this).addClass('active');
+			$("#amount_tendered").focus();
+			$("#amount_tendered").select();
+			$("#amount_tendered").attr('placeholder','');
+			
+			checkPaymentTypeGiftcard();
+			checkPaymentTypePoints();
+		}
+
+		//Add payment to the sale 
+		$("#add_payment_button").click(function(e)
+		{
+			e.preventDefault();
+
+			$('#add_payment_form').ajaxSubmit({target: "#register_container", beforeSubmit: salesBeforeSubmit});
+		});
+
+		//Add payment to the sale when hit enter on amount tendered input
+		$('#amount_tendered').bind('keypress', function(e) {
+			if(e.keyCode==13)
+			{
+				e.preventDefault();
+				
+				//Quick complete possible
+				if ($("#finish_sale_alternate_button").is(":visible"))
+				{
+					$('#add_payment_form').ajaxSubmit({target: "#register_container", beforeSubmit: salesBeforeSubmit, complete: function()
+					{
+						$('#finish_sale_button').trigger('click');
+					}});
+				}
+				else
+				{
+					$('#add_payment_form').ajaxSubmit({target: "#register_container", beforeSubmit: salesBeforeSubmit});
+				}
+			}
+		});
+
+		//Select all text in the input when input is clicked
+		$("input[type=text]").not(".description").click(function() {
+			$(this).select();
+		});
+		
+
+		// Finish Sale button
+		$("#finish_sale_button").click(function(e)
+		{
+			e.preventDefault();
+			
+			var confirm_messages = [];
+			
+			//Prevent double submission of form
+			$("#finish_sale_button").hide();
+			$('#grid-loader').show();
+			
+			
+									
+							confirm_messages.push("Are you sure you want to submit this sale? This cannot be undone.");
+							
+				if (confirm_messages.length)						
+				{
+					bootbox.confirm(confirm_messages.join("<br />"), function(result)
+					{
+						if (result)
+						{
+							finishSale();
+						}
+						else
+						{
+							//Bring back submit and unmask if fail to confirm
+							$("#finish_sale_button").show();
+							$('#grid-loader').hide();
+						}
+					});
+				}
+				else
+				{
+					finishSale();
+				}
+		});
+				
+				
+			if ($("#payment_types").val() == "Gift Card")
+			{
+				$('#finish_sale_alternate_button').removeClass('hidden');
+				$('#add_payment_button').addClass('hidden');
+			}
+			else if($("#payment_types").val() == "Points")
+			{
+				$('#finish_sale_alternate_button').addClass('hidden');
+				$('#add_payment_button').removeClass('hidden');
+			}
+			else
+			{
+				if ($('#amount_tendered').val()>=0.00)
+				{
+					$('#finish_sale_alternate_button').removeClass('hidden');
+					$('#add_payment_button').addClass('hidden');
+				}
+				else
+				{
+					$('#finish_sale_alternate_button').addClass('hidden');
+					$('#add_payment_button').removeClass('hidden');
+				}
+			}
+		
+		
+		$('#amount_tendered').on('input',function(){
+			if ($("#payment_types").val() == "Gift Card")
+			{
+				$('#finish_sale_alternate_button').removeClass('hidden');
+				$('#add_payment_button').addClass('hidden');
+			}
+			else if($("#payment_types").val() == "Points")
+			{
+				$('#finish_sale_alternate_button').addClass('hidden');
+				$('#add_payment_button').removeClass('hidden');
+			}
+			else
+			{
+				if ($('#amount_tendered').val()>=0.00)
+				{
+					$('#finish_sale_alternate_button').removeClass('hidden');
+					$('#add_payment_button').addClass('hidden');
+				}
+				else
+				{
+					$('#finish_sale_alternate_button').addClass('hidden');
+					$('#add_payment_button').removeClass('hidden');
+				}
+			}
+			
+		});
+
+		$('#finish_sale_alternate_button').on('click',function(e){
+			e.preventDefault();
+			$('#add_payment_form').ajaxSubmit({target: "#register_container", beforeSubmit: salesBeforeSubmit, complete: function()
+			{
+				$('#finish_sale_button').trigger('click');
+			}});
+		});
+		
+				
+		// Show or hide item grid
+		$("#show_grid, .show-grid").on('click',function(e)
+		{
+			e.preventDefault();
+			$("#category_item_selection_wrapper").slideDown();
+
+			$('.show-grid').addClass('hidden');
+			$('.hide-grid').removeClass('hidden');
+		});
+
+		$("#hide_grid,#hide_grid_top, .hide-grid").on('click',function(e)
+		{
+			e.preventDefault();
+			$("#category_item_selection_wrapper").slideUp();
+
+			$('.hide-grid').addClass('hidden');
+			$('.show-grid').removeClass('hidden');
+		});
+	
+		// Save credit card info
+		$('#save_credit_card_info').change(function() 
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_save_credit_card_info', {save_credit_card_info:$('#save_credit_card_info').is(':checked') ? '1' : '0'});
+		});
+
+		// Use saved cc info
+		$('#use_saved_cc_info').change(function() 
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_use_saved_cc_info', {use_saved_cc_info:$('#use_saved_cc_info').is(':checked') ? '1' : '0'});
+		});
+
+		// Prompt for cc info (EMV integration only)
+		$('#prompt_for_card').change(function() 
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_prompt_for_card', {prompt_for_card:$('#prompt_for_card').is(':checked') ? '1' : '0'});
+		});
+
+			      	$('.cart-number').html(0);
+				  
+		
+	});
+	// end of document ready
+
+
+// Re-usable Functions 
+
+	function checkPaymentTypeGiftcard()
+	{
+		if ($("#payment_types").val() == "Gift Card")
+		{
+			$("#amount_tendered").val('');
+			$("#amount_tendered").attr('placeholder',"Swipe\/Type gift card #");
+		
+							$("#amount_tendered").focus();
+				 
+									giftcard_swipe_field($("#amount_tendered"));
+							}
+	}
+
+	function checkPaymentTypePoints()
+	{
+		if ($("#payment_types").val() == "Points")
+		{
+			$("#amount_tendered").val('');
+			$("#amount_tendered").attr('placeholder',"Enter amount of points to use");
+		
+							$("#amount_tendered").focus();
+			 
+		}
+	}
+
+	function salesBeforeSubmit(formData, jqForm, options)
+	{
+		if (submitting)
+		{ 	
+			return false; 
+		}
+		submitting = true;
+					$('.cart-number').html(0);
+				 $("#ajax-loader").show();
+		 $("#add_payment_button").hide();
+		$("#finish_sale_button").hide();
+	}
+
+	function itemScannedSuccess(responseText, statusText, xhr, $form)
+	{
+		setTimeout(function(){$('#item').focus();}, 10);
+	}
+	
+	function finishSale()
+	{
+		if ($("#comment").val())
+		{
+			$.post('https://demo.phppointofsale.com/index.php/sales/set_comment', {comment: $('#comment').val()}, function()
+			{
+				$('#finish_sale_form').submit();						
+			});						
+		}
+		else
+		{
+			$('#finish_sale_form').submit();						
+		}
+		
+	}
+</script></div>
+ 
+</div>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+				
+	$(window).load(function()
+	{
+		setTimeout(function()
+		{
+				$('.dismissfullscreen').click();	
+				
+		}, 0);
+	});	
+		
+ 	var current_category_id = null;
+	var current_tag_id = null;
+	
+  var categories_stack = [{category_id: 0, name: "All"}];
+  
+  function updateBreadcrumbs()
+  {
+     var breadcrumbs = '';
+     for(var k = 0; k< categories_stack.length;k++)
+     {
+       var category_name = categories_stack[k].name;
+       var category_id = categories_stack[k].category_id;
+   
+       breadcrumbs += (k != 0 ? ' &raquo ' : '' )+'<a href="javascript:void(0);"class="category_breadcrumb_item" data-category_id = "'+category_id+'">'+category_name+"</a>";
+     }
+ 
+     $("#grid_breadcrumbs").html(breadcrumbs);		  
+  }
+  
+  $(document).on('click', ".category_breadcrumb_item",function()
+  {
+      var clicked_category_id = $(this).data('category_id');      
+      var categories_size = categories_stack.length;
+      current_category_id = clicked_category_id;
+      
+      for(var k = 0; k< categories_size; k++)
+      {
+        var current_category = categories_stack[k]
+        var category_id = current_category.category_id;
+        
+        if (category_id == clicked_category_id)
+        {
+          if (categories_stack[k+1] != undefined)
+          {
+            categories_stack.splice(k+1,categories_size - k - 1);
+          }
+          break;
+        }
+      }
+      
+      if (current_category_id != 0)
+      {
+        loadCategoriesAndItems(current_category_id,0);
+      }
+      else
+      {
+        loadTopCategories();
+      }
+  });
+  
+	function loadTopCategories()
+	{    
+		$('#grid-loader').show();
+		$.get('https://demo.phppointofsale.com/index.php/sales/categories', function(json)
+		{
+			processCategoriesResult(json);
+		}, 'json');	
+	}
+	
+	function loadTags()
+	{
+		$('#grid-loader').show();
+		$.get('https://demo.phppointofsale.com/index.php/sales/tags', function(json)
+		{
+			processTagsResult(json);
+		}, 'json');	
+	}
+  
+  function loadCategoriesAndItems(category_id, offset)
+  {
+    $('#grid-loader').show();
+    current_category_id = category_id;
+    //Get sub categories then items
+    $.get('https://demo.phppointofsale.com/index.php/sales/categories_and_items/'+current_category_id+'/'+offset, function(json)
+    {
+        processCategoriesAndItemsResult(json);
+    }, "json");
+  }
+  
+  function loadTagItems(tag_id, offset)
+  {
+     $('#grid-loader').show();
+	  current_tag_id = tag_id;
+     //Get sub categories then items
+     $.get('https://demo.phppointofsale.com/index.php/sales/tag_items/'+tag_id+'/'+offset, function(json)
+     {
+         processTagItemsResult(json);
+     }, "json");
+  }
+
+	$(document).on('click', ".pagination.categories a", function(event)
+	{
+		$('#grid-loader').show();
+		event.preventDefault();
+		var offset = !is_int($(this).attr('href').substring($(this).attr('href').lastIndexOf('/')+1)) ? 0 : $(this).attr('href').substring($(this).attr('href').lastIndexOf('/') + 1);
+	
+		$.get('https://demo.phppointofsale.com/index.php/sales/categories/0/'+offset, function(json)
+		{
+			processCategoriesResult(json);
+      
+		}, "json");
+	});
+	
+	$(document).on('click', ".pagination.tags a", function(event)
+	{
+		$('#grid-loader').show();
+		event.preventDefault();
+		var offset = !is_int($(this).attr('href').substring($(this).attr('href').lastIndexOf('/')+1)) ? 0 : $(this).attr('href').substring($(this).attr('href').lastIndexOf('/') + 1);
+	
+		$.get('https://demo.phppointofsale.com/index.php/sales/tags/'+offset, function(json)
+		{
+			processTagsResult(json);
+      
+		}, "json");
+	});
+	
+  
+	$(document).on('click', ".pagination.categoriesAndItems a", function(event)
+	{
+		$('#grid-loader').show();
+		event.preventDefault();
+		var offset = !is_int($(this).attr('href').substring($(this).attr('href').lastIndexOf('/')+1)) ? 0 : $(this).attr('href').substring($(this).attr('href').lastIndexOf('/') + 1);
+	  	loadCategoriesAndItems(current_category_id, offset);
+	 });
+	 
+ 	$(document).on('click', ".pagination.items a", function(event)
+ 	{
+ 		$('#grid-loader').show();
+ 		event.preventDefault();
+ 		var offset = !is_int($(this).attr('href').substring($(this).attr('href').lastIndexOf('/')+1)) ? 0 : $(this).attr('href').substring($(this).attr('href').lastIndexOf('/') + 1);
+ 	  	loadTagItems(current_tag_id, offset);
+ 	 });
+
+	$('#category_item_selection_wrapper').on('click','.category_item.category', function(event)
+	{
+      event.preventDefault();
+      current_category_id = $(this).data('category_id');
+      var category_obj = {category_id: current_category_id, name: $(this).find('p').text()};
+      categories_stack.push(category_obj);
+      loadCategoriesAndItems($(this).data('category_id'), 0);
+	});
+	
+	$('#category_item_selection_wrapper').on('click','.category_item.tag', function(event)
+	{
+      event.preventDefault();
+		current_tag_id = $(this).data('tag_id');
+      loadTagItems($(this).data('tag_id'), 0);
+	});
+	
+	$('#category_item_selection_wrapper').on('click','#by_category', function(event)
+	{
+	 	current_category_id = null;
+		current_tag_id = null;
+		$("#grid_breadcrumbs").html('');
+		$('.btn-grid').removeClass('active');
+		$(this).addClass('active');
+		categories_stack = [{category_id: 0, name: "All"}];
+		loadTopCategories();
+	});
+	
+	$('#category_item_selection_wrapper').on('click','#by_tag', function(event)
+	{
+	 	current_category_id = null;
+		current_tag_id = null;
+		$('.btn-grid').removeClass('active');
+		$(this).addClass('active');
+		$("#grid_breadcrumbs").html('');
+		loadTags();
+	});
+	
+
+	$('#category_item_selection_wrapper').on('click','.category_item.item', function(event)
+	{		
+		$('#grid-loader').show();
+		event.preventDefault();
+		$.post('https://demo.phppointofsale.com/index.php/sales/add', {item: $(this).data('id') }, function(response)
+		{
+			show_feedback('success', "You have successfully added item", "Success");			$('#grid-loader').hide();
+			$("#register_container").html(response);
+			$('.show-grid').addClass('hidden');
+			$('.hide-grid').removeClass('hidden');
+		});
+	});
+
+	$("#category_item_selection_wrapper").on('click', '#back_to_categories', function(event)
+	{ 
+		$('#grid-loader').show();
+		event.preventDefault();
+    
+    //Remove element from stack
+    categories_stack.pop();
+    
+    //Get current last element
+    var back_category = categories_stack[categories_stack.length - 1];
+    
+    if (back_category.category_id != 0)
+    {
+      loadCategoriesAndItems(back_category.category_id,0);
+    }
+    else 
+    {
+      loadTopCategories();
+    }
+  });
+  
+	$("#category_item_selection_wrapper").on('click', '#back_to_tags', function(event)
+	{ 
+		$('#grid-loader').show();
+		event.preventDefault();
+	   loadTags();
+	});
+  
+
+	function processCategoriesResult(json)
+	{    
+		
+		$("#category_item_selection_wrapper .pagination").removeClass('categoriesAndItems').removeClass('tags').removeClass('items').addClass('categories');
+		$("#category_item_selection_wrapper .pagination").html(json.pagination);
+	
+		$("#category_item_selection").html('');
+	
+		for(var k=0;k<json.categories.length;k++)
+		{
+			 var category_item = $("<div/>").attr('class', 'category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6').data('category_id',json.categories[k].id).append('<p> <i class="ion-archive"></i> '+json.categories[k].name+'</p>');
+			$("#category_item_selection").append(category_item);
+		}
+    
+    	updateBreadcrumbs();
+		$('#grid-loader').hide();
+	}
+	
+	function processTagsResult(json)
+	{		
+		$("#category_item_selection_wrapper .pagination").removeClass('categoriesAndItems').removeClass('categories').removeClass('items').addClass('tags');	
+		$("#category_item_selection_wrapper .pagination").html(json.pagination);
+	
+		$("#category_item_selection").html('');
+	
+		for(var k=0;k<json.tags.length;k++)
+		{
+			 var tag_item = $("<div/>").attr('class', 'category_item tag col-md-2 register-holder tags-holder col-sm-3 col-xs-6').data('tag_id',json.tags[k].id).append('<p> <i class="ion-pricetags"></i> '+json.tags[k].name+'</p>');
+			$("#category_item_selection").append(tag_item);
+		}
+    
+		$('#grid-loader').hide();
+	}
+  
+  function processCategoriesAndItemsResult(json)
+  {	  
+	 $("#category_item_selection").html('');
+    var back_to_categories_button = $("<div/>").attr('id', 'back_to_categories').attr('class', 'category_item register-holder no-image back-to-categories col-md-2 col-sm-3 col-xs-6 ').append('<p>&laquo; '+"Back To Categories"+'</p>');
+    $("#category_item_selection").append(back_to_categories_button);
+
+    for(var k=0;k<json.categories_and_items.length;k++)
+    {
+		 if (json.categories_and_items[k].type == 'category')
+		 {
+       	var category_item = $("<div/>").attr('class', 'category_item category col-md-2 register-holder categories-holder col-sm-3 col-xs-6').data('category_id',json.categories_and_items[k].id).append('<p> <i class="ion-archive"></i> '+json.categories_and_items[k].name+'</p>');
+      	$("#category_item_selection").append(category_item);
+		 }
+		 else if (json.categories_and_items[k].type == 'item')
+		 {
+	       var image_src = json.categories_and_items[k].image_src;
+	       var prod_image = "";
+	       var image_class = "no-image";
+	       var item_parent_class = "";
+	       if (image_src != '' ) {
+	         var item_parent_class = "item_parent_class";
+	         var prod_image = '<img src="'+image_src+'" alt="" />';
+	         var image_class = "";
+	       }
+      
+	       var item = $("<div/>").attr('class', 'category_item item col-md-2 register-holder ' + image_class + ' col-sm-3 col-xs-6  '+item_parent_class).attr('data-id', json.categories_and_items[k].id).append(prod_image+'<p>'+json.categories_and_items[k].name+'<br /><span class="text-bold">'+(json.categories_and_items[k].price ? '('+(json.categories_and_items[k].different_price ? '<span style="text-decoration: line-through;">'+json.categories_and_items[k].regular_price+'</span> ': '')+json.categories_and_items[k].price+')' : '')+'</span></p>');
+	       $("#category_item_selection").append(item);
+		 	
+		 }
+	 }
+	 	 
+    $("#category_item_selection_wrapper .pagination").removeClass('categories').removeClass('tags').removeClass('items').addClass('categoriesAndItems');
+    $("#category_item_selection_wrapper .pagination").html(json.pagination);
+
+    updateBreadcrumbs();
+    $('#grid-loader').hide();
+    
+  }
+  
+  function processTagItemsResult(json)
+  {
+ 	 $("#category_item_selection").html('');
+     var back_to_categories_button = $("<div/>").attr('id', 'back_to_tags').attr('class', 'category_item register-holder no-image back-to-categories col-md-2 col-sm-3 col-xs-6 ').append('<p>&laquo; '+"Back to tags"+'</p>');
+     $("#category_item_selection").append(back_to_categories_button);
+
+     for(var k=0;k<json.items.length;k++)
+     {
+ 	       var image_src = json.items[k].image_src;
+ 	       var prod_image = "";
+ 	       var image_class = "no-image";
+ 	       var item_parent_class = "";
+ 	       if (image_src != '' ) {
+ 	         var item_parent_class = "item_parent_class";
+ 	         var prod_image = '<img src="'+image_src+'" alt="" />';
+ 	         var image_class = "";
+ 	       }
+      
+ 	       var item = $("<div/>").attr('class', 'category_item item col-md-2 register-holder ' + image_class + ' col-sm-3 col-xs-6  '+item_parent_class).attr('data-id', json.items[k].id).append(prod_image+'<p>'+json.items[k].name+'<br /> <span class="text-bold">'+(json.items[k].price ? '('+(json.items[k].different_price ? '<span style="text-decoration: line-through;">'+json.items[k].regular_price+'</span> ': '')+json.items[k].price+')' : '')+'</span></p>');
+ 	       $("#category_item_selection").append(item);
+		 	
+ 	 }
+	 	 
+     $("#category_item_selection_wrapper .pagination").removeClass('categories').removeClass('tags').removeClass('categoriesAndItems').addClass('items');
+     $("#category_item_selection_wrapper .pagination").html(json.pagination);
+
+     $('#grid-loader').hide();
+  }
+  
+  	loadTopCategories();
+	});
+
+	var last_focused_id = null;
+	
+	setTimeout(function(){$('#item').focus();}, 10);
+</script>
+
+
+<script>
+//Keyboard events...only want to load once
+$(document).keyup(function(event)
+{
+	var mycode = event.keyCode;
+	
+	//tab
+	if (mycode == 9)
+	{
+		var $tabbed_to = $(event.target);
+		
+		if ($tabbed_to.hasClass('xeditable'))
+		{
+			$tabbed_to.trigger('click').editable('show');
+		}
+	}
+
+});
+
+$(document).keydown(function(event)
+{		
+	var mycode = event.keyCode;
+	
+	//F2
+	if (mycode == 113)
+	{
+		$("#item").focus();
+	}
+
+	//F4
+	if (mycode == 115)
+	{
+		event.preventDefault();
+		$("#finish_sale_alternate_button").click();
+		$("#finish_sale_button").click();
+	}
+
+	//F7
+	if (mycode == 118)
+	{
+		event.preventDefault();
+		$("#amount_tendered").focus();
+		$("#amount_tendered").select();
+	}
+
+	//ESC
+	if (mycode == 27)
+	{
+		event.preventDefault();
+		$("#cancel_sale_button").click();
+	}	
+});
+</script>
+
+			<div id="footers" class="col-md-12 hidden-print text-center">
+				Please visit our 
+					<a tabindex="-1" href="http://phppointofsale.com/" target="_blank">website</a> to learn the latest information about the project.
+					<span class="text-info">You are using PHP Point Of Sale Version <span class="badge bg-primary"> 15.0</span></span> Built on 02-04-2016 09:32 am			</div>
+		</div>
+		<!---content -->
+	</div>
+	
+	<!-- wrapper -->
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"653e27187f","applicationID":"2375780","transactionName":"bwdVbUoEVhcAAUUMDlZNdlpMDFcKTjFQCQRLTV5XXABA","queueTime":0,"applicationTime":160,"atts":"Q0BWGwIeRRk=","errorBeacon":"bam.nr-data.net","agent":""}</script>
+<div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 7px; z-index: 999999; cursor: default; position: fixed; top: 0px; left: 82px; height: 623px; display: block; opacity: 0;"><div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 5px; height: 514px; border: 1px solid rgb(255, 255, 255); border-radius: 5px; background-color: rgb(66, 66, 66); background-clip: padding-box;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 7px; z-index: 999999; top: 616px; left: 0px; position: fixed; cursor: default; display: block; width: 82px; opacity: 0;"><div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 5px; width: 84px; border: 1px solid rgb(255, 255, 255); border-radius: 5px; left: 0px; background-color: rgb(66, 66, 66); background-clip: padding-box;"></div></div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-1" tabindex="0" style="display: none;"></ul><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-2" tabindex="0" style="display: none;"></ul></body></html>
