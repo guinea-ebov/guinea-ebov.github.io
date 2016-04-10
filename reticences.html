@@ -64,7 +64,7 @@
                 });
  
         var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        fichier = 'reticences_2016_04_8.csv'
+        fichier = 'reticences_2016_04_9.csv'
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, fichier);
         } 
@@ -129,27 +129,9 @@
       <div id="map"></div>
       <br />
       
-      <div class="panel panel-default">
-      <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Réticences à la date du 8/04/2016<a href="#" onClick ="doExport({type:"json"});"></a></div>
-      <table class="table table-striped">
-         <thead>
-            <tr>
-                <th data-sort="string">Sous-préfecture</th>
-                <th data-sort="string">Localité</th>
-                <th data-sort="string">Type de réticence</th>
-            </tr> 
-         </thead>
-         <tbody>
-         
-            <tr>
-              <td>Koyamah</td>
-              <td>Dandano</td>
-              <td>Transfert de cas suspect</td>              
-            </tr>
-         
-      </tbody>
-      </table>
-      </div>
+        <div class="alert alert-info" role="alert">
+          Aucune réticence notifiée à la date du 9/04/2016.
+        </div>
       
     <script>
  $(document).ready(function() {
@@ -458,7 +440,7 @@
      
 <script>  
 $(function ()  
-{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 9/04/2016 "});   
+{ $("#miseAjour").popover({title: '<b>Date de mises à jour</b>', content: "Dernière mise à jour : 10/04/2016 "});   
 });  
  
 $(function ()  
